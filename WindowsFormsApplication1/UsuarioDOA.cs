@@ -11,13 +11,15 @@ namespace WindowsFormsApplication1
     class UsuarioDOA
     {
         private DataBase db;
+        private int pisoInt;
         public List<Usuario> listaUsuarios = new List<Usuario>();
         public UsuarioDOA()
         {
             db = DataBase.GetInstance();
         }
-        
-        public void crearCliente(string cliente, string usuario, string password, string mail, string apellido, string nombre, int DOC, int telefono, string tipoDOC, string codPos, string Dpto, string localidad, int piso, int numero, string calle, DateTime nacimiento){
+
+        public void crearCliente(string cliente, string usuario, string password, string mail, string apellido, string nombre, int DOC, int telefono, string tipoDOC, string codPos, string Dpto, string localidad, string piso, int numero, string calle, DateTime nacimiento)
+        {
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.Alta_Cliente", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@RolAsignado", SqlDbType.NVarChar).Value = cliente;
@@ -31,8 +33,15 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@TipoDocumento", SqlDbType.NVarChar).Value = tipoDOC;
             cmd.Parameters.AddWithValue("@CodPostal", SqlDbType.NVarChar).Value = codPos;
             cmd.Parameters.AddWithValue("@Depto", SqlDbType.NVarChar).Value = Dpto;
-            cmd.Parameters.AddWithValue("@Localidad",SqlDbType.NVarChar).Value = localidad;
-            cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = piso;
+            cmd.Parameters.AddWithValue("@Localidad", SqlDbType.NVarChar).Value = localidad;
+
+            if (!string.IsNullOrEmpty(piso))
+            {
+                pisoInt = int.Parse(piso);
+                cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = pisoInt;
+            }
+            else cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = 0;
+
             cmd.Parameters.AddWithValue("@Numero", SqlDbType.Int).Value = numero;
             cmd.Parameters.AddWithValue("@Calle", SqlDbType.NVarChar).Value = calle;
             cmd.Parameters.AddWithValue("@FechaNacimiento", SqlDbType.DateTime).Value = nacimiento;
@@ -41,7 +50,7 @@ namespace WindowsFormsApplication1
 
         }
 
-        public void crearEmpresa(string empresa, string usuario, string password, string mail, string cuit, string nombreContacto, string razonEmp, int telefono, string codPos, string Dpto, string localidad, int piso, int numero, string calle, DateTime nacimiento, string rubro, string ciudad)
+        public void crearEmpresa(string empresa, string usuario, string password, string mail, string cuit, string nombreContacto, string razonEmp, int telefono, string codPos, string Dpto, string localidad, string piso, int numero, string calle, DateTime nacimiento, string rubro, string ciudad)
         {
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.Alta_Empresa", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -56,7 +65,12 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@CodPostal", SqlDbType.NVarChar).Value = codPos;
             cmd.Parameters.AddWithValue("@Depto", SqlDbType.NVarChar).Value = Dpto;
             cmd.Parameters.AddWithValue("@Localidad", SqlDbType.NVarChar).Value = localidad;
-            cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = piso;
+            if (!string.IsNullOrEmpty(piso))
+            {
+                pisoInt = int.Parse(piso);
+                cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = pisoInt;
+            }
+            else cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = 0;
             cmd.Parameters.AddWithValue("@Numero", SqlDbType.Int).Value = numero;
             cmd.Parameters.AddWithValue("@Calle", SqlDbType.NVarChar).Value = calle;
             cmd.Parameters.AddWithValue("@FechaCreacion", SqlDbType.DateTime).Value = nacimiento;
@@ -64,7 +78,7 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@Ciudad", SqlDbType.NVarChar).Value = ciudad;
             cmd.Parameters.AddWithValue("@FechaActual", SqlDbType.DateTime).Value = Fecha.getFechaActual();
             cmd.ExecuteNonQuery();
-                
+
         }
 
         public void cambiarContrasenia(string usuario, string nuevaContrasenia, string actualContrasenia)
@@ -77,7 +91,7 @@ namespace WindowsFormsApplication1
             cmd.ExecuteNonQuery();
         }
 
-        public void modificarCliente(string cliente, string usuario, string password, string mail, string apellido, string nombre, int DOC, int telefono, string tipoDOC, string codPos, string Dpto, string localidad, int piso, int numero, string calle, DateTime nacimiento)
+        public void modificarCliente(string cliente, string usuario, string password, string mail, string apellido, string nombre, int DOC, int telefono, string tipoDOC, string codPos, string Dpto, string localidad, string piso, int numero, string calle, DateTime nacimiento)
         {
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Cliente", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -93,13 +107,18 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@CodPostal", SqlDbType.NVarChar).Value = codPos;
             cmd.Parameters.AddWithValue("@Depto", SqlDbType.NVarChar).Value = Dpto;
             cmd.Parameters.AddWithValue("@Localidad", SqlDbType.NVarChar).Value = localidad;
-            cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = piso;
+            if (!string.IsNullOrEmpty(piso))
+            {
+                pisoInt = int.Parse(piso);
+                cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = pisoInt;
+            }
+            else cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = 0;
             cmd.Parameters.AddWithValue("@Numero", SqlDbType.Int).Value = numero;
             cmd.Parameters.AddWithValue("@Calle", SqlDbType.NVarChar).Value = calle;
             cmd.Parameters.AddWithValue("@FechaNacimiento", SqlDbType.DateTime).Value = nacimiento;
             cmd.ExecuteNonQuery();
         }
-        public void modificarEmpresa(string empresa, string usuario, string password, string mail, string cuit, string nombreContacto, string razonEmp, int telefono, string codPos, string Dpto, string localidad, int piso, int numero, string calle, DateTime nacimiento, string rubro, string ciudad)
+        public void modificarEmpresa(string empresa, string usuario, string password, string mail, string cuit, string nombreContacto, string razonEmp, int telefono, string codPos, string Dpto, string localidad, string piso, int numero, string calle, DateTime nacimiento, string rubro, string ciudad)
         {
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Empresa", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -114,7 +133,12 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@CodPostal", SqlDbType.NVarChar).Value = codPos;
             cmd.Parameters.AddWithValue("@Depto", SqlDbType.NVarChar).Value = Dpto;
             cmd.Parameters.AddWithValue("@Localidad", SqlDbType.NVarChar).Value = localidad;
-            cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = piso;
+            if (!string.IsNullOrEmpty(piso))
+            {
+                pisoInt = int.Parse(piso);
+                cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = pisoInt;
+            }
+            else cmd.Parameters.AddWithValue("@Piso", SqlDbType.Int).Value = 0;
             cmd.Parameters.AddWithValue("@Numero", SqlDbType.Int).Value = numero;
             cmd.Parameters.AddWithValue("@Calle", SqlDbType.NVarChar).Value = calle;
             cmd.Parameters.AddWithValue("@FechaCreacion", SqlDbType.DateTime).Value = nacimiento;
@@ -127,7 +151,7 @@ namespace WindowsFormsApplication1
 
         public List<Usuario> Login(string username, string password)
         {
-            
+
 
             //especifico que SP voy a ejecutar
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.Usuario_Login", db.Connection);
@@ -136,7 +160,7 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@username", SqlDbType.NVarChar).Value = username;
             cmd.Parameters.AddWithValue("@password", SqlDbType.NVarChar).Value = password;
             //ejecuto la consulta y traigo el resultado
-            
+
             SqlDataReader sdr = cmd.ExecuteReader();
             while (sdr.Read())
             {
@@ -157,7 +181,7 @@ namespace WindowsFormsApplication1
             usuario.Password = reader["password"].ToString();
             usuario.Habilitado = Convert.ToBoolean(reader["habilitado"].ToString());
             usuario.Id_rol = (int)reader["rol"];
-          
+
             return usuario;
         }
     }

@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
         {
             db = DataBase.GetInstance();
         }
-        
+
         public Cliente crearUnCliente(String userCliente)
         {
             //especifico que SP voy a ejecutar
@@ -26,10 +26,9 @@ namespace WindowsFormsApplication1
             cmd.Parameters.AddWithValue("@IdUsuario", SqlDbType.NVarChar).Value = userCliente;
             Cliente unCliente = null;
             SqlDataReader sdr = cmd.ExecuteReader();
-            while (sdr.Read())
-            {
-                unCliente = LoadObject(sdr);
-            }
+
+            unCliente = LoadObject(sdr);
+
             sdr.Close();
             return unCliente;
         }

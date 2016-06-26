@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class ModificacionUsuario : Form
     {
-       
+
         SqlCommand cmd;
         SqlDataReader sdr;
         SqlDataAdapter adapter;
@@ -61,27 +61,27 @@ namespace WindowsFormsApplication1.ABM_Usuario
             lstRoles.ValueMember = lstRoles.DisplayMember;
 
 
-             
-            
+
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-          
+
             //FALTA EL FILTRADO
         }
 
         private void cmdVolver_Click(object sender, EventArgs e)
         {
             Form1.f1.Show();
-            
+
             this.Hide();
-            
+
         }
 
         private void cboSeleccion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboSeleccion.SelectedItem.ToString() == "Cliente" )
+            if (cboSeleccion.SelectedItem.ToString() == "Cliente")
             {
                 txtApellido.Visible = true;
                 txtEmailC.Visible = true;
@@ -102,7 +102,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 txtRazonSocial.Text = "";
                 txtEmailE.Text = "";
                 txtCUIT.Text = "";
-              
+
             }
             if (cboSeleccion.SelectedItem.ToString() == "Empresa")
             {
@@ -132,12 +132,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form1.f1.Close(); 
+            Form1.f1.Close();
         }
 
         private void cmdBusqueda_Click(object sender, EventArgs e)
         {
-           
+
             string cadenaDeErrorTipo = "Debe seleccionar un tipo de filtro de busqueda";
             string cadenaDeErrorTipoUsuario = "Debe seleccionar un tipo de usuario";
             if (cboSeleccion.SelectedIndex == -1)
@@ -147,8 +147,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             if (cboSeleccion.SelectedItem.ToString() == "Cliente")
             {
-               
-                
+
+
                 if (string.IsNullOrEmpty(txtNombre.Text) && string.IsNullOrEmpty(txtApellido.Text) && string.IsNullOrEmpty(txtDNI.Text) && string.IsNullOrEmpty(txtEmailC.Text))
                 {
                     MessageBox.Show(cadenaDeErrorTipo, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -162,26 +162,29 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 {
                     cmd.Parameters.AddWithValue("@Mail", SqlDbType.NVarChar).Value = "";
                 }
-                else {
+                else
+                {
                     cmd.Parameters.AddWithValue("@Mail", SqlDbType.NVarChar).Value = txtEmailC.Text;
                 }
 
-                
+
                 if (string.IsNullOrEmpty(txtDNI.Text))
                 {
                     cmd.Parameters.AddWithValue("@NroDocumento", DBNull.Value);
                 }
-                else {
+                else
+                {
                     cmd.Parameters.AddWithValue("@NroDocumento", SqlDbType.Int).Value = int.Parse(txtDNI.Text);
                 }
 
-               
-               
+
+
                 if (string.IsNullOrEmpty(txtApellido.Text))
                 {
                     cmd.Parameters.AddWithValue("@Apellido", SqlDbType.NVarChar).Value = "";
                 }
-                else {
+                else
+                {
                     cmd.Parameters.AddWithValue("@Apellido", SqlDbType.NVarChar).Value = txtApellido.Text;
                 }
 
@@ -190,7 +193,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 {
                     cmd.Parameters.AddWithValue("@Nombres", SqlDbType.NVarChar).Value = "";
                 }
-                else {
+                else
+                {
                     cmd.Parameters.AddWithValue("@Nombres", SqlDbType.NVarChar).Value = txtNombre.Text;
                 }
 
@@ -199,9 +203,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 adapter.Fill(dt);
                 this.dataGridView1.DataSource = dt;
 
-       
 
-               
+
+
             }
             if (cboSeleccion.SelectedItem.ToString() == "Empresa")
             {
@@ -248,7 +252,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 adapter = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable("ROAD_TO_PROYECTO.Empresa");
                 adapter.Fill(dt);
-                this.dataGridView1.DataSource = dt;      
+                this.dataGridView1.DataSource = dt;
+
 
             }
             if (esModificar)
@@ -257,7 +262,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmdAsignarRol.Visible = true;
                 lblRoles.Visible = true;
             }
-           
+
         }
 
         private void cmdModificar_Click(object sender, EventArgs e)
@@ -270,10 +275,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             if (cboSeleccion.SelectedItem.ToString() == "Cliente")
             {
-              
+
 
                 int fila = dataGridView1.CurrentRow.Index;
-            
+
                 String celdaUserCliente = (String)dataGridView1[0, fila].Value;
 
                 cargarUnClienteSeleccionado(celdaUserCliente);
@@ -286,7 +291,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             if (cboSeleccion.SelectedItem.ToString() == "Empresa")
             {
-               
+
 
                 int fila = dataGridView1.CurrentRow.Index;
 
@@ -299,7 +304,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 return;
 
             }
-       
+
         }
 
         private void cargarUnaEmpresaSeleccionada(String userEmpresa)
@@ -313,19 +318,20 @@ namespace WindowsFormsApplication1.ABM_Usuario
             AltaUsuario.aus.txtUsuario.Text = unaEmpresa.username;
             AltaUsuario.aus.txtPassword.Text = unaEmpresa.password;
             AltaUsuario.aus.txtTelEmpresa.Text = Convert.ToString(unaEmpresa.telefono);
-          
+
             AltaUsuario.aus.txtDpto.Text = unaEmpresa.departamento;
             AltaUsuario.aus.txtCalle.Text = unaEmpresa.calle;
-            AltaUsuario.aus.txtPiso.Text =Convert.ToString(unaEmpresa.piso);
+            if (unaEmpresa.piso.Equals(0)) AltaUsuario.aus.txtPiso.Text = "";
+            else AltaUsuario.aus.txtPiso.Text = Convert.ToString(unaEmpresa.piso);
             AltaUsuario.aus.txtNumero.Text = Convert.ToString(unaEmpresa.numero);
-            AltaUsuario.aus.txtLocalidad.Text =unaEmpresa.localidad;
-            AltaUsuario.aus.txtRazonEmpresa.Text =unaEmpresa.razonSocial;
-            AltaUsuario.aus.txtMail.Text =unaEmpresa.mail;
-            AltaUsuario.aus.txtTelEmpresa.Text =Convert.ToString(unaEmpresa.telefono);
-            AltaUsuario.aus.txtCodPos.Text =Convert.ToString(unaEmpresa.codPostal);
-            AltaUsuario.aus.txtCiudadEmpresa.Text =unaEmpresa.ciudad;
-            AltaUsuario.aus.txtCUITEmpresa.Text =Convert.ToString(unaEmpresa.cuit);
-            AltaUsuario.aus.txtNombreContEmpresa.Text =unaEmpresa.nombreContacto;
+            AltaUsuario.aus.txtLocalidad.Text = unaEmpresa.localidad;
+            AltaUsuario.aus.txtRazonEmpresa.Text = unaEmpresa.razonSocial;
+            AltaUsuario.aus.txtMail.Text = unaEmpresa.mail;
+            AltaUsuario.aus.txtTelEmpresa.Text = Convert.ToString(unaEmpresa.telefono);
+            AltaUsuario.aus.txtCodPos.Text = Convert.ToString(unaEmpresa.codPostal);
+            AltaUsuario.aus.txtCiudadEmpresa.Text = unaEmpresa.ciudad;
+            AltaUsuario.aus.txtCUITEmpresa.Text = Convert.ToString(unaEmpresa.cuit);
+            AltaUsuario.aus.txtNombreContEmpresa.Text = unaEmpresa.nombreContacto;
             AltaUsuario.aus.rubroModificado = unaEmpresa.rubro;
 
             AltaUsuario.aus.rbCliente.Enabled = false;
@@ -343,18 +349,20 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             aus.txtUsuario.Text = unCliente.username;
             aus.txtPassword.PasswordChar = '*';
-            aus.txtPassword.Text =unCliente.password;
-            aus.txtTelCliente.Text =Convert.ToString(unCliente.telefono);
-            aus.txtDpto.Text =unCliente.departamento;
-            aus.txtCalle.Text =unCliente.calle;
-            aus.txtPiso.Text =Convert.ToString(unCliente.piso);
-            aus.txtLocalidad.Text =unCliente.localidad;
-            aus.txtApellidoCliente.Text =unCliente.apellido;
-            aus.txtNombreCliente.Text =unCliente.nombre;
-            aus.txtDNICliente.Text =Convert.ToString(unCliente.dni);
-            aus.cboTipoCliente.SelectedItem =unCliente.tipoDocumento; 
-            aus.txtMail.Text =unCliente.mail;
-            aus.txtCodPos.Text =Convert.ToString(unCliente.codPostal);
+            aus.txtPassword.Text = unCliente.password;
+            aus.txtTelCliente.Text = Convert.ToString(unCliente.telefono);
+            aus.txtDpto.Text = unCliente.departamento;
+            aus.txtCalle.Text = unCliente.calle;
+            if (unaEmpresa.piso.Equals(0)) AltaUsuario.aus.txtPiso.Text = "";
+            else AltaUsuario.aus.txtPiso.Text = Convert.ToString(unaEmpresa.piso);
+
+            aus.txtLocalidad.Text = unCliente.localidad;
+            aus.txtApellidoCliente.Text = unCliente.apellido;
+            aus.txtNombreCliente.Text = unCliente.nombre;
+            aus.txtDNICliente.Text = Convert.ToString(unCliente.dni);
+            aus.cboTipoCliente.SelectedItem = unCliente.tipoDocumento;
+            aus.txtMail.Text = unCliente.mail;
+            aus.txtCodPos.Text = Convert.ToString(unCliente.codPostal);
             aus.dtpCreacion.Value = unCliente.nacimiento;
             aus.txtNumero.Text = Convert.ToString(unCliente.numero);
 
@@ -362,11 +370,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
             AltaUsuario.aus.rbEmpresa.Enabled = false;
             AltaUsuario.aus.txtUsuario.Enabled = false;
             AltaUsuario.aus.txtPassword.Enabled = false;
-            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-        
-            
+
+
         }
 
         private void cmdBorrar_Click(object sender, EventArgs e)
@@ -374,10 +382,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cboSeleccion.Text = "";
             dataGridView1.DataSource = null;
             dataGridView1.Refresh();
-            
+
             txtRazonSocial.Text = "";
             txtEmailE.Text = "";
-            txtCUIT.Text = "";          
+            txtCUIT.Text = "";
             txtApellido.Text = "";
             txtEmailC.Text = "";
             txtDNI.Text = "";
@@ -396,13 +404,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 MessageBox.Show("Debe seleccionar un usuario a modificar", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
-         
 
-                int fila = dataGridView1.CurrentRow.Index;
 
-                String celdaUser = (String)dataGridView1[0, fila].Value;
+            int fila = dataGridView1.CurrentRow.Index;
 
-                borrarUserSeleccionado(celdaUser);
+            String celdaUser = (String)dataGridView1[0, fila].Value;
+
+            borrarUserSeleccionado(celdaUser);
 
 
         }
@@ -440,6 +448,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             MessageBox.Show("Se ha asignado un rol correctamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
-    
+
     }
 }
