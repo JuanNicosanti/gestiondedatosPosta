@@ -1038,21 +1038,34 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Facturar_Publicacion
 	as begin
 		if((select ComiFija from ROAD_TO_PROYECTO.Visibilidad v, ROAD_TO_PROYECTO.Publicacion p where p.PublId = @PublId and p.Visibilidad = v.VisiId) != 0) 
 		begin
-		declare @UltimaFactura int, @FacturaActual int
+			declare @Usuario nvarchar(255)
+			(select @Usuario = UserId from Publicacion p where PublId = @PublId)
+			if( ((select Nuevo from Usuario where Usuario = @Usuario) = 0) or ( ((select Nuevo from Usuario where Usuario = @Usuario) = 1) and ((select top 1 PublId from Publicacion p where p.UserId = @Usuario order by p.FechaInicio) <> @PublId) ))
+			begin
+				declare @UltimaFactura int, @FacturaActual int
 
-		select top 1 @UltimaFactura = FactNro from ROAD_TO_PROYECTO.Factura order by FactNro desc
-		set @FacturaActual = @UltimaFactura + 1
+				select top 1 @UltimaFactura = FactNro from ROAD_TO_PROYECTO.Factura order by FactNro desc
+				set @FacturaActual = @UltimaFactura + 1
 
-		insert into ROAD_TO_PROYECTO.Factura (FactNro, PubliId, Fecha)--, Monto, FormaPago) 
-		values(@FacturaActual, @PublId, (select FechaInicio from ROAD_TO_PROYECTO.Publicacion where PublId = @PublId))
+				insert into ROAD_TO_PROYECTO.Factura (FactNro, PubliId, Fecha)--, Monto, FormaPago) 
+				values(@FacturaActual, @PublId, (select FechaInicio from ROAD_TO_PROYECTO.Publicacion where PublId = @PublId))
 
-		insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto) 
-		values (@FacturaActual, 1, 'Precio por tipo publicación', (select ComiFija from ROAD_TO_PROYECTO.Visibilidad v, ROAD_TO_PROYECTO.Publicacion p where p.PublId = @PublId and p.Visibilidad = v.VisiId))
+				insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto) 
+				values (@FacturaActual, 1, 'Precio por tipo publicación', (select ComiFija from ROAD_TO_PROYECTO.Visibilidad v, ROAD_TO_PROYECTO.Publicacion p where p.PublId = @PublId and p.Visibilidad = v.VisiId))
 
-		update ROAD_TO_PROYECTO.Factura
-		set Monto = (select sum(Monto) from ROAD_TO_PROYECTO.Item_Factura where FactNro = @FacturaActual)
-		where FactNro = @FacturaActual
-
+				update ROAD_TO_PROYECTO.Factura
+				set Monto = (select sum(Monto) from ROAD_TO_PROYECTO.Item_Factura where FactNro = @FacturaActual)
+				where FactNro = @FacturaActual
+			end
+			else
+			begin
+				if( ((select Nuevo from Usuario where Usuario = @Usuario) = 1) and ((select top 1 PublId from Publicacion p where p.UserId = @Usuario order by p.FechaInicio) = @PublId) )
+				begin
+					update Usuario
+					set Nuevo = 0
+					where Usuario = @Usuario
+				end
+			end
 		end
 	end
 GO
