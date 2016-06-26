@@ -1,0 +1,38 @@
+c:\users\matias\documents\visual studio 2012\Projects\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Juani\Downloads\TP Frba MercadoEnvio - 1C 2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.AltaUsuario.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.CambiarContrasenia.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Login.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ModificacionUsuario.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.AltaPublicacion.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.Form1.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.AgregarVisibilidad.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.AltaRol.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ModificacionRol.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.BusquedaVisibilidad.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.CalificarVendedor.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.HistorialCalificaciones.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.MenuCalificaciones.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.ComprarOfertar.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Facturar.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Facturas.ConsultaFacturas.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.EstadoPublicacion.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Historial_Cliente.Historial_Cliente.resources
+C:\Users\Juan\git\gestiondedatos\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.Listado_Estadistico.resources
