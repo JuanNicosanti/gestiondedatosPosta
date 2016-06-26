@@ -64,7 +64,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbComiFija.Text) <= 0)
+                    if (double.Parse(tbComiFija.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision por tipo de publicacion \r";
                         huboErrorNegativos++;
@@ -87,7 +87,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbComiVariable.Text) <= 0)
+                    if (double.Parse(tbComiVariable.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision por producto vendido \r";
                         huboErrorNegativos++;
@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbEnvio.Text) <= 0)
+                    if (double.Parse(tbEnvio.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision de envio \r";
                         huboErrorNegativos++;

@@ -58,6 +58,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.lblTotalPagina = new System.Windows.Forms.Label();
             this.lblCantidadTotal = new System.Windows.Forms.Label();
+            this.cmdVolver = new System.Windows.Forms.Button();
             this.panelBusqueda.SuspendLayout();
             this.panelResultados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -88,7 +89,7 @@
             // cmdLimpiar
             // 
             this.cmdLimpiar.BackColor = System.Drawing.Color.LightCoral;
-            this.cmdLimpiar.Location = new System.Drawing.Point(570, 13);
+            this.cmdLimpiar.Location = new System.Drawing.Point(545, 13);
             this.cmdLimpiar.Name = "cmdLimpiar";
             this.cmdLimpiar.Size = new System.Drawing.Size(75, 23);
             this.cmdLimpiar.TabIndex = 13;
@@ -99,7 +100,7 @@
             // cmdBuscar
             // 
             this.cmdBuscar.BackColor = System.Drawing.Color.LawnGreen;
-            this.cmdBuscar.Location = new System.Drawing.Point(570, 67);
+            this.cmdBuscar.Location = new System.Drawing.Point(545, 68);
             this.cmdBuscar.Name = "cmdBuscar";
             this.cmdBuscar.Size = new System.Drawing.Size(75, 23);
             this.cmdBuscar.TabIndex = 12;
@@ -364,12 +365,24 @@
             this.lblCantidadTotal.Text = "label11";
             this.lblCantidadTotal.Visible = false;
             // 
+            // cmdVolver
+            // 
+            this.cmdVolver.BackColor = System.Drawing.Color.Cyan;
+            this.cmdVolver.Location = new System.Drawing.Point(583, 455);
+            this.cmdVolver.Name = "cmdVolver";
+            this.cmdVolver.Size = new System.Drawing.Size(120, 23);
+            this.cmdVolver.TabIndex = 14;
+            this.cmdVolver.Text = "Volver";
+            this.cmdVolver.UseVisualStyleBackColor = false;
+            this.cmdVolver.Click += new System.EventHandler(this.cmdVolver_Click);
+            // 
             // ConsultaFacturas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(754, 503);
+            this.Controls.Add(this.cmdVolver);
             this.Controls.Add(this.lblCantidadTotal);
             this.Controls.Add(this.lblTotalPagina);
             this.Controls.Add(this.label9);
@@ -431,5 +444,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblTotalPagina;
         private System.Windows.Forms.Label lblCantidadTotal;
+        private System.Windows.Forms.Button cmdVolver;
     }
 }

@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
     public partial class CambiarContrasenia : Form
     {
 
-        public Boolean soyAdmin;
+        public Boolean soyAdmin=false;
         public CambiarContrasenia()
         {
             InitializeComponent();
@@ -31,8 +31,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 this.Hide();
                 return;
             }
-            Login.lg.Show();
-            this.Hide();
+            else
+            {
+                Login.lg.Show();
+                this.Hide();
+            }
         }
 
         private void cmdAceptar_Click(object sender, EventArgs e)
@@ -85,8 +88,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             UsuarioDOA doa = new UsuarioDOA();
             doa.cambiarContrasenia(txtUsuario.Text, hash1, hash2);
             MessageBox.Show("Se cambio la contraseña satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            Login.lg.Show();
-            this.Hide();
+            if (soyAdmin)
+            {
+                Form1.f1.Show();
+                this.Hide();
+                return;
+            }
+            else
+            {
+                Login.lg.Show();
+                this.Hide();
+            }
         }
 
         public string encriptacion(string input)

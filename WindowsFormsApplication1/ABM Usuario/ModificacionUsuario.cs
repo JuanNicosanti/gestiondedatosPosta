@@ -334,6 +334,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             AltaUsuario.aus.txtNombreContEmpresa.Text = unaEmpresa.nombreContacto;
             AltaUsuario.aus.rubroModificado = unaEmpresa.rubro;
 
+            AltaUsuario.aus.esEmpresa = true;
             AltaUsuario.aus.rbCliente.Enabled = false;
             AltaUsuario.aus.rbEmpresa.Enabled = false;
             AltaUsuario.aus.txtUsuario.Enabled = false;
@@ -353,8 +354,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             aus.txtTelCliente.Text = Convert.ToString(unCliente.telefono);
             aus.txtDpto.Text = unCliente.departamento;
             aus.txtCalle.Text = unCliente.calle;
-            if (unaEmpresa.piso.Equals(0)) AltaUsuario.aus.txtPiso.Text = "";
-            else AltaUsuario.aus.txtPiso.Text = Convert.ToString(unaEmpresa.piso);
+            if (unCliente.piso.Equals(0)) AltaUsuario.aus.txtPiso.Text = "";
+            else AltaUsuario.aus.txtPiso.Text = Convert.ToString(unCliente.piso);
 
             aus.txtLocalidad.Text = unCliente.localidad;
             aus.txtApellidoCliente.Text = unCliente.apellido;
@@ -366,6 +367,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             aus.dtpCreacion.Value = unCliente.nacimiento;
             aus.txtNumero.Text = Convert.ToString(unCliente.numero);
 
+            AltaUsuario.aus.esEmpresa = false;
             AltaUsuario.aus.rbCliente.Enabled = false;
             AltaUsuario.aus.rbEmpresa.Enabled = false;
             AltaUsuario.aus.txtUsuario.Enabled = false;

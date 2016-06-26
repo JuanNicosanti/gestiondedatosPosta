@@ -721,7 +721,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Alta_Cliente
 
 	as
 	begin
-		declare	@IdExterno int, @Ciudad nvarchar(100)		
+		declare	@IdExterno int, @Ciudad nvarchar(100)
+		set @Ciudad = ''				
 		if(@RolAsignado = 'Cliente')
 		begin
 			if not exists(select c.NroDocumento from ROAD_TO_PROYECTO.Cliente c where c.TipoDocumento = @TipoDocumento and c.NroDocumento = @NroDocumento)
@@ -815,6 +816,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Modificacion_Cliente
 	as
 	begin
 		declare @Ciudad nvarchar(100)
+		set @Ciudad = ''
 		if(@RolAsignado = 'Cliente')
 		begin
 			execute ROAD_TO_PROYECTO.Modificacion_Usuario @Usuario = @Usuario, @Contraseña = @Contraseña, @Mail = @Mail
@@ -1784,7 +1786,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.AsignarRolAUsuario
 @RolAsignado nvarchar(255)
 as begin
 if(@RolAsignado ='Cliente')
-exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario, @RolAsignado,AsignarUltimoIdCliente
+exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario , @RolAsignado,AsignarUltimoIdCliente
 else if(@RolAsignado = 'Empresa')
 exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario, @RolAsignado, AsignarUltimoIdEmpresa
 else

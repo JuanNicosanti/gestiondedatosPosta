@@ -290,6 +290,12 @@ namespace WindowsFormsApplication1.Facturas
 
             }
         }
+
+        private void cmdVolver_Click(object sender, EventArgs e)
+        {
+            Form1.f1.Show();
+            this.Hide();
+        }
        
 
 

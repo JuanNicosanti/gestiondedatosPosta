@@ -21,6 +21,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private int huboErrorTipoDatos = 0;
         private int huboErrorFechaAnterior = 0;
 
+        public Boolean esEmpresa = false;
+
         SqlCommand cmd;
         SqlDataAdapter adapter;
         SqlDataReader sdr;
@@ -225,7 +227,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             else
             {
-                cboRubro.SelectedValue = rubroModificado;
+                if (esEmpresa)
+                {
+                    cboRubro.SelectedValue = rubroModificado;
+                }
+
+                
             }
         }
 
