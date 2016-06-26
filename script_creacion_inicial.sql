@@ -1036,13 +1036,13 @@ GO
 CREATE PROCEDURE ROAD_TO_PROYECTO.Facturar_Publicacion
 	@PublId int
 	as begin
+		declare @Usuario nvarchar(255), @UltimaFactura int, @FacturaActual int
+
 		if((select ComiFija from ROAD_TO_PROYECTO.Visibilidad v, ROAD_TO_PROYECTO.Publicacion p where p.PublId = @PublId and p.Visibilidad = v.VisiId) != 0) 
 		begin
-			declare @Usuario nvarchar(255)
 			(select @Usuario = UserId from Publicacion p where PublId = @PublId)
 			if( ((select Nuevo from Usuario where Usuario = @Usuario) = 0) or ( ((select Nuevo from Usuario where Usuario = @Usuario) = 1) and ((select top 1 PublId from Publicacion p where p.UserId = @Usuario order by p.FechaInicio) <> @PublId) ))
 			begin
-				declare @UltimaFactura int, @FacturaActual int
 
 				select top 1 @UltimaFactura = FactNro from ROAD_TO_PROYECTO.Factura order by FactNro desc
 				set @FacturaActual = @UltimaFactura + 1
