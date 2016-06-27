@@ -17,6 +17,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         SqlCommand cmd;
         SqlCommand cmd2;
         SqlCommand cmd3;
+        SqlCommand cmd4;
         SqlDataReader sdr;
         SqlDataAdapter adapter;
         private DataBase db;
@@ -24,6 +25,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         public int idRolAModificar;
         private String rolAModificar;
         private Boolean tieneFuncionalidades=false;
+        private Boolean existeElRol = false;
         public AltaRol()
         {
             InitializeComponent();
@@ -121,8 +123,25 @@ namespace WindowsFormsApplication1.ABM_Rol
                 return;
             }
 
+           
+
             if (esAltaRol == 1)
             {
+                SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.IdBasadoANombreRol", db.Connection);
+                cmd4.CommandType = CommandType.StoredProcedure;
+                cmd4.Parameters.AddWithValue("@Nombre", SqlDbType.NVarChar).Value = nuevoRol;
+                SqlDataReader sdr = cmd4.ExecuteReader();
+                while (sdr.Read())
+                {
+                    existeElRol = true;
+                }
+                if (existeElRol)
+                {
+                    existeElRol = false;
+                    MessageBox.Show("El rol ingresado ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.AltaRol", db.Connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlParameter retval = cmd.Parameters.Add("@RolId", SqlDbType.Int);
@@ -156,6 +175,25 @@ namespace WindowsFormsApplication1.ABM_Rol
                     cmd2.Parameters.AddWithValue("@Funcion", SqlDbType.NVarChar).Value = unaFunc;
                     cmd2.ExecuteNonQuery();
                 }
+                if (!nuevoRol.Equals(rolAModificar))
+                {
+                    SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.IdBasadoANombreRol", db.Connection);
+                    cmd4.CommandType = CommandType.StoredProcedure;
+                    cmd4.Parameters.AddWithValue("@Nombre", SqlDbType.NVarChar).Value = nuevoRol;
+                    SqlDataReader sdr = cmd4.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        existeElRol = true;
+                    }
+                    if (existeElRol)
+                    {
+                        existeElRol = false;
+                        MessageBox.Show("El rol ingresado ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+
+                }
+               
                 SqlCommand cmd3 = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Rol", db.Connection);
                 cmd3.CommandType = CommandType.StoredProcedure;
                 cmd3.Parameters.AddWithValue("@RolId", SqlDbType.Int).Value = idRolAModificar;
