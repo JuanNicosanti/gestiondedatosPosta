@@ -17,6 +17,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
         SqlCommand cmd;
         SqlDataReader sdr;
         SqlDataAdapter adapter;
+
+        SqlCommand cmd2;
+
+        DataTable dtRoles = new DataTable();
+
+        private Boolean tieneElRol =false;
         private DataBase db;
         private Cliente unCliente;
         private Empresa unaEmpresa;
@@ -437,11 +443,33 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
 
 
+
+
             int fila = dataGridView1.CurrentRow.Index;
 
             String celdaUser = (String)dataGridView1[0, fila].Value;
             String nuevoRol = lstRoles.SelectedValue.ToString();
 
+            SqlCommand cmd2 = new SqlCommand("ROAD_TO_PROYECTO.RolesDeUnUsuarioBasadoAUsername", db.Connection);
+            cmd2.CommandType = CommandType.StoredProcedure;
+            cmd2.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = celdaUser;
+            SqlDataReader sdr = cmd2.ExecuteReader();
+            while (sdr.Read())
+            {
+                if (sdr["Nombre"].ToString() == nuevoRol)
+                {
+                    tieneElRol = true;
+                }
+            }
+            
+
+            sdr.Close();
+            if (tieneElRol)
+            {
+                MessageBox.Show("El usuario ya posee el Rol seleccionado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                tieneElRol = false;
+                return;
+            }
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.AsignarRolAUsuario", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = celdaUser;

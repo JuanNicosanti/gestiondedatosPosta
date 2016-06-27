@@ -15,6 +15,6 @@ Debido a que el domicilio puede ser una casa o un piso entero, está permitido qu
 8)poner bajas logicas al abm visibilidad
 9) SI EN EL ALTA ROL SE PONE UN NOMBRE QUE ESTA YA CREADO , ROMPE
 10) FALTA BOTON HABILITAR USUARIO Y QUE MUESTRE AQUELLOS QUE NO ESTAN HABILITADOS
-11)validacion para que no permita agregarle el mismo rol que ya tiene el usuario
+
 12)ver función asignarRolAUsuario porque rompe cuando se le asigna un rol de cliente o de empresa (SQL)
 13) validaciones en alta visib si ya existe la visibilidad
