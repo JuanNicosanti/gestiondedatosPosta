@@ -558,6 +558,16 @@ as begin
 end
 GO
 
+--Mostrar Roles de un Usuario
+CREATE PROCEDURE ROAD_TO_PROYECTO.RolesDeUnUsuarioBasadoAUsername
+@Usuario nvarchar(255)
+as begin
+	select r.Nombre
+	from ROAD_TO_PROYECTO.Roles_Por_Usuario rU join ROAD_TO_PROYECTO.Rol r on r.RolId = rU.RolId
+	where rU.UserId = @Usuario 
+end
+GO
+
 --Mostrar idRol en base a un Rol
 CREATE PROCEDURE ROAD_TO_PROYECTO.IdBasadoANombreRol
 @Nombre nvarchar(255)
