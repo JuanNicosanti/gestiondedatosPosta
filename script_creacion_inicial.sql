@@ -410,9 +410,22 @@ from ROAD_TO_PROYECTO.Transaccion
 where TipoTransac = 'Compra'
 GO
 
+--Funcion para calcular cant estrellas
+CREATE FUNCTION ROAD_TO_PROYECTO.CalcularEstrellas(@Cantidad int)
+returns int
+as begin
+	return case
+	when @Cantidad between 1 and 2 then 1
+	when @Cantidad between 3 and 4 then 2
+	when @Cantidad between 5 and 6 then 3
+	when @Cantidad between 7 and 8 then 4
+	when @Cantidad between 9 and 10 then 5
+	end
+	end
+GO
 --Calificacion
 insert into ROAD_TO_PROYECTO.Calificacion
-select Calificacion_Codigo, t.TranId,Calificacion_Cant_Estrellas/2,Calificacion_Descripcion
+select Calificacion_Codigo, t.TranId,ROAD_TO_PROYECTO.CalcularEstrellas(Calificacion_Cant_Estrellas),Calificacion_Descripcion
 from gd_esquema.Maestra gd,ROAD_TO_PROYECTO.TRANSACCION t,ROAD_TO_PROYECTO.Cliente c
 where t.PubliId = gd.Publicacion_Cod and t.clieid = c.ClieId and c.NroDocumento = gd.Cli_Dni and t.fecha = Compra_Fecha and t.cantidad = Compra_Cantidad and gd.Calificacion_Cant_Estrellas is not null and (t.ganadora = 1 or t.tipotransac = 'Compra') 
 GO
@@ -1603,7 +1616,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Cantidad_Facturas_Vendedores
 	@Trimestre int,
 	@Año int
 	as begin
-		IF OBJECT_ID('ROAD_TO_PROYECTO.#consulta3') IS NOT NULL DROP TABLE ROAD_TO_PROYECTO.#consulta3
+		IF OBJECT_ID('tempdb.ROAD_TO_PROYECTO.#consulta3') IS NOT NULL DROP TABLE ROAD_TO_PROYECTO.#consulta3
 		create table ROAD_TO_PROYECTO.#consulta3(
 		Usuario nvarchar(255),
 		Detalle nvarchar(255),
@@ -1633,6 +1646,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Cantidad_Facturas_Vendedores
 		order by Monto desc
 	end
 GO
+
+exec ROAD_TO_PROYECTO.Cantidad_Facturas_Vendedores 1,2015
 
 --Top 5 número 4: Vendedores con mayor monto facturado
 CREATE PROCEDURE ROAD_TO_PROYECTO.Monto_Facturado_Vendedor
@@ -1811,14 +1826,26 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.AsignarRolAUsuario
 @Usuario nvarchar(255),
 @RolAsignado nvarchar(255)
 as begin
+declare @UltimoIdCliente int
+declare @UltimoIdEmpresa int
+
 if(@RolAsignado ='Cliente')
-exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario , @RolAsignado,AsignarUltimoIdCliente
+begin
+set @UltimoIdCliente = ROAD_TO_PROYECTO.AsignarUltimoIdCliente()
+exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario , @RolAsignado, @UltimoIdCliente
+end
+
 else if(@RolAsignado = 'Empresa')
-exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario, @RolAsignado, AsignarUltimoIdEmpresa
+begin
+set @UltimoIdEmpresa = ROAD_TO_PROYECTO.AsignarUltimoIdEmpresa()
+exec ROAD_TO_PROYECTO.Alta_Rol_Usuario @Usuario, @RolAsignado, @UltimoIdEmpresa
+end
+
 else
 if not exists(select rpu.UserId,rpu.RolId from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu where rpu.UserId = @Usuario and rpu.RolId = (select RolId from ROAD_TO_PROYECTO.Rol r where r.Nombre = @RolAsignado))
 insert into ROAD_TO_PROYECTO.Roles_Por_Usuario values (@Usuario,(select rolid from ROAD_TO_PROYECTO.Rol where nombre = @RolAsignado),NULL)
 end
+
 GO
 
 CREATE FUNCTION ROAD_TO_PROYECTO.AsignarUltimoIdEmpresa()

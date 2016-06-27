@@ -255,12 +255,13 @@
             // 
             // cmdRubro
             // 
+            this.cmdRubro.BackColor = System.Drawing.Color.LawnGreen;
             this.cmdRubro.Location = new System.Drawing.Point(166, 122);
             this.cmdRubro.Name = "cmdRubro";
             this.cmdRubro.Size = new System.Drawing.Size(105, 23);
             this.cmdRubro.TabIndex = 18;
             this.cmdRubro.Text = "Aceptar";
-            this.cmdRubro.UseVisualStyleBackColor = true;
+            this.cmdRubro.UseVisualStyleBackColor = false;
             this.cmdRubro.Click += new System.EventHandler(this.cmdRubro_Click);
             // 
             // cboRubro

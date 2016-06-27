@@ -1,4 +1,3 @@
-1) HACER LA FUNCIÓN QUE DIJO JUANI PARA MODIFICAR EN LA MIGRACIÓN LA CANTIDAD DE ESTRELLAS OTORGADAS
 
 3) AGREGAR A DOC:
 Debido a que el domicilio puede ser una casa o un piso entero, está permitido que no se ingrese ningún dato en los campos "Piso" y "Departamento" en el alta de usuario.
@@ -9,10 +8,9 @@ Debido a que el domicilio puede ser una casa o un piso entero, está permitido qu
 
 6) VER POR QUÉ FACTURA MAL A UN CLIENTE NUEVO
 
-
+7)ORDENAR LOS LISTADOS POR FECHA(lo pidio el wacho)
 8)poner bajas logicas al abm visibilidad
 
-
-
-12)ver función asignarRolAUsuario porque rompe cuando se le asigna un rol de cliente o de empresa (SQL)
 13) validaciones en alta visib si ya existe la visibilidad
+
+14) Los uusarios dicen tener muchas publicaciones para calificar y en el calificar vendedor por publicacion no aparece ninguna(JP PROBLEM)
