@@ -26,9 +26,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
         SqlCommand cmd;
         SqlCommand cmd4;
         SqlCommand cmd5;
+        SqlCommand cmd6;
         SqlDataAdapter adapter;
         SqlDataReader sdr;
         SqlDataReader sdr2;
+        SqlDataReader sd3;
+        SqlDataReader sd4;
         private DataBase db;
         private Boolean existeElUsuario;
         public String rubroModificado;
@@ -1001,6 +1004,36 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 {
                     existeElUsuario = false;
                     MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
+                SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorCUIT", db.Connection);
+                cmd5.CommandType = CommandType.StoredProcedure;
+                cmd5.Parameters.AddWithValue("@CUIT", SqlDbType.NVarChar).Value = txtCUITEmpresa.Text;
+                SqlDataReader sdr2 = cmd5.ExecuteReader();
+                while (sdr2.Read())
+                {
+                    existeElUsuario = true;
+                }
+                if (existeElUsuario)
+                {
+                    existeElUsuario = false;
+                    MessageBox.Show("El CUIT ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
+                SqlCommand cmd6 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorRazonSocial", db.Connection);
+                cmd6.CommandType = CommandType.StoredProcedure;
+                cmd6.Parameters.AddWithValue("@RazonSocial", SqlDbType.NVarChar).Value = txtRazonEmpresa.Text;
+                SqlDataReader sdr3 = cmd6.ExecuteReader();
+                while (sdr3.Read())
+                {
+                    existeElUsuario = true;
+                }
+                if (existeElUsuario)
+                {
+                    existeElUsuario = false;
+                    MessageBox.Show("La razon social ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     return;
                 }
 

@@ -1846,7 +1846,7 @@ as begin
 end
 GO
 
---Busqueda de un usuario por su username
+--Busqueda de un cliente por su DOC
 CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_ClientePorDOC
 @DOC numeric(18,0),
 @TipoDocumento nvarchar(5)
@@ -1858,6 +1858,26 @@ as begin
 end
 GO
 
+--Busqueda de una empresa por su Razon Social
+CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_EmpresaPorRazonSocial
+@RazonSocial nvarchar(255)
+as begin
+	select e.RazonSocial
+	from ROAD_TO_PROYECTO.Empresa e
+	where e.RazonSocial = @RazonSocial
+end
+GO
+
+--Busqueda de una empresa por su CUIT
+CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_EmpresaPorCUIT
+@CUIT nvarchar(50)
+as begin
+	select e.CUIT
+	from ROAD_TO_PROYECTO.Empresa e
+	where e.CUIT = @CUIT
+		
+end
+GO
 
 CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Publicacion_Estado
 @Usuario nvarchar(255),
