@@ -11,7 +11,9 @@ Debido a que el domicilio puede ser una casa o un piso entero, está permitido qu
 
 6) VER POR QUÉ FACTURA MAL A UN CLIENTE NUEVO
 
-7)VALIDACION SI EXISTE EL DNI CLIENTE, NOMBRE DE USUARIO, Y EN EMPRESA RAZON SOCIAL Y CUIT
+7)VALIDACION EN EMPRESA RAZON SOCIAL Y CUIT
+
+
 8)poner bajas logicas al abm visibilidad
 
 

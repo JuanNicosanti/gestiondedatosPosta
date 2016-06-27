@@ -1836,6 +1836,29 @@ as begin
 end
 GO
 
+--Busqueda de un usuario por su username
+CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Usuario
+@Usuario nvarchar(255)
+as begin
+	select u.Usuario
+	from ROAD_TO_PROYECTO.Usuario u
+	where u.Usuario = @Usuario 
+end
+GO
+
+--Busqueda de un usuario por su username
+CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_ClientePorDOC
+@DOC numeric(18,0),
+@TipoDocumento nvarchar(5)
+as begin
+	select c.ClieId
+	from ROAD_TO_PROYECTO.Cliente c
+	where c.NroDocumento = @DOC 
+		and c.TipoDocumento = @TipoDocumento
+end
+GO
+
+
 CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Publicacion_Estado
 @Usuario nvarchar(255),
 @Descripcion nvarchar(255),

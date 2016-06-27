@@ -24,10 +24,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public Boolean esEmpresa = false;
 
         SqlCommand cmd;
+        SqlCommand cmd4;
+        SqlCommand cmd5;
         SqlDataAdapter adapter;
         SqlDataReader sdr;
+        SqlDataReader sdr2;
         private DataBase db;
-
+        private Boolean existeElUsuario;
         public String rubroModificado;
 
         public int esAltaUsuario = 1;
@@ -585,6 +588,37 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     return;
                 }
 
+                SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
+                cmd4.CommandType = CommandType.StoredProcedure;
+                cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
+                SqlDataReader sdr = cmd4.ExecuteReader();
+                while (sdr.Read())
+                {
+                    existeElUsuario = true;
+                }
+                if (existeElUsuario)
+                {
+                    existeElUsuario = false;
+                    MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
+                SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_ClientePorDOC", db.Connection);
+                cmd5.CommandType = CommandType.StoredProcedure;
+                cmd5.Parameters.AddWithValue("@DOC", SqlDbType.NVarChar).Value = int.Parse(txtDNICliente.Text);
+                cmd5.Parameters.AddWithValue("@TipoDocumento", SqlDbType.NVarChar).Value = cboTipoCliente.SelectedItem.ToString();
+                SqlDataReader sdr2 = cmd5.ExecuteReader();
+                while (sdr2.Read())
+                {
+                    existeElUsuario = true;
+                }
+                if (existeElUsuario)
+                {
+                    existeElUsuario = false;
+                    MessageBox.Show("El DNI ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
                 UsuarioDOA doa = new UsuarioDOA();
                 if (esAltaUsuario == 1)
                 {
@@ -605,6 +639,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     return;
 
                 }
+
+               
 
                 if (esAltaUsuario == 0)
                 {
@@ -952,6 +988,22 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
                 string hash = this.encriptacion(txtPassword.Text);
                 UsuarioDOA doa = new UsuarioDOA();
+
+                SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
+                cmd4.CommandType = CommandType.StoredProcedure;
+                cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
+                SqlDataReader sdr = cmd4.ExecuteReader();
+                while (sdr.Read())
+                {
+                    existeElUsuario = true;
+                }
+                if (existeElUsuario)
+                {
+                    existeElUsuario = false;
+                    MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+
                 if (esAltaUsuario == 1)
                 {
                     string hashE = this.encriptacion(txtPassword.Text);
