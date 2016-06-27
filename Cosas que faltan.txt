@@ -1,7 +1,5 @@
 1) HACER LA FUNCIÓN QUE DIJO JUANI PARA MODIFICAR EN LA MIGRACIÓN LA CANTIDAD DE ESTRELLAS OTORGADAS
 
-2) FALTA QUE DEVUELVA TODOS LOS USUARIOS DE UN MISMO TIPO CUANDO NO SE AGREGAN FILTROS
-
 3) AGREGAR A DOC:
 Debido a que el domicilio puede ser una casa o un piso entero, está permitido que no se ingrese ningún dato en los campos "Piso" y "Departamento" en el alta de usuario.
 

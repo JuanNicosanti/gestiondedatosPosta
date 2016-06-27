@@ -891,6 +891,22 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Cambiar_Contraseña
 	end
 GO
 
+CREATE PROCEDURE ROAD_TO_PROYECTO.MostrarTodosLosClientesSinFiltro
+as begin
+		select u.Usuario, u.Mail, c.TipoDocumento, c.NroDocumento, c.Apellido, c.Nombres
+		from ROAD_TO_PROYECTO.Usuario u, ROAD_TO_PROYECTO.Cliente c, ROAD_TO_PROYECTO.Roles_Por_Usuario rpu
+		where rpu.UserId = u.Usuario and rpu.RolId = (select RolId from ROAD_TO_PROYECTO.Rol r where r.Nombre = 'Cliente') and rpu.IdExterno = c.ClieId
+end
+GO
+
+CREATE PROCEDURE ROAD_TO_PROYECTO.MostrarTodosLasEmpresasSinFiltro
+as begin
+	select u.Usuario, u.Mail, e.RazonSocial, e.CUIT
+		from ROAD_TO_PROYECTO.Usuario u, ROAD_TO_PROYECTO.Empresa e, ROAD_TO_PROYECTO.Roles_Por_Usuario rpu
+		where rpu.UserId = u.Usuario and rpu.RolId = (select RolId from ROAD_TO_PROYECTO.Rol r where r.Nombre = 'Empresa') and rpu.IdExterno = e.EmprId
+end
+GO
+
 --Busqueda de un cliente según parámetros
 CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Cliente
 	@Mail nvarchar(50),

@@ -151,6 +151,43 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 MessageBox.Show(cadenaDeErrorTipoUsuario, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
+
+            if (cboSeleccion.SelectedItem.ToString().Equals("Cliente") && string.IsNullOrEmpty(txtNombre.Text) && string.IsNullOrEmpty(txtApellido.Text) && string.IsNullOrEmpty(txtDNI.Text) && string.IsNullOrEmpty(txtEmailC.Text))
+            {
+                cmd = new SqlCommand("ROAD_TO_PROYECTO.MostrarTodosLosClientesSinFiltro", db.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                adapter = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("ROAD_TO_PROYECTO.Cliente");
+                adapter.Fill(dt);
+                this.dataGridView1.DataSource = dt;
+
+                if (esModificar)
+                {
+                    lstRoles.Visible = true;
+                    cmdAsignarRol.Visible = true;
+                    lblRoles.Visible = true;
+                }
+
+                return;
+            }
+            if (cboSeleccion.SelectedItem.ToString().Equals("Empresa") && string.IsNullOrEmpty(txtRazonSocial.Text) && string.IsNullOrEmpty(txtCUIT.Text) && string.IsNullOrEmpty(txtEmailE.Text))
+            {
+                cmd = new SqlCommand("ROAD_TO_PROYECTO.MostrarTodosLasEmpresasSinFiltro", db.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                adapter = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable("ROAD_TO_PROYECTO.Empresa");
+                adapter.Fill(dt);
+                this.dataGridView1.DataSource = dt;
+
+                if (esModificar)
+                {
+                    lstRoles.Visible = true;
+                    cmdAsignarRol.Visible = true;
+                    lblRoles.Visible = true;
+                }
+
+                return;
+            }
             if (cboSeleccion.SelectedItem.ToString() == "Cliente")
             {
 
