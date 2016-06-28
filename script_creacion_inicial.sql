@@ -2111,3 +2111,17 @@ values('admin', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w2
 
 insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
 values('admin', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'Administrador'))
+
+
+insert into ROAD_TO_PROYECTO.Rol (Nombre, Habilitado)
+values ('MasterRolTesting', 1)
+
+insert into ROAD_TO_PROYECTO.Funciones_Por_Rol
+select (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting') as RolId, f.FuncId 
+from ROAD_TO_PROYECTO.Funcion f
+
+insert into ROAD_TO_PROYECTO.Usuario (Usuario, Contraseña, Mail)
+values('master', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w23e')), 3, 255), 'master@mercadoEnvio.org')
+
+insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
+values('master', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting'))
