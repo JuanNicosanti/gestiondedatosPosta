@@ -18,9 +18,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
     {
 
         public Boolean soyAdmin=false;
+        private DataBase db;
+        private Boolean existeElUsuario = false;
         public CambiarContrasenia()
         {
             InitializeComponent();
+            db = DataBase.GetInstance();
         }
 
         private void cmdVolver_Click(object sender, EventArgs e)
@@ -83,8 +86,42 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 return;
             }
 
-            string hash1 = this.encriptacion(txtContrasenia.Text);
+            SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
+            cmd4.CommandType = CommandType.StoredProcedure;
+            cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
+            SqlDataReader sdr = cmd4.ExecuteReader();
+            while (sdr.Read())
+            {
+                existeElUsuario = true;
+            }
+            if (!existeElUsuario)
+            {
+                MessageBox.Show("El usuario ingresado no existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+            sdr.Close();
             string hash2 = this.encriptacion(txtActual.Text);
+            existeElUsuario = false;
+            //ME FIJO SI ES CORRECTA LA CONTRASENIA PARA ESE USUARIO//
+            SqlCommand cmd10 = new SqlCommand("ROAD_TO_PROYECTO.Usuario_Login", db.Connection);
+            cmd10.CommandType = CommandType.StoredProcedure;
+            cmd10.Parameters.AddWithValue("@username", SqlDbType.NVarChar).Value = txtUsuario.Text;
+            cmd10.Parameters.AddWithValue("@password", SqlDbType.NVarChar).Value = hash2;
+            SqlDataReader sdr2 = cmd10.ExecuteReader();
+            while (sdr2.Read())
+            {
+                existeElUsuario = true;
+            }
+            sdr2.Close();
+           
+            if (!existeElUsuario)
+            {
+                MessageBox.Show("La contrasenia ingresada no corresponde al usuario", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+            string hash1 = this.encriptacion(txtContrasenia.Text);
+            
             UsuarioDOA doa = new UsuarioDOA();
             doa.cambiarContrasenia(txtUsuario.Text, hash1, hash2);
             MessageBox.Show("Se cambio la contraseña satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
