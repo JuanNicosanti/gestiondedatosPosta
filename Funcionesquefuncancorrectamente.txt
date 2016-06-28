@@ -1,3 +1,4 @@
 -Alta Rol
 -Baja Rol
 -Modif Rol
+-ABM Rubro

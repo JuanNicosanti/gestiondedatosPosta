@@ -21,6 +21,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private int huboErrorTipoDatos = 0;
         private int huboErrorFechaAnterior = 0;
 
+        private String dniVieja;
+        private String cuitVieja;
+        private String razonSocialVieja;
+        private String nombreUsuarioVieja;
+
+       
         public Boolean esEmpresa = false;
 
         SqlCommand cmd;
@@ -211,6 +217,18 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.lblCiudadEmpresa.Visible = false;
             this.txtCiudadEmpresa.Visible = false;
             this.dtpCreacion.Value = Fecha.getFechaActual();
+
+            dniVieja = this.txtDNICliente.Text;
+            cuitVieja = this.txtCUITEmpresa.Text;
+            razonSocialVieja = this.txtRazonEmpresa.Text;
+            nombreUsuarioVieja = this.txtUsuario.Text;
+
+            if (esAltaUsuario==0)
+            {
+                cmdBorrar.Visible = false;
+            }
+
+
             this.timer1.Start();
 
         }
@@ -591,40 +609,42 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     return;
                 }
 
-                SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
-                cmd4.CommandType = CommandType.StoredProcedure;
-                cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
-                SqlDataReader sdr = cmd4.ExecuteReader();
-                while (sdr.Read())
-                {
-                    existeElUsuario = true;
-                }
-                if (existeElUsuario)
-                {
-                    existeElUsuario = false;
-                    MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
-
-                SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_ClientePorDOC", db.Connection);
-                cmd5.CommandType = CommandType.StoredProcedure;
-                cmd5.Parameters.AddWithValue("@DOC", SqlDbType.NVarChar).Value = int.Parse(txtDNICliente.Text);
-                cmd5.Parameters.AddWithValue("@TipoDocumento", SqlDbType.NVarChar).Value = cboTipoCliente.SelectedItem.ToString();
-                SqlDataReader sdr2 = cmd5.ExecuteReader();
-                while (sdr2.Read())
-                {
-                    existeElUsuario = true;
-                }
-                if (existeElUsuario)
-                {
-                    existeElUsuario = false;
-                    MessageBox.Show("El DNI ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
+              
 
                 UsuarioDOA doa = new UsuarioDOA();
                 if (esAltaUsuario == 1)
                 {
+                    SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
+                    cmd4.CommandType = CommandType.StoredProcedure;
+                    cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
+                    SqlDataReader sdr = cmd4.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        existeElUsuario = true;
+                    }
+                    if (existeElUsuario)
+                    {
+                        existeElUsuario = false;
+                        MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+
+                    SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_ClientePorDOC", db.Connection);
+                    cmd5.CommandType = CommandType.StoredProcedure;
+                    cmd5.Parameters.AddWithValue("@DOC", SqlDbType.NVarChar).Value = int.Parse(txtDNICliente.Text);
+                    cmd5.Parameters.AddWithValue("@TipoDocumento", SqlDbType.NVarChar).Value = cboTipoCliente.SelectedItem.ToString();
+                    SqlDataReader sdr2 = cmd5.ExecuteReader();
+                    while (sdr2.Read())
+                    {
+                        existeElUsuario = true;
+                    }
+                    if (existeElUsuario)
+                    {
+                        existeElUsuario = false;
+                        MessageBox.Show("El DNI ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+
                     string hash = this.encriptacion(txtPassword.Text);
 
                     doa.crearCliente("Cliente", txtUsuario.Text, hash, txtMail.Text, txtApellidoCliente.Text, txtNombreCliente.Text, int.Parse(txtDNICliente.Text), int.Parse(txtTelCliente.Text), this.cboTipoCliente.SelectedItem.ToString(), txtCodPos.Text, txtDpto.Text, txtLocalidad.Text, txtPiso.Text, int.Parse(txtNumero.Text), txtCalle.Text, dtpCreacion.Value);
@@ -647,15 +667,36 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
                 if (esAltaUsuario == 0)
                 {
-                    doa.modificarCliente("Cliente", txtUsuario.Text, txtPassword.Text, txtMail.Text, txtApellidoCliente.Text, txtNombreCliente.Text, int.Parse(txtDNICliente.Text), int.Parse(txtTelCliente.Text), this.cboTipoCliente.SelectedItem.ToString(), txtCodPos.Text, txtDpto.Text, txtLocalidad.Text, txtPiso.Text, int.Parse(txtNumero.Text), txtCalle.Text, dtpCreacion.Value);
-                    MessageBox.Show("Se modifico el cliente satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    ModificacionUsuario mUsu = new ModificacionUsuario();
-                    mUsu.esModificar = true;
-                    mUsu.cmdModificar.Visible = true;
-                    mUsu.cmdEliminar.Visible = false;
-                    mUsu.Show();
-                    this.Hide();
-                    return;
+                    if (!txtDNICliente.Text.Equals(dniVieja))
+                    {
+                        SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_ClientePorDOC", db.Connection);
+                        cmd5.CommandType = CommandType.StoredProcedure;
+                        cmd5.Parameters.AddWithValue("@DOC", SqlDbType.NVarChar).Value = int.Parse(txtDNICliente.Text);
+                        cmd5.Parameters.AddWithValue("@TipoDocumento", SqlDbType.NVarChar).Value = cboTipoCliente.SelectedItem.ToString();
+                        SqlDataReader sdr2 = cmd5.ExecuteReader();
+                        while (sdr2.Read())
+                        {
+                            existeElUsuario = true;
+                        }
+                        if (existeElUsuario)
+                        {
+                            existeElUsuario = false;
+                            MessageBox.Show("El DNI ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        doa.modificarCliente("Cliente", txtUsuario.Text, txtPassword.Text, txtMail.Text, txtApellidoCliente.Text, txtNombreCliente.Text, int.Parse(txtDNICliente.Text), int.Parse(txtTelCliente.Text), this.cboTipoCliente.SelectedItem.ToString(), txtCodPos.Text, txtDpto.Text, txtLocalidad.Text, txtPiso.Text, int.Parse(txtNumero.Text), txtCalle.Text, dtpCreacion.Value);
+                        MessageBox.Show("Se modifico el cliente satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        ModificacionUsuario mUsu = new ModificacionUsuario();
+                        mUsu.esModificar = true;
+                        mUsu.cmdModificar.Visible = true;
+                        mUsu.cmdEliminar.Visible = false;
+                        mUsu.Show();
+                        this.Hide();
+                        return;
+                    }
                 }
 
 
@@ -748,11 +789,36 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     }
 
                 }
-                if (cboRubro.SelectedIndex.Equals(-1))
+             
+                if (!cboRubro.SelectedIndex.Equals(-1))
+                {
+                    if (cboRubro.SelectedValue.ToString() == "Sin especificar")
+                    {
+                        MessageBox.Show("Debe ingresar un rubro válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+                }
+                else
                 {
                     cadenaDeErrores += " Rubro \r";
                     huboError++;
                 }
+
+                if (string.IsNullOrEmpty(txtCiudadEmpresa.Text))
+                {
+                    cadenaDeErrores += " Ciudad \r";
+                    huboError++;
+                }
+                if (!(string.IsNullOrEmpty(txtCiudadEmpresa.Text)))
+                {
+
+                    if (Int32.TryParse(txtCiudadEmpresa.Text, out val))
+                    {
+                        cadenaDeErrorNumeroYEsCaracter += "Ciudad \r";
+                        huboErrorNumerico++;
+                    }
+                }
+
                 if (string.IsNullOrEmpty(txtCodPos.Text))
                 {
                     cadenaDeErrores += " CodigoPostal \r";
@@ -943,11 +1009,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     huboErrorTipoDatos = 0;
                     return;
                 }
-                if (cboRubro.SelectedValue.ToString() == "Sin especificar")
-                {
-                    MessageBox.Show("Debe ingresar un rubro válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
+              
                 if (huboErrorFechaAnterior != 0 && huboErrorNumerico != 0)
                 {
                     string errorGeneral = cadenaDeErrorFechaAnterior + cadenaDeErrorNumeroYEsCaracter;
@@ -992,53 +1054,54 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 string hash = this.encriptacion(txtPassword.Text);
                 UsuarioDOA doa = new UsuarioDOA();
 
-                SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
-                cmd4.CommandType = CommandType.StoredProcedure;
-                cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
-                SqlDataReader sdr = cmd4.ExecuteReader();
-                while (sdr.Read())
-                {
-                    existeElUsuario = true;
-                }
-                if (existeElUsuario)
-                {
-                    existeElUsuario = false;
-                    MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
-
-                SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorCUIT", db.Connection);
-                cmd5.CommandType = CommandType.StoredProcedure;
-                cmd5.Parameters.AddWithValue("@CUIT", SqlDbType.NVarChar).Value = txtCUITEmpresa.Text;
-                SqlDataReader sdr2 = cmd5.ExecuteReader();
-                while (sdr2.Read())
-                {
-                    existeElUsuario = true;
-                }
-                if (existeElUsuario)
-                {
-                    existeElUsuario = false;
-                    MessageBox.Show("El CUIT ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
-
-                SqlCommand cmd6 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorRazonSocial", db.Connection);
-                cmd6.CommandType = CommandType.StoredProcedure;
-                cmd6.Parameters.AddWithValue("@RazonSocial", SqlDbType.NVarChar).Value = txtRazonEmpresa.Text;
-                SqlDataReader sdr3 = cmd6.ExecuteReader();
-                while (sdr3.Read())
-                {
-                    existeElUsuario = true;
-                }
-                if (existeElUsuario)
-                {
-                    existeElUsuario = false;
-                    MessageBox.Show("La razon social ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                    return;
-                }
+                
 
                 if (esAltaUsuario == 1)
                 {
+                    SqlCommand cmd4 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Usuario", db.Connection);
+                    cmd4.CommandType = CommandType.StoredProcedure;
+                    cmd4.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = txtUsuario.Text;
+                    SqlDataReader sdr = cmd4.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        existeElUsuario = true;
+                    }
+                    if (existeElUsuario)
+                    {
+                        existeElUsuario = false;
+                        MessageBox.Show("El usuario ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+
+                    SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorCUIT", db.Connection);
+                    cmd5.CommandType = CommandType.StoredProcedure;
+                    cmd5.Parameters.AddWithValue("@CUIT", SqlDbType.NVarChar).Value = txtCUITEmpresa.Text;
+                    SqlDataReader sdr2 = cmd5.ExecuteReader();
+                    while (sdr2.Read())
+                    {
+                        existeElUsuario = true;
+                    }
+                    if (existeElUsuario)
+                    {
+                        existeElUsuario = false;
+                        MessageBox.Show("El CUIT ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
+
+                    SqlCommand cmd6 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorRazonSocial", db.Connection);
+                    cmd6.CommandType = CommandType.StoredProcedure;
+                    cmd6.Parameters.AddWithValue("@RazonSocial", SqlDbType.NVarChar).Value = txtRazonEmpresa.Text;
+                    SqlDataReader sdr3 = cmd6.ExecuteReader();
+                    while (sdr3.Read())
+                    {
+                        existeElUsuario = true;
+                    }
+                    if (existeElUsuario)
+                    {
+                        existeElUsuario = false;
+                        MessageBox.Show("La razon social ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
+                    }
                     string hashE = this.encriptacion(txtPassword.Text);
                     doa.crearEmpresa("Empresa", txtUsuario.Text, hashE, txtMail.Text, txtCUITEmpresa.Text, txtNombreContEmpresa.Text, txtRazonEmpresa.Text, int.Parse(txtTelEmpresa.Text), txtCodPos.Text, txtDpto.Text, txtLocalidad.Text, txtPiso.Text, int.Parse(txtNumero.Text), txtCalle.Text, dtpCreacion.Value, cboRubro.SelectedValue.ToString(), txtCiudadEmpresa.Text);
                     MessageBox.Show("Se creo la empresa satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -1057,6 +1120,42 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 }
                 if (esAltaUsuario == 0)
                 {
+                    if (!txtRazonEmpresa.Text.Equals(razonSocialVieja))
+                    {
+                       
+
+                        SqlCommand cmd6 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorRazonSocial", db.Connection);
+                        cmd6.CommandType = CommandType.StoredProcedure;
+                        cmd6.Parameters.AddWithValue("@RazonSocial", SqlDbType.NVarChar).Value = txtRazonEmpresa.Text;
+                        SqlDataReader sdr3 = cmd6.ExecuteReader();
+                        while (sdr3.Read())
+                        {
+                            existeElUsuario = true;
+                        }
+                        if (existeElUsuario)
+                        {
+                            existeElUsuario = false;
+                            MessageBox.Show("La razon social ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                            return;
+                        }
+                    }
+                    if (!txtCUITEmpresa.Text.Equals(cuitVieja))
+                    {
+                        SqlCommand cmd5 = new SqlCommand("ROAD_TO_PROYECTO.Buscar_EmpresaPorCUIT", db.Connection);
+                        cmd5.CommandType = CommandType.StoredProcedure;
+                        cmd5.Parameters.AddWithValue("@CUIT", SqlDbType.NVarChar).Value = txtCUITEmpresa.Text;
+                        SqlDataReader sdr2 = cmd5.ExecuteReader();
+                        while (sdr2.Read())
+                        {
+                            existeElUsuario = true;
+                        }
+                        if (existeElUsuario)
+                        {
+                            existeElUsuario = false;
+                            MessageBox.Show("El CUIT ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                            return;
+                        }
+                    }
                     doa.modificarEmpresa("Empresa", txtUsuario.Text, txtPassword.Text, txtMail.Text, txtCUITEmpresa.Text, txtNombreContEmpresa.Text, txtRazonEmpresa.Text, int.Parse(txtTelEmpresa.Text), txtCodPos.Text, txtDpto.Text, txtLocalidad.Text, txtPiso.Text, int.Parse(txtNumero.Text), txtCalle.Text, dtpCreacion.Value, cboRubro.SelectedValue.ToString(), txtCiudadEmpresa.Text);
                     ModificacionUsuario mUsu = new ModificacionUsuario();
                     MessageBox.Show("Se modifico la empresa satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -1067,15 +1166,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     this.Hide();
                 }
             }
-
-
-
-
-
-            //GUARDAR LOS DATOS DE LOS txtUsuario txtContrasenia y demas en la BDD
-            Login.lg.Show();
-            this.Hide();
-
 
         }
 
