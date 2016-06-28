@@ -89,6 +89,13 @@ namespace WindowsFormsApplication1.ABM_Rol
             int fila = dataGridView1.CurrentRow.Index;
 
             int celdaIdRol = (int)dataGridView1[0, fila].Value;
+            Boolean celdaHabilitado = Convert.ToBoolean(dataGridView1[2, fila].Value);
+
+            if (celdaHabilitado)
+            {
+                MessageBox.Show("El rol ya esta habilitado", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.HabilitarRol", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Rol", SqlDbType.Int).Value = celdaIdRol;
@@ -117,6 +124,14 @@ namespace WindowsFormsApplication1.ABM_Rol
 
             int fila = dataGridView1.CurrentRow.Index;
             int celdaIdRol = (int)dataGridView1[0, fila].Value;
+
+            Boolean celdaHabilitado = Convert.ToBoolean(dataGridView1[2, fila].Value);
+            if (!celdaHabilitado)
+            {
+                MessageBox.Show("El rol ya esta inhabilitado", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
 
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.BajaRol", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;

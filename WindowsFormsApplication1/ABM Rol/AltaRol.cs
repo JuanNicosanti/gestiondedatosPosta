@@ -26,6 +26,10 @@ namespace WindowsFormsApplication1.ABM_Rol
         private String rolAModificar;
         private Boolean tieneFuncionalidades=false;
         private Boolean existeElRol = false;
+        private Boolean desasignarFuncionesViejas = false;
+
+        private List<String> funcionesViejas = new List<string>();
+
         public AltaRol()
         {
             InitializeComponent();
@@ -70,9 +74,12 @@ namespace WindowsFormsApplication1.ABM_Rol
             if (esAltaRol == 0)
             {
                 rolAModificar = txtNuevoRol.Text;
-                timer1.Start();
-                
-
+                int j = 0;
+                while (j < lstFuncElegidas.Items.Count)//for (int i = 0; i < lstFuncElegidas.Items.Count; i++)
+                {
+                    funcionesViejas.Add(lstFuncElegidas.Items[j].ToString());
+                    j++;
+                }
             }
 
           
@@ -86,11 +93,11 @@ namespace WindowsFormsApplication1.ABM_Rol
             while(i< lstFuncElegidas.Items.Count)//for (int i = 0; i < lstFuncElegidas.Items.Count; i++)
             {
                 string unaFunc = lstFuncElegidas.Items[i].ToString();
-                SqlCommand cmd2 = new SqlCommand("ROAD_TO_PROYECTO.DesasignarFuncionARol", db.Connection);
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Parameters.AddWithValue("@RolId", SqlDbType.Int).Value = idRolAModificar;
-                cmd2.Parameters.AddWithValue("@Funcion", SqlDbType.NVarChar).Value = unaFunc;
-                cmd2.ExecuteNonQuery();
+                SqlCommand cmd3 = new SqlCommand("ROAD_TO_PROYECTO.DesasignarFuncionARol", db.Connection);
+                cmd3.CommandType = CommandType.StoredProcedure;
+                cmd3.Parameters.AddWithValue("@RolId", SqlDbType.Int).Value = idRolAModificar;
+                cmd3.Parameters.AddWithValue("@Funcion", SqlDbType.NVarChar).Value = unaFunc;
+                cmd3.ExecuteNonQuery();
                 i++;
 
             }
@@ -165,7 +172,22 @@ namespace WindowsFormsApplication1.ABM_Rol
             
             if (esAltaRol == 0)
             {
-                
+
+                //desasignarFuncionesViejas = true;
+
+                int j = 0;
+                while (j < funcionesViejas.Count)//for (int i = 0; i < lstFuncElegidas.Items.Count; i++)
+                {
+                    string unaFunc = funcionesViejas[j].ToString();
+                    SqlCommand cmd10 = new SqlCommand("ROAD_TO_PROYECTO.DesasignarFuncionARol", db.Connection);
+                    cmd10.CommandType = CommandType.StoredProcedure;
+                    cmd10.Parameters.AddWithValue("@RolId", SqlDbType.Int).Value = idRolAModificar;
+                    cmd10.Parameters.AddWithValue("@Funcion", SqlDbType.NVarChar).Value = unaFunc;
+                    cmd10.ExecuteNonQuery();
+                    j++;
+
+                }
+
                 for (int i = 0; i < lstFuncElegidas.Items.Count; i++)
                 {
                     string unaFunc = lstFuncElegidas.Items[i].ToString();
@@ -249,7 +271,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.desasignarTodosLasFuncDelViejoRol();
+           // if(desasignarFuncionesViejas)this.desasignarTodosLasFuncDelViejoRol();
         }
 
         private void lstFuncElegidas_SelectedIndexChanged(object sender, EventArgs e)
