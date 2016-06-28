@@ -1272,6 +1272,17 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Visibilidad
 	end
 GO
 
+
+CREATE PROCEDURE ROAD_TO_PROYECTO.Validacion_Existe_Visibilidad
+@Descripcion nvarchar(255)
+as begin
+	select v.VisiId
+	from ROAD_TO_PROYECTO.Visibilidad v
+	where v.Descripcion = @Descripcion
+end
+GO
+
+
 --Finalizo las publicaciones cuya fecha de fin sea posterior a la fecha actual, les cambio el estado
 CREATE PROCEDURE ROAD_TO_PROYECTO.Finalizar_Publicaciones_Vencidas
 	@FechaActual datetime
@@ -1893,6 +1904,16 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Usuario
 @Usuario nvarchar(255)
 as begin
 	select u.Usuario
+	from ROAD_TO_PROYECTO.Usuario u
+	where u.Usuario = @Usuario 
+end
+GO
+
+
+CREATE PROCEDURE ROAD_TO_PROYECTO.Validacion_Si_Esta_Habilitado_Un_Usuario
+@Usuario nvarchar(255)
+as begin
+	select u.Habilitado
 	from ROAD_TO_PROYECTO.Usuario u
 	where u.Usuario = @Usuario 
 end

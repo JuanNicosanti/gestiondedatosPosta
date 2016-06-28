@@ -19,6 +19,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         private int huboError = 0;
         private int huboErrorTipoDatos = 0;
         private int huboErrorNegativos = 0;
+        private Boolean existeLaVisibilidad = false;
 
         public AgregarVisibilidad()
         {
@@ -186,7 +187,20 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 huboErrorNegativos = 0;
                 return;
             }
-           
+            SqlCommand cmd32 = new SqlCommand("ROAD_TO_PROYECTO.Validacion_Existe_Visibilidad", db.Connection);
+            cmd32.CommandType = CommandType.StoredProcedure;
+            cmd32.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
+            SqlDataReader sdr2 = cmd32.ExecuteReader();
+            while (sdr2.Read())
+            {
+                existeLaVisibilidad = true;
+            }
+            if (existeLaVisibilidad)
+            {
+                existeLaVisibilidad = false;
+                MessageBox.Show("La visibilidad ingresada ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Agregar_Visibilidad", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
@@ -194,6 +208,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = tbComiVariable.Text;
             cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = tbEnvio.Text;
             cmd.ExecuteNonQuery();
+            MessageBox.Show("La visibilidad se ha creado correctamente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
             WindowsFormsApplication1.Form1.f1.Show();
             this.Close();

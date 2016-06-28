@@ -25,6 +25,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private Boolean tieneElRol =false;
         private DataBase db;
         private Cliente unCliente;
+        private Boolean estaHabilitado=true;
+
         private Empresa unaEmpresa;
         private ClienteDOA doaCliente = new ClienteDOA();
         private EmpresaDOA doaEmpresa = new EmpresaDOA();
@@ -146,7 +148,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             string cadenaDeErrorTipo = "Debe seleccionar un tipo de filtro de busqueda";
             string cadenaDeErrorTipoUsuario = "Debe seleccionar un tipo de usuario";
-            if (cboSeleccion.SelectedIndex == -1)
+            if (cboSeleccion.SelectedIndex == -1 || cboSeleccion.Text.Equals(""))
             {
                 MessageBox.Show(cadenaDeErrorTipoUsuario, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
@@ -452,10 +454,24 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 return;
             }
 
-
             int fila = dataGridView1.CurrentRow.Index;
-
             String celdaUser = (String)dataGridView1[0, fila].Value;
+
+            SqlCommand cmd32 = new SqlCommand("ROAD_TO_PROYECTO.Validacion_Si_Esta_Habilitado_Un_Usuario", db.Connection);
+            cmd32.CommandType = CommandType.StoredProcedure;
+            cmd32.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = celdaUser;
+            SqlDataReader sdr3 = cmd32.ExecuteReader();
+            while (sdr3.Read())
+            {
+                estaHabilitado = Convert.ToBoolean(sdr3["Habilitado"].ToString());
+            }
+            if (!estaHabilitado)
+            {
+                
+                MessageBox.Show("El usuario ya esta inhabilitado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                estaHabilitado = true;
+                return;
+            }
 
             borrarUserSeleccionado(celdaUser);
 

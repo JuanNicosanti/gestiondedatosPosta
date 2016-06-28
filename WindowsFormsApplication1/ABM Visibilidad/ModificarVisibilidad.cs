@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         SqlCommand cmd;
         private DataBase db;
         private int huboError = 0;
+        private Boolean existeLaVisibilidad = false;
         private int huboErrorTipoDatos = 0;
         private int huboErrorNegativos = 0;
         public static ModificarVisibilidad modVis;
@@ -225,6 +226,21 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 habilitada = 0;
             }
 
+            SqlCommand cmd32 = new SqlCommand("ROAD_TO_PROYECTO.Validacion_Existe_Visibilidad", db.Connection);
+            cmd32.CommandType = CommandType.StoredProcedure;
+            cmd32.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
+            SqlDataReader sdr2 = cmd32.ExecuteReader();
+            while (sdr2.Read())
+            {
+                existeLaVisibilidad = true;
+            }
+            if (existeLaVisibilidad)
+            {
+                existeLaVisibilidad = false;
+                MessageBox.Show("La visibilidad ingresada ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Visibilidad", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = visiId;                
@@ -234,7 +250,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = tbEnvio.Text;
             cmd.Parameters.AddWithValue("@Habilitado", SqlDbType.Int).Value = habilitada;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Elemento modificado", "LISTO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show("Visibilidad modificada correctamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
             BusquedaVisibilidad.bVisi.Show();
             this.Close();

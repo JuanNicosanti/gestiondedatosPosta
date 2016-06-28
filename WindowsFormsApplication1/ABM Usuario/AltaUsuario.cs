@@ -223,12 +223,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             razonSocialVieja = this.txtRazonEmpresa.Text;
             nombreUsuarioVieja = this.txtUsuario.Text;
 
-            if (esAltaUsuario==0)
-            {
-                cmdBorrar.Visible = false;
-            }
-
-
+        
             this.timer1.Start();
 
         }
@@ -1186,9 +1181,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void cmdBorrar_Click(object sender, EventArgs e)
         {
-            this.txtMail.Text = "";
-            this.txtPassword.Text = "";
-            this.txtUsuario.Text = "";
+            if (esAltaUsuario == 1)
+            {
+                this.txtPassword.Text = "";
+                this.txtUsuario.Text = "";
+                this.rbEmpresa.Checked = false;
+                this.rbCliente.Checked = false;
+            }
+       
 
             this.txtCalle.Text = "";
             this.txtCodPos.Text = "";
@@ -1196,6 +1196,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.txtLocalidad.Text = "";
             this.txtPiso.Text = "";
             this.txtNumero.Text = "";
+            this.txtMail.Text = "";
 
             this.txtApellidoCliente.Text = "";
             this.txtDNICliente.Text = "";
@@ -1216,8 +1217,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.dtpCreacion.Visible = false;
 
 
-            this.rbEmpresa.Checked = false;
-            this.rbCliente.Checked = false;
+            
 
         }
 

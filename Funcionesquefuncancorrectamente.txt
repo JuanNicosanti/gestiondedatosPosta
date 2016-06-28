@@ -4,3 +4,10 @@
 -ABM Rubro
 -Alta Usuario
 -Cambiar Contrasenia
+-Modificar Usuario
+-Baja Usuario
+-Login
+-Busqueda Visibilidad
+-Modificar Visibilidad
+-Visibilidad
+-Agregar Visibilidad 
