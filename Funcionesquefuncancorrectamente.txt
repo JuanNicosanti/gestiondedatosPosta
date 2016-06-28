@@ -2,3 +2,5 @@
 -Baja Rol
 -Modif Rol
 -ABM Rubro
+-Alta Usuario
+-Cambiar Contrasenia

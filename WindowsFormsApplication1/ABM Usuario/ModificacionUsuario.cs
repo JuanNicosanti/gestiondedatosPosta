@@ -360,7 +360,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             AltaUsuario.aus.txtPassword.PasswordChar = '*';
             AltaUsuario.aus.txtUsuario.Text = unaEmpresa.username;
             AltaUsuario.aus.txtPassword.Text = unaEmpresa.password;
-            AltaUsuario.aus.txtTelEmpresa.Text = Convert.ToString(unaEmpresa.telefono);
+            if (unaEmpresa.telefono.Equals(0)) AltaUsuario.aus.txtTelEmpresa.Text = "";
+            else AltaUsuario.aus.txtTelEmpresa.Text = Convert.ToString(unaEmpresa.telefono);
 
             AltaUsuario.aus.txtDpto.Text = unaEmpresa.departamento;
             AltaUsuario.aus.txtCalle.Text = unaEmpresa.calle;
@@ -370,7 +371,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             AltaUsuario.aus.txtLocalidad.Text = unaEmpresa.localidad;
             AltaUsuario.aus.txtRazonEmpresa.Text = unaEmpresa.razonSocial;
             AltaUsuario.aus.txtMail.Text = unaEmpresa.mail;
-            AltaUsuario.aus.txtTelEmpresa.Text = Convert.ToString(unaEmpresa.telefono);
+            
             AltaUsuario.aus.txtCodPos.Text = Convert.ToString(unaEmpresa.codPostal);
             AltaUsuario.aus.txtCiudadEmpresa.Text = unaEmpresa.ciudad;
             AltaUsuario.aus.txtCUITEmpresa.Text = Convert.ToString(unaEmpresa.cuit);
@@ -394,7 +395,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
             aus.txtUsuario.Text = unCliente.username;
             aus.txtPassword.PasswordChar = '*';
             aus.txtPassword.Text = unCliente.password;
-            aus.txtTelCliente.Text = Convert.ToString(unCliente.telefono);
+            if (unCliente.telefono.Equals(0)) aus.txtTelCliente.Text = "";
+            else aus.txtTelCliente.Text = Convert.ToString(unCliente.telefono);
             aus.txtDpto.Text = unCliente.departamento;
             aus.txtCalle.Text = unCliente.calle;
             if (unCliente.piso.Equals(0)) AltaUsuario.aus.txtPiso.Text = "";
