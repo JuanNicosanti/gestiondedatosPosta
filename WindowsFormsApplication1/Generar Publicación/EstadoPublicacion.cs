@@ -21,6 +21,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
         public static EstadoPublicacion estado;
         private int fila;
         private int factId;
+        private int esNuevo;
+        private string visibPubli;
 
         public EstadoPublicacion()
         {
@@ -142,35 +144,59 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void cmdFinalizar_Click(object sender, EventArgs e)
         {
-            cmd = new SqlCommand("ROAD_TO_PROYECTO.Finalizar_Publicacion", db.Connection);
+            cmd = new SqlCommand("ROAD_TO_PROYECTO.Usuario_Nuevo", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Publicación finalizada");
-
-            cmd = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Ultima_Factura", db.Connection);
-            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Usuario", SqlDbType.Int).Value = user;
 
             sdr = cmd.ExecuteReader();
             while (sdr.Read())
             {
-                factId = int.Parse(sdr["FactNro"].ToString());
+                esNuevo = int.Parse(sdr["Nuevo"].ToString());
             }
             sdr.Close();
+
+            cmd = new SqlCommand("ROAD_TO_PROYECTO.Visibilidad_Publicacion", db.Connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
+
+            sdr = cmd.ExecuteReader();
+            while (sdr.Read())
+            {
+                visibPubli = sdr["Descripcion"].ToString();
+            }
+            sdr.Close();
+
+            cmd = new SqlCommand("ROAD_TO_PROYECTO.Finalizar_Publicacion", db.Connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Publicación finalizada");            
 
             dgPublis.Visible = false;
             cmdActivar.Visible = false;
             cmdModificar.Visible = false;
             cmdPausar.Visible = false;
             cmdFinalizar.Visible = false;
-            
-            WindowsFormsApplication1.ComprarOfertar.Facturar factura = new WindowsFormsApplication1.ComprarOfertar.Facturar();
-            factura.factId = factId;
-            factura.publId = int.Parse(dgPublis[0, fila].Value.ToString());
-            factura.esPorConsulta = 0;
-            factura.Show();
-            this.Hide();
 
+            if (esNuevo == 0 && !(visibPubli == "Gratis"))
+            {
+                cmd = new SqlCommand("ROAD_TO_PROYECTO.Buscar_Ultima_Factura", db.Connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    factId = int.Parse(sdr["FactNro"].ToString());
+                }
+                sdr.Close();                
+
+                WindowsFormsApplication1.ComprarOfertar.Facturar factura = new WindowsFormsApplication1.ComprarOfertar.Facturar();
+                factura.factId = factId;
+                factura.publId = int.Parse(dgPublis[0, fila].Value.ToString());
+                factura.esPorConsulta = 0;
+                factura.Show();
+                this.Hide();
+            }            
         }
 
         private void cmdModificar_Click(object sender, EventArgs e)

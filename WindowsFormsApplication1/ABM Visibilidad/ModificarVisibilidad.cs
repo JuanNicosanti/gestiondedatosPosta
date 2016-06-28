@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         private int huboErrorNegativos = 0;
         public static ModificarVisibilidad modVis;
         public int visiId;
+        public int habilitada = 1;
 
         public ModificarVisibilidad()
         {
@@ -30,7 +31,14 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void ModificarVisibilidad_Load(object sender, EventArgs e)
         {
-
+            if (habilitada == 1)
+            {
+                cbHabilitada.Checked = true;
+            }
+            else 
+            {
+                cbHabilitada.Checked = false;
+            }
         }
 
         private void cmdVolverComs_Click(object sender, EventArgs e)
@@ -85,7 +93,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbComiFija.Text) <= 0)
+                    if (double.Parse(tbComiFija.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision por tipo de publicacion \r";
                         huboErrorNegativos++;
@@ -108,7 +116,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbComiVariable.Text) <= 0)
+                    if (double.Parse(tbComiVariable.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision por producto vendido \r";
                         huboErrorNegativos++;
@@ -132,7 +140,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 }
                 else
                 {
-                    if (int.Parse(tbEnvio.Text) <= 0)
+                    if (double.Parse(tbEnvio.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision de envio \r";
                         huboErrorNegativos++;
@@ -207,6 +215,16 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 huboErrorNegativos = 0;
                 return;
             }
+
+            if (cbHabilitada.Checked)
+            {
+                habilitada = 1;
+            }
+            else 
+            {
+                habilitada = 0;
+            }
+
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Visibilidad", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = visiId;                
@@ -214,6 +232,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.Parameters.AddWithValue("@ComiFijaString", SqlDbType.NVarChar).Value = tbComiFija.Text;
             cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = tbComiVariable.Text;
             cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = tbEnvio.Text;
+            cmd.Parameters.AddWithValue("@Habilitado", SqlDbType.Int).Value = habilitada;
             cmd.ExecuteNonQuery();
             MessageBox.Show("Elemento modificado", "LISTO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 

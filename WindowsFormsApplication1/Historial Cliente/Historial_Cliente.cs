@@ -172,11 +172,22 @@ namespace WindowsFormsApplication1.Historial_Cliente
             adapter = new SqlDataAdapter(cmd);
             SqlDataReader sdr = cmd.ExecuteReader();
             while (sdr.Read())
-            {
-                lblSinCalif.Text = sdr["Sin Calificar"].ToString();
+            {                
                 lblPromedio.Text = sdr["Promedio Estrellas"].ToString();
                 lblCantEstrellas.Text = sdr["Estrellas Totales"].ToString();
             }
+            sdr.Close();
+
+            cmd = new SqlCommand("ROAD_TO_PROYECTO.Cantidad_Compras_Subastas_Sin_Calificar", db.Connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = username;
+            adapter = new SqlDataAdapter(cmd);
+            SqlDataReader sdr2 = cmd.ExecuteReader();
+            while (sdr2.Read())
+            {
+                lblSinCalif.Text = sdr2["cantPublis"].ToString();                
+            }
+            sdr2.Close();
             //dtComprasYSubastas = new DataTable("ROAD_TO_PROYECTO.Transaccion");
             //adapter.Fill(dtComprasYSubastas);
         }

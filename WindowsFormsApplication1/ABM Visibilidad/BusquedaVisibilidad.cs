@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         SqlDataAdapter adapter;
         private DataBase db;
         public static BusquedaVisibilidad bVisi;
-        public int fila;
+        public int fila;        
         
         public BusquedaVisibilidad()
         {
@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         }
 
         private void cmdBuscar_Click(object sender, EventArgs e)
-        {       
+        {                        
             string comiFija = controlarFiltros(tbComiFija.Text);
             string comiVariable = controlarFiltros(tbComiVariable.Text);
             string comiEnvio = controlarFiltros(tbComiEnvio.Text);
@@ -51,7 +51,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable("ROAD_TO_PROYECTO.Visibilidad");
             adapter.Fill(dt);
-            this.dataGridView1.DataSource = dt;
+            this.dataGridView1.DataSource = dt;            
 
             panelResultados.Visible = true;
         }
@@ -84,6 +84,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbComiVariable.Text = dataGridView1[3, fila].Value.ToString();
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbEnvio.Text = dataGridView1[4, fila].Value.ToString();
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.visiId = (int)dataGridView1[0, fila].Value;
+            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.habilitada = (int)dataGridView1[5, fila].Value;
             modVisibilidad.Show();
             panelResultados.Visible = false;
             this.Hide();

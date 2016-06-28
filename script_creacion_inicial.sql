@@ -58,7 +58,7 @@ Usuario nvarchar(255) PRIMARY KEY,
 Contraseña nvarchar(255) NOT NULL,
 Mail nvarchar(50),
 Habilitado bit default 1,
-Nuevo bit default 1,
+Nuevo int default 1,
 Reputacion numeric(18,2),
 FechaCreacion datetime,
 Domicilio int FOREIGN KEY REFERENCES ROAD_TO_PROYECTO.Domicilio,
@@ -139,7 +139,8 @@ VisiId int PRIMARY KEY,
 Descripcion nvarchar(255),
 ComiFija numeric (18,2),
 ComiVariable numeric (18,2),
-ComiEnvio numeric (18,2) default 0
+ComiEnvio numeric (18,2) default 0,
+Habilitado int default 1
 )
 GO
 
@@ -967,27 +968,23 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Baja_Usuario
 	end
 GO
 
-CREATE PROCEDURE ROAD_TO_PROYECTO.Comisiones_Visibilidad
-	@UserId nvarchar(255)
+CREATE PROCEDURE ROAD_TO_PROYECTO.Comisiones_Visibilidad	
 	as
 	begin
-		declare @cantPubli int
-		select @cantPubli = COUNT(*)
-		from ROAD_TO_PROYECTO.Publicacion
-		where UserId = @UserId
-		if(@cantPubli = 0)
-		begin
-			select Descripcion
-			from ROAD_TO_PROYECTO.Visibilidad
-			order by Descripcion
-		end
-		if(@cantPubli > 0)
-		begin
-			select Descripcion
-			from ROAD_TO_PROYECTO.Visibilidad
-			where Descripcion != 'Gratis'
-			order by Descripcion
-		end
+		select Descripcion
+		from ROAD_TO_PROYECTO.Visibilidad
+		where Habilitado = 1
+		order by Descripcion		
+	end
+GO
+
+CREATE PROCEDURE ROAD_TO_PROYECTO.Usuario_Nuevo
+	@Usuario nvarchar(255)
+	as
+	begin		
+		select Nuevo
+		from ROAD_TO_PROYECTO.Usuario u
+		where u.Usuario = @Usuario
 	end
 GO
 
@@ -1212,8 +1209,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Agregar_Visibilidad
 		select top 1 @VisiIdAnterior = VisiId from ROAD_TO_PROYECTO.Visibilidad order by VisiId desc
 		set @VisiId = @VisiIdAnterior +1
 		if not exists (select descripcion from ROAD_TO_PROYECTO.Visibilidad where Descripcion = @Descripcion)
-		insert into ROAD_TO_PROYECTO.Visibilidad (VisiId, Descripcion, ComiFija, ComiVariable, ComiEnvio)
-		values (@VisiId, @Descripcion, @ComiFija, @ComiVariable, @ComiEnvio)
+		insert into ROAD_TO_PROYECTO.Visibilidad (VisiId, Descripcion, ComiFija, ComiVariable, ComiEnvio, Habilitado)
+		values (@VisiId, @Descripcion, @ComiFija, @ComiVariable, @ComiEnvio, 1)
 	end
 GO
 
@@ -1221,7 +1218,9 @@ GO
 CREATE PROCEDURE ROAD_TO_PROYECTO.Eliminar_Visibilidad
 	@VisiId int
 	as begin
-		delete from Visibilidad where VisiId = @VisiId
+		update ROAD_TO_PROYECTO.Visibilidad
+		set Habilitado = 0
+		where VisiId = @VisiId
 	end
 GO
 
@@ -1231,17 +1230,27 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Modificacion_Visibilidad
  	@Descripcion nvarchar(255),
  	@ComiFijaString nvarchar(255),
  	@ComiVariableString nvarchar(255),
- 	@ComiEnvioString nvarchar(255)
+ 	@ComiEnvioString nvarchar(255),
+	@Habilitado int
  	as begin
 		declare	@ComiFija numeric(18,2), @ComiVariable numeric(18,2), @ComiEnvio numeric(18,2)
 		set @ComiFija = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiFijaString)
 		set @ComiVariable = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiVariableString)
 		set @ComiEnvio = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiEnvioString)
 		update ROAD_TO_PROYECTO.Visibilidad 
- 		set Descripcion = @Descripcion, ComiFija = @ComiFija, ComiVariable = @ComiVariable, ComiEnvio = @ComiEnvio
+ 		set Descripcion = @Descripcion, ComiFija = @ComiFija, ComiVariable = @ComiVariable, ComiEnvio = @ComiEnvio, Habilitado = @Habilitado
  		where VisiId = @VisiId
  	end
  GO
+
+CREATE PROCEDURE ROAD_TO_PROYECTO.Visibilidad_Publicacion
+@PubliId int
+	as begin
+		select v.Descripcion
+		from ROAD_TO_PROYECTO.Publicacion p inner join ROAD_TO_PROYECTO.Visibilidad v on p.Visibilidad = v.VisiId
+		where p.PublId = @PubliId
+	end
+GO
 
  --Busco visibilidad segun parámetros exactos y no exactos
 CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Visibilidad
@@ -1254,12 +1263,12 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Buscar_Visibilidad
 		if(@ComifijaString is not null) set @ComiFija = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiFijaString)
 		if(@ComiVariableString is not null) set @ComiVariable = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiVariableString)
 		if(@ComiEnvioString is not null) set @ComiEnvio = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@ComiEnvioString)
-		select VisiId, Descripcion, ComiFija, ComiVariable, ComiEnvio 
+		select VisiId, Descripcion, ComiFija, ComiVariable, ComiEnvio, Habilitado
 		from ROAD_TO_PROYECTO.Visibilidad 
 		where (Descripcion like '%' + @Descripcion + '%' or @Descripcion is null)
 		and (ComiFija < @ComiFija or @ComiFija is null)
 		and (ComiVariable < @ComiVariable or @ComiVariable is null)
-		and (ComiEnvio < @ComiEnvio or @ComiEnvio is null)
+		and (ComiEnvio < @ComiEnvio or @ComiEnvio is null)		
 	end
 GO
 
@@ -1798,7 +1807,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Historial_Cliente_Acumulados
 	as begin
 		declare @ClieId int
 		set @ClieId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
-		select count (*) as 'Sin Calificar', ROAD_TO_PROYECTO.EstrellasPromedioCliente(@ClieId) as 'Promedio Estrellas', ROAD_TO_PROYECTO.EstrellasTotalesCliente(@ClieId) as 'Estrellas Totales'
+		select ROAD_TO_PROYECTO.EstrellasPromedioCliente(@ClieId) as 'Promedio Estrellas', ROAD_TO_PROYECTO.EstrellasTotalesCliente(@ClieId) as 'Estrellas Totales'
 		from ROAD_TO_PROYECTO.Transaccion t
 		where t.ClieId = @ClieId and t.TranId not in (select c.TranId from ROAD_TO_PROYECTO.Calificacion c)
 	end

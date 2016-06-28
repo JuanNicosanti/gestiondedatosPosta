@@ -43,6 +43,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.cbHabilitada = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +57,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 190);
+            this.label5.Location = new System.Drawing.Point(18, 190);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(98, 13);
             this.label5.TabIndex = 22;
@@ -65,7 +66,7 @@
             // cmdVolverComs
             // 
             this.cmdVolverComs.BackColor = System.Drawing.Color.Cyan;
-            this.cmdVolverComs.Location = new System.Drawing.Point(193, 249);
+            this.cmdVolverComs.Location = new System.Drawing.Point(193, 258);
             this.cmdVolverComs.Name = "cmdVolverComs";
             this.cmdVolverComs.Size = new System.Drawing.Size(75, 23);
             this.cmdVolverComs.TabIndex = 21;
@@ -76,7 +77,7 @@
             // cmdLimpiar
             // 
             this.cmdLimpiar.BackColor = System.Drawing.Color.LightCoral;
-            this.cmdLimpiar.Location = new System.Drawing.Point(106, 249);
+            this.cmdLimpiar.Location = new System.Drawing.Point(106, 258);
             this.cmdLimpiar.Name = "cmdLimpiar";
             this.cmdLimpiar.Size = new System.Drawing.Size(75, 23);
             this.cmdLimpiar.TabIndex = 20;
@@ -87,7 +88,7 @@
             // cmdAceptarVis
             // 
             this.cmdAceptarVis.BackColor = System.Drawing.Color.LawnGreen;
-            this.cmdAceptarVis.Location = new System.Drawing.Point(21, 249);
+            this.cmdAceptarVis.Location = new System.Drawing.Point(21, 258);
             this.cmdAceptarVis.Name = "cmdAceptarVis";
             this.cmdAceptarVis.Size = new System.Drawing.Size(75, 23);
             this.cmdAceptarVis.TabIndex = 19;
@@ -159,7 +160,7 @@
             this.salirToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(279, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(285, 24);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -174,18 +175,29 @@
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.NavajoWhite;
-            this.statusStrip1.Location = new System.Drawing.Point(0, 283);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 299);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(279, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(285, 22);
             this.statusStrip1.TabIndex = 25;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // cbHabilitada
+            // 
+            this.cbHabilitada.AutoSize = true;
+            this.cbHabilitada.Location = new System.Drawing.Point(21, 233);
+            this.cbHabilitada.Name = "cbHabilitada";
+            this.cbHabilitada.Size = new System.Drawing.Size(73, 17);
+            this.cbHabilitada.TabIndex = 26;
+            this.cbHabilitada.Text = "Habilitada";
+            this.cbHabilitada.UseVisualStyleBackColor = true;
             // 
             // ModificarVisibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(279, 305);
+            this.ClientSize = new System.Drawing.Size(285, 321);
+            this.Controls.Add(this.cbHabilitada);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tbEnvio);
             this.Controls.Add(this.label5);
@@ -228,5 +240,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        public System.Windows.Forms.CheckBox cbHabilitada;
     }
 }

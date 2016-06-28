@@ -1,16 +1,12 @@
-
 3) AGREGAR A DOC:
 Debido a que el domicilio puede ser una casa o un piso entero, está permitido que no se ingrese ningún dato en los campos "Piso" y "Departamento" en el alta de usuario.
 
-4) CREAR ADMIN/S PROPIO/S Y PONERLO/S EN LA DOCUMENTACIÓN. ADEMÁS, CREAR EL USUARIO QUE TIENE TODAS LAS FUNCIONALIDADES JUNTAS (LO PIDE EL ENUNCIADO ESPECÍFICAMENTE)
-
 5) AGREGAR MONTO Y FORMA DE PAGO A LAS FACTURAS
 
-6) VER POR QUÉ FACTURA MAL A UN CLIENTE NUEVO
+7) ORDENAR LOS LISTADOS POR FECHA(lo pidio el wacho)
 
-7)ORDENAR LOS LISTADOS POR FECHA(lo pidio el wacho)
-8)poner bajas logicas al abm visibilidad
+9) Tira un error en el sp Monto_Facturado_Vendedor al ejecutar el script inicial.
 
 13) validaciones en alta visib si ya existe la visibilidad
 
-14) Los uusarios dicen tener muchas publicaciones para calificar y en el calificar vendedor por publicacion no aparece ninguna(JP PROBLEM)
+15) PONER QUE LA FECHA DE NACIMIENTO SEA MENOR A LA FECHA DEL ARCH DE CONFIG MENOS 18, PARA QUE EL USUARIO TENGA QUE SER MAYOR DE 18 AÑOS Y PONER ESTO EN LA DOCUMENTACION (Muy menor)

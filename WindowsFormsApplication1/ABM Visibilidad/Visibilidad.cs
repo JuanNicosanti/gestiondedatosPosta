@@ -86,8 +86,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         {
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Comisiones_Visibilidad", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
-            adapter = new SqlDataAdapter(cmd);
-            cmd.Parameters.AddWithValue("@UserId", SqlDbType.NVarChar).Value = user;
+            adapter = new SqlDataAdapter(cmd);            
 
             DataTable dt = new DataTable("ROAD_TO_PROYECTO.Visibilidad");
             adapter.Fill(dt);

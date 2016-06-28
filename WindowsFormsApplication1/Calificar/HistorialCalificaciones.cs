@@ -92,5 +92,10 @@ namespace WindowsFormsApplication1.Calificar
         {
 
         }
+
+        private void lblComprasSinCalificar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

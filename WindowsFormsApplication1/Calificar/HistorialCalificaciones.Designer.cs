@@ -237,6 +237,7 @@
             this.lblComprasSinCalificar.Size = new System.Drawing.Size(35, 13);
             this.lblComprasSinCalificar.TabIndex = 18;
             this.lblComprasSinCalificar.Text = "label8";
+            this.lblComprasSinCalificar.Click += new System.EventHandler(this.lblComprasSinCalificar_Click);
             // 
             // HistorialCalificaciones
             // 
