@@ -576,7 +576,7 @@ WindowsFormsApplication1.ComprarOfertar
                 cmd.Parameters.AddWithValue("@ConEnvio", SqlDbType.Int).Value = tieneEnvio;
 
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha ofertado satisfactoriamente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("Se ha ofertado satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
            
             yaSeCompro = true;

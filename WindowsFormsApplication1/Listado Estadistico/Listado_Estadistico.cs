@@ -251,7 +251,7 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         {
             if (cboRubro.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione un rubro", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("Seleccione un rubro", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
 
             }

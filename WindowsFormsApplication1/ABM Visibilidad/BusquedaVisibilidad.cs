@@ -105,7 +105,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = celdaIdVis;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Elemento borrado", "LISTO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show("Visibilidad eliminada", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
             panelResultados.Visible = false;
         }

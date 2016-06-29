@@ -93,7 +93,7 @@ namespace WindowsFormsApplication1.ABM_Rol
 
             if (celdaHabilitado)
             {
-                MessageBox.Show("El rol ya esta habilitado", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("El rol ya esta habilitado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
             SqlCommand cmd = new SqlCommand("ROAD_TO_PROYECTO.HabilitarRol", db.Connection);
@@ -128,7 +128,7 @@ namespace WindowsFormsApplication1.ABM_Rol
             Boolean celdaHabilitado = Convert.ToBoolean(dataGridView1[2, fila].Value);
             if (!celdaHabilitado)
             {
-                MessageBox.Show("El rol ya esta inhabilitado", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("El rol ya esta inhabilitado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
 

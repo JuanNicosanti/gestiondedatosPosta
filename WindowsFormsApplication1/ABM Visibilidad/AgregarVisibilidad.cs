@@ -208,7 +208,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = tbComiVariable.Text;
             cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = tbEnvio.Text;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("La visibilidad se ha creado correctamente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show("La visibilidad se ha creado correctamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
             WindowsFormsApplication1.Form1.f1.Show();
             this.Close();
