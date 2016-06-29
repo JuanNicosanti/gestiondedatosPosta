@@ -440,6 +440,9 @@ DROP COLUMN Ganadora
 ALTER TABLE ROAD_TO_PROYECTO.Transaccion
 DROP COLUMN Cantidad
 
+ALTER TABLE ROAD_TO_PROYECTO.Transaccion
+DROP COLUMN TipoTransac
+
 --Factura
 insert into ROAD_TO_PROYECTO.Factura
 select gd.Factura_Nro,Publicacion_Cod, gd.factura_fecha,gd.factura_total
@@ -1152,8 +1155,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Comprar_Publicacion
 		--Verific si la cantidad a comprar es menor que el stock disponible
 		if((select Stock from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) >= @Cantidad)
 		begin
-			insert into ROAD_TO_PROYECTO.Transaccion(Fecha,TipoTransac, PubliId, ClieId, ConEnvio,FormaPago)
-			values(@FechaActual,'Compra', @PubliId, @CompradorId, @ConEnvio,@FormaPago)
+			insert into ROAD_TO_PROYECTO.Transaccion(Fecha, PubliId, ClieId, ConEnvio, FormaPago)
+			values(@FechaActual, @PubliId, @CompradorId, @ConEnvio,@FormaPago)
 			select @TranId = SCOPE_IDENTITY()
 			insert into ROAD_TO_PROYECTO.Compra(Cantidad, TranId)
 			values(@Cantidad, @TranId)
@@ -1182,8 +1185,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Ofertar_Publicacion
 			--Verifico que la oferta sea mayor al precio actual de la subasta
 			if((select Precio from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) < @MontoOferta)
 			begin
-				insert into ROAD_TO_PROYECTO.Transaccion (Fecha,TipoTransac, PubliId, ClieId, ConEnvio)
-				values(@FechaActual,'Oferta', @PubliId, @OfertanteId, @ConEnvio)
+				insert into ROAD_TO_PROYECTO.Transaccion (Fecha, PubliId, ClieId, ConEnvio)
+				values(@FechaActual, @PubliId, @OfertanteId, @ConEnvio)
 				select @TranId = SCOPE_IDENTITY()
 				insert into ROAD_TO_PROYECTO.Oferta(Monto, TranId)
 				values(@MontoOferta, @TranId)
@@ -1750,11 +1753,11 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Historial_Cliente_Compras_Subastas
 	as begin
 		declare @ClieId int
 		set @ClieId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
-		select t.TipoTransac, t.Fecha, o.Monto as 'Monto', p.Descipcion, p.UserId
+		select 'Oferta', t.Fecha, o.Monto as 'Monto', p.Descipcion, p.UserId
 		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Oferta o
 		where t.PubliId = p.PublId and t.ClieId = @ClieId and t.TranId = o.TranId
 		union
-		select t.TipoTransac, t.Fecha, p.Precio as 'Monto', p.Descipcion, p.UserId
+		select 'Compra', t.Fecha, p.Precio as 'Monto', p.Descipcion, p.UserId
 		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Compra c
 		where t.PubliId = p.PublId and t.ClieId = @ClieId and t.TranId = c.TranId
 		order by t.Fecha desc
@@ -1809,12 +1812,21 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Transacciones_Con_X_Estrellas
 	end
 GO
 
+CREATE FUNCTION ROAD_TO_PROYECTO.DeterminarTipoTransac(@Transac int)
+returns nvarchar(20)
+as begin
+	declare @retorno nvarchar(20)
+	if((select TranId from ROAD_TO_PROYECTO.Compra where TranId = @Transac) is not null) set @retorno = 'Compra'
+	else set @retorno = 'Oferta'
+	return @retorno
+end
+
 CREATE PROCEDURE ROAD_TO_PROYECTO.Ultimas_Cinco_Transacciones_Calificadas
 	@Usuario nvarchar(255)
 	as begin
 		declare @ClieId int
 		set @ClieId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
-		select top 5 t.TipoTransac, t.Fecha, p.Precio as 'Monto', p.Descipcion, p.UserId, c.CantEstrellas
+		select top 5 ROAD_TO_PROYECTO.DeterminarTipoTransac(t.TranId) as TipoTransc, t.Fecha, p.Precio as 'Monto', p.Descipcion, p.UserId, c.CantEstrellas
 		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Calificacion c
 		where t.PubliId = p.PublId and t.ClieId = @ClieId and t.TranId = c.TranId
 		order by t.Fecha desc
@@ -2140,17 +2152,7 @@ CREATE TRIGGER ROAD_TO_PROYECTO.Determinar_Oferta_Ganadora_Y_Facturar_Finalizada
 	end
 GO
 
-
-
-
---ATRODEN UN ROGER
-insert into ROAD_TO_PROYECTO.Usuario (Usuario, Contraseña, Mail)
-values('admin', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w23e')), 3, 255), 'admin@mercadoEnvio.org')
-
-insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
-values('admin', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'Administrador'))
-
-
+--CUENTA MAESTRA DE TESTEO, SE CREA UN ROL ESPECIAL CON TODAS LAS FUNCIONALIDADES
 insert into ROAD_TO_PROYECTO.Rol (Nombre, Habilitado)
 values ('MasterRolTesting', 1)
 
@@ -2159,7 +2161,7 @@ select (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting'
 from ROAD_TO_PROYECTO.Funcion f
 
 insert into ROAD_TO_PROYECTO.Usuario (Usuario, Contraseña, Mail)
-values('master', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w23e')), 3, 255), 'master@mercadoEnvio.org')
+values('admin', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w23e')), 3, 255), 'master@mercadoEnvio.org')
 
 insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
-values('master', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting'))
+values('admin', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting'))
