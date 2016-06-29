@@ -185,7 +185,8 @@ Monto numeric(18,2),
 Ganadora bit,
 PubliId int FOREIGN KEY REFERENCES ROAD_TO_PROYECTO.Publicacion,
 ClieId int FOREIGN KEY REFERENCES ROAD_TO_PROYECTO.Cliente,
-ConEnvio bit default 0
+ConEnvio bit default 0,
+FormaPago nvarchar(255) default 'Efectivo'
 )
 GO
 
@@ -221,8 +222,7 @@ create table ROAD_TO_PROYECTO.Factura(
 FactNro numeric(18,0) PRIMARY KEY,
 PubliId int FOREIGN KEY REFERENCES ROAD_TO_PROYECTO.Publicacion,
 Fecha datetime,
-Monto numeric(18,2),
-FormaPago nvarchar(255),
+Monto numeric(18,2)
 )
 GO
 
@@ -381,15 +381,15 @@ GO
 --Transaccion
 PRINT 'Migrando transacciones...'
 insert into ROAD_TO_PROYECTO.Transaccion
-select 'Compra', Compra_Fecha, Compra_Cantidad, null, null, Publicacion_Cod, (select ClieId from ROAD_TO_PROYECTO.Cliente where Cli_Dni = NroDocumento), 0
+select 'Compra', Compra_Fecha, Compra_Cantidad, null, null, Publicacion_Cod, (select ClieId from ROAD_TO_PROYECTO.Cliente where Cli_Dni = NroDocumento), 0,isnull(Forma_Pago_Desc,'Efectivo')
 from gd_esquema.Maestra
 where Publicacion_Tipo = 'Compra Inmediata' and Compra_Fecha is not null 
-group by publicacion_cod, Compra_Fecha, Compra_Cantidad, Cli_Dni
+group by publicacion_cod, Compra_Fecha, Compra_Cantidad, Cli_Dni,Forma_Pago_Desc
 union
-select 'Oferta', Oferta_Fecha, 1, Oferta_Monto, 0, Publicacion_Cod, (select ClieId from ROAD_TO_PROYECTO.Cliente where Cli_Dni = NroDocumento), 0
+select 'Oferta', Oferta_Fecha, 1, Oferta_Monto, 0, Publicacion_Cod, (select ClieId from ROAD_TO_PROYECTO.Cliente where Cli_Dni = NroDocumento), 0,isnull(Forma_Pago_Desc,'Efectivo')
 from gd_esquema.Maestra
 where Publicacion_Tipo = 'Subasta' and Oferta_Fecha is not null
-group by Publicacion_Cod, Oferta_Fecha, Oferta_Monto, Cli_Dni
+group by Publicacion_Cod, Oferta_Fecha, Oferta_Monto, Cli_Dni,Forma_Pago_Desc
 GO
 
 update t1 set Ganadora = 1
@@ -442,7 +442,7 @@ DROP COLUMN Cantidad
 
 --Factura
 insert into ROAD_TO_PROYECTO.Factura
-select gd.Factura_Nro,Publicacion_Cod, gd.factura_fecha,gd.factura_total, gd.forma_pago_desc
+select gd.Factura_Nro,Publicacion_Cod, gd.factura_fecha,gd.factura_total
 from gd_esquema.Maestra gd
 where  Factura_nro is not null 
 group by factura_nro,Factura_Fecha,Factura_Total,Forma_Pago_Desc,Publicacion_Cod
@@ -1141,7 +1141,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Comprar_Publicacion
 	@FechaActual datetime,
 	@Cantidad numeric(18,0),
 	@Usuario nvarchar(255),
-	@ConEnvio bit
+	@ConEnvio bit,
+	@FormaPago nvarchar(255)
 	as begin
 		declare @TranId int
 		if(@Usuario <> (select UserId from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId))
@@ -1151,8 +1152,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Comprar_Publicacion
 		--Verific si la cantidad a comprar es menor que el stock disponible
 		if((select Stock from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) >= @Cantidad)
 		begin
-			insert into ROAD_TO_PROYECTO.Transaccion(Fecha, PubliId, ClieId, ConEnvio)
-			values(@FechaActual, @PubliId, @CompradorId, @ConEnvio)
+			insert into ROAD_TO_PROYECTO.Transaccion(Fecha,TipoTransac, PubliId, ClieId, ConEnvio,FormaPago)
+			values(@FechaActual,'Compra', @PubliId, @CompradorId, @ConEnvio,@FormaPago)
 			select @TranId = SCOPE_IDENTITY()
 			insert into ROAD_TO_PROYECTO.Compra(Cantidad, TranId)
 			values(@Cantidad, @TranId)
@@ -1169,6 +1170,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Ofertar_Publicacion
 	@MontoOfertaString nvarchar(255),
 	@Usuario nvarchar(255),
 	@ConEnvio bit
+	
 	as begin
 		if(@Usuario <> (select UserId from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId))
 		begin
@@ -1180,8 +1182,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Ofertar_Publicacion
 			--Verifico que la oferta sea mayor al precio actual de la subasta
 			if((select Precio from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) < @MontoOferta)
 			begin
-				insert into ROAD_TO_PROYECTO.Transaccion (Fecha, PubliId, ClieId, ConEnvio)
-				values(@FechaActual, @PubliId, @OfertanteId, @ConEnvio)
+				insert into ROAD_TO_PROYECTO.Transaccion (Fecha,TipoTransac, PubliId, ClieId, ConEnvio)
+				values(@FechaActual,'Oferta', @PubliId, @OfertanteId, @ConEnvio)
 				select @TranId = SCOPE_IDENTITY()
 				insert into ROAD_TO_PROYECTO.Oferta(Monto, TranId)
 				values(@MontoOferta, @TranId)
@@ -1384,7 +1386,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Consulta_Facturas_Vendedor
 		declare	@ImporteMinimo numeric(18,2), @ImporteMaximo numeric(18,2)
 		set @ImporteMinimo = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@MontoInicioIntervaloString)
 		set @ImporteMaximo = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@MontoFinIntervaloString)		
-		select f.FactNro, f.PubliId, f.Fecha, f.Monto as Total, f.FormaPago, i.Cantidad, i.Detalle, i.Monto as Subtotal
+		select f.FactNro, f.PubliId, f.Fecha, f.Monto as Total, i.Cantidad, i.Detalle, i.Monto as Subtotal
 		from ROAD_TO_PROYECTO.Factura f
 		inner join ROAD_TO_PROYECTO.Item_Factura i on f.FactNro = i.FactNro
 		inner join ROAD_TO_PROYECTO.Publicacion p on f.PubliId = p.PublId
@@ -1667,8 +1669,6 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Cantidad_Facturas_Vendedores
 	end
 GO
 
-exec ROAD_TO_PROYECTO.Cantidad_Facturas_Vendedores 1,2015
-
 --Top 5 número 4: Vendedores con mayor monto facturado
 CREATE PROCEDURE ROAD_TO_PROYECTO.Monto_Facturado_Vendedor
 	@Trimestre int,
@@ -1757,6 +1757,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Historial_Cliente_Compras_Subastas
 		select t.TipoTransac, t.Fecha, p.Precio as 'Monto', p.Descipcion, p.UserId
 		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Compra c
 		where t.PubliId = p.PublId and t.ClieId = @ClieId and t.TranId = c.TranId
+		order by t.Fecha desc
 	end
 GO
 

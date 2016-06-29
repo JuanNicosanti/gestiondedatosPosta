@@ -63,6 +63,8 @@
             this.lblCantidad = new System.Windows.Forms.Label();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lblFPago = new System.Windows.Forms.Label();
+            this.cboPagos = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -307,7 +309,7 @@
             // we
             // 
             this.we.BackColor = System.Drawing.Color.Moccasin;
-            this.we.Location = new System.Drawing.Point(9, 280);
+            this.we.Location = new System.Drawing.Point(10, 295);
             this.we.Name = "we";
             this.we.Size = new System.Drawing.Size(167, 145);
             this.we.TabIndex = 27;
@@ -322,7 +324,7 @@
             this.label6.Location = new System.Drawing.Point(9, 39);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(168, 212);
+            this.label6.Size = new System.Drawing.Size(168, 253);
             this.label6.TabIndex = 28;
             this.label6.Text = "Pago";
             this.label6.Click += new System.EventHandler(this.label6_Click);
@@ -403,12 +405,36 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // lblFPago
+            // 
+            this.lblFPago.AllowDrop = true;
+            this.lblFPago.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblFPago.Location = new System.Drawing.Point(22, 215);
+            this.lblFPago.Name = "lblFPago";
+            this.lblFPago.Size = new System.Drawing.Size(136, 66);
+            this.lblFPago.TabIndex = 37;
+            this.lblFPago.Text = "Forma de pago";
+            // 
+            // cboPagos
+            // 
+            this.cboPagos.FormattingEnabled = true;
+            this.cboPagos.Items.AddRange(new object[] {
+            "Efectivo",
+            "Contrareembolso"});
+            this.cboPagos.Location = new System.Drawing.Point(30, 241);
+            this.cboPagos.Name = "cboPagos";
+            this.cboPagos.Size = new System.Drawing.Size(121, 21);
+            this.cboPagos.TabIndex = 38;
+            this.cboPagos.Text = "Seleccion una forma de pago";
+            // 
             // ComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(1037, 502);
+            this.Controls.Add(this.cboPagos);
+            this.Controls.Add(this.lblFPago);
             this.Controls.Add(this.txtCantidad);
             this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.txtGuita);
@@ -489,5 +515,7 @@
         private System.Windows.Forms.Label lblCantidad;
         private System.Windows.Forms.TextBox txtCantidad;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lblFPago;
+        private System.Windows.Forms.ComboBox cboPagos;
     }
 }

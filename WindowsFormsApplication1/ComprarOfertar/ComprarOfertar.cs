@@ -77,6 +77,9 @@ WindowsFormsApplication1.ComprarOfertar
             txtCantidad.Visible = false;
             lblGuita.Visible = false;
             lblCantidad.Visible = false;
+            lblFPago.Visible = false;
+            cboPagos.Visible = false;
+            cboPagos.SelectedIndex = -1;
             cmd = new SqlCommand("ROAD_TO_PROYECTO.ListaRubros", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             adapter = new SqlDataAdapter(cmd);
@@ -360,6 +363,9 @@ WindowsFormsApplication1.ComprarOfertar
             txtCantidad.Visible = false;
             rbEnvioNo.Checked = false;
             rbEnvioSi.Checked = false;
+            lblFPago.Visible = false;
+            cboPagos.SelectedIndex = -1;
+            cboPagos.Visible = false;
         }
 
     
@@ -444,13 +450,18 @@ WindowsFormsApplication1.ComprarOfertar
                 return;
             }
 
+            if (cboPagos.SelectedIndex.Equals(-1))
+            {
+                MessageBox.Show("Debe elegir la forma de pago", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
             
             String ofertaOCompra = dataGridView1[7, fila].Value.ToString();
           
             
             if(rbEnvioNo.Checked == false && rbEnvioSi.Checked == false)
             {
-                MessageBox.Show("Debe completar la informacion de pago", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("Debe seleccionar si desea envio", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
             
@@ -558,6 +569,7 @@ WindowsFormsApplication1.ComprarOfertar
                 cmd.Parameters.AddWithValue("@Cantidad", SqlDbType.Int).Value =  cantidad;
                 cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = compradorID;
                 cmd.Parameters.AddWithValue("@ConEnvio", SqlDbType.Int).Value = tieneEnvio;
+                cmd.Parameters.AddWithValue("@FormaPago", SqlDbType.NVarChar).Value = cboPagos.SelectedItem.ToString();
 
                 cmd.ExecuteNonQuery();
 
@@ -571,9 +583,10 @@ WindowsFormsApplication1.ComprarOfertar
                 
                 cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = celdaIdPublicacion;
                 cmd.Parameters.AddWithValue("@FechaActual", SqlDbType.DateTime).Value = Fecha.getFechaActual();
-                cmd.Parameters.AddWithValue("@MontoOfertaString", SqlDbType.NVarChar).Value = txtGuita.Text;
-                cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = ofertanteID;
+                cmd.Parameters.AddWithValue("@MontoOfertaString", SqlDbType.NVarChar).Value = txtGuita.Text;            
+                cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = compradorID;
                 cmd.Parameters.AddWithValue("@ConEnvio", SqlDbType.Int).Value = tieneEnvio;
+        
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Se ha ofertado satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -629,6 +642,8 @@ WindowsFormsApplication1.ComprarOfertar
                     txtGuita.Visible = true;
                     lblGuita.Visible = true;
                     lblCantidad.Visible = false;
+                     lblFPago.Visible = false;
+                     cboPagos.Visible = false;
 
                 }
                 if (ofertaOCompra.Equals("Compra Inmediata"))
@@ -637,6 +652,8 @@ WindowsFormsApplication1.ComprarOfertar
                     txtCantidad.Visible = true;
                     lblGuita.Visible = false;
                     lblCantidad.Visible = true;
+                    lblFPago.Visible = true;
+                    cboPagos.Visible = true;
                 }
             } //timer1.Start();
         }
