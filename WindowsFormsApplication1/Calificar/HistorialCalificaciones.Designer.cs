@@ -55,9 +55,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 36);
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 13);
+            this.label1.Size = new System.Drawing.Size(215, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Últimas publicaciones calificadas";
             // 
@@ -76,115 +77,127 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(19, 216);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(160, 13);
+            this.label2.Size = new System.Drawing.Size(219, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Cantidad de compras realizadas:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(19, 263);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(241, 13);
+            this.label3.Size = new System.Drawing.Size(328, 16);
             this.label3.TabIndex = 3;
             this.label3.Text = "Cantidad de compras calificadas con una estrella:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(19, 301);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(245, 13);
+            this.label4.Size = new System.Drawing.Size(338, 16);
             this.label4.TabIndex = 4;
             this.label4.Text = "Cantidad de compras calificadas con tres estrellas:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(19, 322);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(258, 13);
+            this.label5.Size = new System.Drawing.Size(354, 16);
             this.label5.TabIndex = 5;
             this.label5.Text = "Cantidad de compras calificadas con cuatro estrellas:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(19, 343);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(254, 13);
+            this.label6.Size = new System.Drawing.Size(344, 16);
             this.label6.TabIndex = 6;
             this.label6.Text = "Cantidad de compras calificadas con cinco estrellas:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(19, 282);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(245, 13);
+            this.label7.Size = new System.Drawing.Size(334, 16);
             this.label7.TabIndex = 7;
             this.label7.Text = "Cantidad de compras calificadas con dos estrellas:";
             // 
             // lblCompras
             // 
             this.lblCompras.AutoSize = true;
-            this.lblCompras.Location = new System.Drawing.Point(185, 216);
+            this.lblCompras.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCompras.Location = new System.Drawing.Point(240, 216);
             this.lblCompras.Name = "lblCompras";
-            this.lblCompras.Size = new System.Drawing.Size(35, 13);
+            this.lblCompras.Size = new System.Drawing.Size(46, 16);
             this.lblCompras.TabIndex = 8;
             this.lblCompras.Text = "label8";
             // 
             // lblUnaStar
             // 
             this.lblUnaStar.AutoSize = true;
-            this.lblUnaStar.Location = new System.Drawing.Point(266, 263);
+            this.lblUnaStar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUnaStar.Location = new System.Drawing.Point(348, 263);
             this.lblUnaStar.Name = "lblUnaStar";
-            this.lblUnaStar.Size = new System.Drawing.Size(35, 13);
+            this.lblUnaStar.Size = new System.Drawing.Size(46, 16);
             this.lblUnaStar.TabIndex = 9;
             this.lblUnaStar.Text = "label9";
             // 
             // lblDosStar
             // 
             this.lblDosStar.AutoSize = true;
-            this.lblDosStar.Location = new System.Drawing.Point(266, 282);
+            this.lblDosStar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDosStar.Location = new System.Drawing.Point(356, 282);
             this.lblDosStar.Name = "lblDosStar";
-            this.lblDosStar.Size = new System.Drawing.Size(41, 13);
+            this.lblDosStar.Size = new System.Drawing.Size(54, 16);
             this.lblDosStar.TabIndex = 10;
             this.lblDosStar.Text = "label10";
             // 
             // lblTresStar
             // 
             this.lblTresStar.AutoSize = true;
-            this.lblTresStar.Location = new System.Drawing.Point(266, 301);
+            this.lblTresStar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTresStar.Location = new System.Drawing.Point(360, 301);
             this.lblTresStar.Name = "lblTresStar";
-            this.lblTresStar.Size = new System.Drawing.Size(41, 13);
+            this.lblTresStar.Size = new System.Drawing.Size(54, 16);
             this.lblTresStar.TabIndex = 11;
             this.lblTresStar.Text = "label11";
             // 
             // lblCuatroStar
             // 
             this.lblCuatroStar.AutoSize = true;
-            this.lblCuatroStar.Location = new System.Drawing.Point(283, 322);
+            this.lblCuatroStar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCuatroStar.Location = new System.Drawing.Point(375, 322);
             this.lblCuatroStar.Name = "lblCuatroStar";
-            this.lblCuatroStar.Size = new System.Drawing.Size(41, 13);
+            this.lblCuatroStar.Size = new System.Drawing.Size(54, 16);
             this.lblCuatroStar.TabIndex = 12;
             this.lblCuatroStar.Text = "label12";
             // 
             // lblCincoStar
             // 
             this.lblCincoStar.AutoSize = true;
-            this.lblCincoStar.Location = new System.Drawing.Point(279, 343);
+            this.lblCincoStar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCincoStar.Location = new System.Drawing.Point(365, 343);
             this.lblCincoStar.Name = "lblCincoStar";
-            this.lblCincoStar.Size = new System.Drawing.Size(41, 13);
+            this.lblCincoStar.Size = new System.Drawing.Size(54, 16);
             this.lblCincoStar.TabIndex = 13;
             this.lblCincoStar.Text = "label13";
             // 
             // cmdVolver
             // 
             this.cmdVolver.BackColor = System.Drawing.Color.Cyan;
-            this.cmdVolver.Location = new System.Drawing.Point(389, 338);
+            this.cmdVolver.Location = new System.Drawing.Point(483, 343);
             this.cmdVolver.Name = "cmdVolver";
             this.cmdVolver.Size = new System.Drawing.Size(75, 23);
             this.cmdVolver.TabIndex = 14;
@@ -223,18 +236,20 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(19, 238);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(215, 13);
+            this.label8.Size = new System.Drawing.Size(295, 16);
             this.label8.TabIndex = 17;
             this.label8.Text = "Cantidad de compras realizadas sin calificar:";
             // 
             // lblComprasSinCalificar
             // 
             this.lblComprasSinCalificar.AutoSize = true;
-            this.lblComprasSinCalificar.Location = new System.Drawing.Point(238, 238);
+            this.lblComprasSinCalificar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblComprasSinCalificar.Location = new System.Drawing.Point(311, 238);
             this.lblComprasSinCalificar.Name = "lblComprasSinCalificar";
-            this.lblComprasSinCalificar.Size = new System.Drawing.Size(35, 13);
+            this.lblComprasSinCalificar.Size = new System.Drawing.Size(46, 16);
             this.lblComprasSinCalificar.TabIndex = 18;
             this.lblComprasSinCalificar.Text = "label8";
             this.lblComprasSinCalificar.Click += new System.EventHandler(this.lblComprasSinCalificar_Click);

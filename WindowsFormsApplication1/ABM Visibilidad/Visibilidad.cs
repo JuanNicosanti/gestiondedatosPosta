@@ -100,6 +100,12 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void cmdAceptarComisiones_Click(object sender, EventArgs e)
         {
+            if (cboTipoVis.SelectedIndex.Equals(-1))
+            {
+                MessageBox.Show("Seleccione un tipo de visibilidad", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                return;
+            }
+            
             WindowsFormsApplication1.Generar_Publicación.AltaPublicacion.ap1.lblVisSel.Text = cboTipoVis.SelectedValue.ToString();
             if (cbEnvio.Checked) envioHab = 1;
             else envioHab = 0;

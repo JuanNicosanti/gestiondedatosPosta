@@ -1179,7 +1179,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Ofertar_Publicacion
 			set @MontoOferta = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@MontoOfertaString)
 			--Verifico que la oferta sea mayor al precio actual de la subasta
 			if((select Precio from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) < @MontoOferta)
-				begin
+			begin
 				insert into ROAD_TO_PROYECTO.Transaccion (Fecha, PubliId, ClieId, ConEnvio)
 				values(@FechaActual, @PubliId, @OfertanteId, @ConEnvio)
 				select @TranId = SCOPE_IDENTITY()
@@ -1765,9 +1765,16 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Cantidad_Compras_Subastas_Realizadas
 	as begin
 		declare @ClieId int
 		set @ClieId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
-		select COUNT(*) - (select COUNT(*) from ROAD_TO_PROYECTO.Oferta o, ROAD_TO_PROYECTO.Transaccion t where t.ClieId = 1 and t.TranId = o.TranId and o.Ganadora = 0 group by t.ClieId) as cantPublis
-		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p
-		where t.PubliId = p.PublId and t.ClieId = @ClieId
+		select COUNT(*) + (select COUNT(*) 
+							from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r, ROAD_TO_PROYECTO.Oferta o
+							where t.TranId = o.TranId
+							and t.PubliId = p.PublId
+							and o.Ganadora = 1							
+							and rpu.UserId = @Usuario and rpu.RolId = r.RolId and r.Nombre = 'Cliente' and rpu.IdExterno = t.ClieId ) as cantPublis
+		from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Publicacion p, ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r, ROAD_TO_PROYECTO.Compra c
+		where t.TranId = c.TranId
+		and t.PubliId = p.PublId		
+		and rpu.UserId = @Usuario and rpu.RolId = r.RolId and r.Nombre = 'Cliente' and rpu.IdExterno = t.ClieId
 	end
 GO
 

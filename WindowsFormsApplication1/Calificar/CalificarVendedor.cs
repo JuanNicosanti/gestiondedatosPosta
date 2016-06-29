@@ -66,7 +66,7 @@ namespace WindowsFormsApplication1.Calificar
             cmd.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = taDetalle.Text;
             cmd.ExecuteNonQuery();
             
-            MessageBox.Show("Publicación calificada", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            MessageBox.Show("Publicación calificada", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             cargarTabla();
             panelCalificaciones.Visible = false;
             lblDetalle.Visible = false;

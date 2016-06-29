@@ -128,7 +128,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Publicación activada");
+            MessageBox.Show("Se activó la publicación", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             cargarTabla();        
         }
 
@@ -138,7 +138,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Publicación pausada");
+            MessageBox.Show("Se pausó la publicación", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             cargarTabla();        
         }
 
@@ -170,7 +170,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Publicación finalizada");            
+            MessageBox.Show("Se finalizó la publicación", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);           
 
             dgPublis.Visible = false;
             cmdActivar.Visible = false;

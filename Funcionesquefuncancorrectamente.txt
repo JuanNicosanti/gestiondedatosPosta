@@ -11,3 +11,11 @@
 -Modificar Visibilidad
 -Visibilidad
 -Agregar Visibilidad 
+-Listado Estadistico
+-Historial del cliente
+-Menu Calificaciones
+-Historial Calificaciones
+-Calificar Vendedor
+-Estado Publicacion
+-Alta Publicacion
+-Facturar

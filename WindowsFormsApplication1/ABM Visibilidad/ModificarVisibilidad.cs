@@ -23,6 +23,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         public int visiId;
         public int habilitada = 1;
 
+        private String visibilidadVieja;
+
         public ModificarVisibilidad()
         {
             InitializeComponent();
@@ -32,6 +34,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void ModificarVisibilidad_Load(object sender, EventArgs e)
         {
+            visibilidadVieja = tbDescripcion.Text;
             if (habilitada == 1)
             {
                 cbHabilitada.Checked = true;
@@ -226,24 +229,27 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 habilitada = 0;
             }
 
-            SqlCommand cmd32 = new SqlCommand("ROAD_TO_PROYECTO.Validacion_Existe_Visibilidad", db.Connection);
-            cmd32.CommandType = CommandType.StoredProcedure;
-            cmd32.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
-            SqlDataReader sdr2 = cmd32.ExecuteReader();
-            while (sdr2.Read())
+            if (!tbDescripcion.Text.Equals(visibilidadVieja))
             {
-                existeLaVisibilidad = true;
+                SqlCommand cmd32 = new SqlCommand("ROAD_TO_PROYECTO.Validacion_Existe_Visibilidad", db.Connection);
+                cmd32.CommandType = CommandType.StoredProcedure;
+                cmd32.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
+                SqlDataReader sdr2 = cmd32.ExecuteReader();
+                while (sdr2.Read())
+                {
+                    existeLaVisibilidad = true;
+                }
+                if (existeLaVisibilidad)
+                {
+                    existeLaVisibilidad = false;
+                    MessageBox.Show("La visibilidad ingresada ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
             }
-            if (existeLaVisibilidad)
-            {
-                existeLaVisibilidad = false;
-                MessageBox.Show("La visibilidad ingresada ya existe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                return;
-            }
-
+          
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Modificacion_Visibilidad", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = visiId;                
+            cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = visiId;
             cmd.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
             cmd.Parameters.AddWithValue("@ComiFijaString", SqlDbType.NVarChar).Value = tbComiFija.Text;
             cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = tbComiVariable.Text;
@@ -254,7 +260,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
             BusquedaVisibilidad.bVisi.Show();
             this.Close();
-          
+            
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
