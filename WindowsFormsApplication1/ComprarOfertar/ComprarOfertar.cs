@@ -75,7 +75,7 @@ WindowsFormsApplication1.ComprarOfertar
         private void ComprarOfertar_Load(object sender, EventArgs e)
         {
 
-            txtGuita.Visible = false;
+            nudGuita.Visible = false;
             txtCantidad.Visible = false;
             lblGuita.Visible = false;
             lblCantidad.Visible = false;
@@ -362,9 +362,10 @@ WindowsFormsApplication1.ComprarOfertar
             lblPaginaActual.Text = "";
             lblTotalPagina.Text = "";
 
+            lblCantidad.Visible = false;
             txtCantidad.Text = "";
-            txtGuita.Text ="";
-            txtGuita.Visible = false;
+            nudGuita.Text ="";
+            nudGuita.Visible = false;
             txtCantidad.Visible = false;
             rbEnvioNo.Checked = false;
             rbEnvioSi.Checked = false;
@@ -485,32 +486,25 @@ WindowsFormsApplication1.ComprarOfertar
             {
                 String valorSubastaString = dataGridView1[5, fila].Value.ToString();
                 double valorSubastaDouble = double.Parse(valorSubastaString);
-                if(string.IsNullOrEmpty(txtGuita.Text))
+                if(string.IsNullOrEmpty(nudGuita.Text))
                 {
                     MessageBox.Show("Debe completar la informacion de pago", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                     return;
                 }
-                if (!string.IsNullOrEmpty(txtGuita.Text))
+                if (!string.IsNullOrEmpty(nudGuita.Text))
                 {
-                    if (!(Int32.TryParse(txtGuita.Text, out val)))
+                   
+                    if (double.Parse(nudGuita.Text) <= 0)
                     {
-                        MessageBox.Show("No se permiten letras en el campo de la oferta de la publicacion ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        MessageBox.Show("No se permiten valores negativos o cero para la oferta de la publicacion", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                         return;
-
                     }
-                    else
+                    if (double.Parse(nudGuita.Text) < valorSubastaDouble)
                     {
-                        if (int.Parse(txtGuita.Text) <= 0)
-                        {
-                            MessageBox.Show("No se permiten valores negativos o cero para la oferta de la publicacion", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                            return;
-                        }
-                        if (double.Parse(txtGuita.Text) < valorSubastaDouble)
-                        {
-                             MessageBox.Show("El valor a ofertar debe superar el minimo de la subasta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                            return;
-                        }
+                            MessageBox.Show("El valor a ofertar debe superar el minimo de la subasta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        return;
                     }
+                    
                 }
             }
             if (ofertaOCompra.Equals("Compra Inmediata"))
@@ -559,7 +553,7 @@ WindowsFormsApplication1.ComprarOfertar
             
             if (ofertaOCompra.Equals("Subasta"))
             {
-                //cash = int.Parse(txtGuita.Text.ToString());
+                //cash = int.Parse(nudGuita.Text.ToString());
             }
             if (ofertaOCompra.Equals("Compra Inmediata"))
             {
@@ -595,7 +589,7 @@ WindowsFormsApplication1.ComprarOfertar
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Se ha realizado la compra satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-
+                cboPagos.SelectedIndex = -1;
 
             }
             if (ofertaOCompra == "Subasta") {
@@ -604,21 +598,22 @@ WindowsFormsApplication1.ComprarOfertar
                 
                 cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = celdaIdPublicacion;
                 cmd.Parameters.AddWithValue("@FechaActual", SqlDbType.DateTime).Value = Fecha.getFechaActual();
-                cmd.Parameters.AddWithValue("@MontoOfertaString", SqlDbType.NVarChar).Value = txtGuita.Text;            
+                cmd.Parameters.AddWithValue("@MontoOfertaString", SqlDbType.NVarChar).Value = nudGuita.Text;            
                 cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = compradorID;
                 cmd.Parameters.AddWithValue("@ConEnvio", SqlDbType.Int).Value = tieneEnvio;
         
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Se ha ofertado satisfactoriamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                lblGuita.Visible = false;
             }
            
             yaSeCompro = true;
             this.hacerRefresh();
 
             txtCantidad.Text = "";
-            txtGuita.Text = "";
-            txtGuita.Visible = false;
+            nudGuita.Text = "";
+            nudGuita.Visible = false;
             txtCantidad.Visible = false;
             rbEnvioNo.Checked = false;
             rbEnvioSi.Checked = false;
@@ -660,7 +655,7 @@ WindowsFormsApplication1.ComprarOfertar
                 if (ofertaOCompra.Equals("Subasta"))
                 {
                     txtCantidad.Visible = false;
-                    txtGuita.Visible = true;
+                    nudGuita.Visible = true;
                     lblGuita.Visible = true;
                     lblCantidad.Visible = false;
                      lblFPago.Visible = false;
@@ -669,7 +664,7 @@ WindowsFormsApplication1.ComprarOfertar
                 }
                 if (ofertaOCompra.Equals("Compra Inmediata"))
                 {
-                    txtGuita.Visible = false;
+                    nudGuita.Visible = false;
                     txtCantidad.Visible = true;
                     lblGuita.Visible = false;
                     lblCantidad.Visible = true;

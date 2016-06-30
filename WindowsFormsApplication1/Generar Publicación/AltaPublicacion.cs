@@ -45,9 +45,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
             while (sdr.Read())
             {
                 txtDescripcion.Text = sdr["Descipcion"].ToString();
-                txtPrecio.Text = sdr["Precio"].ToString();
+                nupPrecio.Text = sdr["Precio"].ToString();
                 txtStockInmediata.Text = sdr["Stock"].ToString();
-                txtValorSubasta.Text = sdr["Precio"].ToString();
+                nudValorInicial.Text = sdr["Precio"].ToString();
                 cboRubro.SelectedValue = sdr["DescripLarga"].ToString();
                 dtpFin.Value = DateTime.Parse(sdr["FechaFin"].ToString());
                 lblVisSel.Text = sdr["Descripcion"].ToString();
@@ -79,13 +79,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 lblFin.Visible = true;
 
                 lblValorSubasta.Visible = true;
-                txtValorSubasta.Visible = true;
+                nudValorInicial.Visible = true;
 
                 lblStockInmediata.Visible = false;
                 txtStockInmediata.Visible = false;
 
                 lblPrecio.Visible = false;
-                txtPrecio.Visible = false;
+                nupPrecio.Visible = false;
                 
                 label3.Visible = true;
                 label4.Visible = true;
@@ -111,11 +111,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 lblFin.Visible = true;
 
                 lblValorSubasta.Visible = false;
-                txtValorSubasta.Visible = false;
+                nudValorInicial.Visible = false;
 
                 lblStockInmediata.Visible = true;
                 txtStockInmediata.Visible = true;
-                txtPrecio.Visible = true;
+                nupPrecio.Visible = true;
               
                 label3.Visible = true;
                 label4.Visible = true;
@@ -138,7 +138,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cargarComboBoxRubros();
 
             lblPrecio.Visible = false;
-            txtPrecio.Visible = false;
+            nupPrecio.Visible = false;
 
             lblVisibilidad.Visible = false;
             lblVisSel.Visible = false;
@@ -153,7 +153,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             lblFin.Visible = false;
 
             lblValorSubasta.Visible = false;
-            txtValorSubasta.Visible = false;
+            nudValorInicial.Visible = false;
 
             lblStockInmediata.Visible = false;
             txtStockInmediata.Visible = false;
@@ -269,30 +269,23 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 {
                     huboErrorFechaAnterior++;                 
                 }
-                if (string.IsNullOrEmpty(txtPrecio.Text))
+                if (string.IsNullOrEmpty(nupPrecio.Text))
                 {
                     cadenaDeErrores += " Precio \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtPrecio.Text)))
+                if (!(string.IsNullOrEmpty(nupPrecio.Text)))
                 {
-                    if (!(Int32.TryParse(txtPrecio.Text, out val)))
+                 
+                    if (double.Parse(nupPrecio.Text) <= 0)
                     {
-                        cadenaDeErrorNumeroYEsCaracter += "Precio \r";
-                        huboErrorNumerico++;
-
+                        cadenaDeErrorValoresNegativos += "Precio \r";
+                        huboErrorTipoDatos++;
                     }
-                    else
-                    {
-                        if (int.Parse(txtPrecio.Text) <= 0)
-                        {
-                            cadenaDeErrorValoresNegativos += "Precio \r";
-                            huboErrorTipoDatos++;
-                        }
-                    }
+                    
 
                 }
-              
+             
                 if (huboError != 0 && huboErrorTipoDatos != 0 && huboErrorFechaAnterior != 0 && huboErrorNumerico != 0)
                 {
                     string errorGeneral = cadenaDeErrores +cadenaDeErrorNumeroYEsCaracter+ cadenaDeErrorValoresNegativos + cadenaDeErrorFechaAnterior;
@@ -427,7 +420,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 estado = "Borrador";
                 PublicacionDOA doa = new PublicacionDOA();
              
-                doa.crearPublicacion(txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, txtPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
+                doa.crearPublicacion(txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, nupPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
                 MessageBox.Show("Se ha creado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                
                 
@@ -448,27 +441,20 @@ namespace WindowsFormsApplication1.Generar_Publicación
                         huboErrorNumerico++;
                     }
                 }
-                if (string.IsNullOrEmpty(txtValorSubasta.Text))
+                if (string.IsNullOrEmpty(nudValorInicial.Text))
                 {
                     cadenaDeErrores += " Valor Inicial de la subasta \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtValorSubasta.Text)))
+                if (!(string.IsNullOrEmpty(nudValorInicial.Text)))
                 {
-                    if (!(Int32.TryParse(txtValorSubasta.Text, out val)))
-                    {
-                        cadenaDeErrorNumeroYEsCaracter += "Valor Inicial de la subasta \r";
-                        huboErrorNumerico++;
 
-                    }
-                    else
+                    if (double.Parse(nudValorInicial.Text) <= 0)
                     {
-                        if (int.Parse(txtValorSubasta.Text) <= 0)
-                        {
-                            cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
-                            huboErrorTipoDatos++;
-                        }
+                        cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
+                        huboErrorTipoDatos++;
                     }
+                    
 
                 }
                 if (cboRubro.SelectedIndex == -1)
@@ -619,7 +605,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 estado = "Borrador";
                 PublicacionDOA doa = new PublicacionDOA();
                 
-                doa.crearPublicacion(txtDescripcion.Text, 1,dtpFin.Value, txtValorSubasta.Text,lblVisSel.Text, cboRubro.SelectedValue.ToString(),cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
+                doa.crearPublicacion(txtDescripcion.Text, 1,dtpFin.Value, nudValorInicial.Text,lblVisSel.Text, cboRubro.SelectedValue.ToString(),cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
                 MessageBox.Show("Se ha creado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }     
             
@@ -632,8 +618,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cboRubro.SelectedIndex = -1;
             txtDescripcion.Text = "";
             txtStockInmediata.Text = "";
-            txtValorSubasta.Text = "";
-            txtPrecio.Text = "";
+            nudValorInicial.Text = "";
+            nupPrecio.Text = "";
             lblVisSel.Text = "";
             dtpFin.Value = Fecha.getFechaActual();
             huboError = 0;
@@ -739,29 +725,23 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 {
                     huboErrorFechaAnterior++;
                 }
-                if (string.IsNullOrEmpty(txtPrecio.Text))
+                if (string.IsNullOrEmpty(nupPrecio.Text))
                 {
                     cadenaDeErrores += " Precio \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtPrecio.Text)))
+                if (!(string.IsNullOrEmpty(nupPrecio.Text)))
                 {
-                    if (!(Int32.TryParse(txtPrecio.Text, out val)))
-                    {
-                        cadenaDeErrorNumeroYEsCaracter += "Precio \r";
-                        huboErrorNumerico++;
-
-                    }
-                    else
-                    {
-                        if (int.Parse(txtPrecio.Text) <= 0)
-                        {
+                     if (double.Parse(nupPrecio.Text) <= 0)
+                     {
                             cadenaDeErrorValoresNegativos += "Precio \r";
                             huboErrorTipoDatos++;
-                        }
-                    }
+                     }
+                    
+                }
 
-                } 
+
+             
 
                 if (huboError != 0 && huboErrorTipoDatos != 0 && huboErrorFechaAnterior != 0 && huboErrorNumerico != 0)
                 {
@@ -895,7 +875,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
                 PublicacionDOA doa = new PublicacionDOA();
 
-                doa.modificarPublicacion(publiId, txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, txtPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado);
+                doa.modificarPublicacion(publiId, txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, nupPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado);
             }
             if (cboTipo.SelectedItem.ToString() == "Subasta")
             {
@@ -905,27 +885,20 @@ namespace WindowsFormsApplication1.Generar_Publicación
                     huboError++;
                 }
 
-                if (string.IsNullOrEmpty(txtValorSubasta.Text))
+                if (string.IsNullOrEmpty(nudValorInicial.Text))
                 {
                     cadenaDeErrores += " Valor Inicial de la subasta \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtValorSubasta.Text)))
+                if (!(string.IsNullOrEmpty(nudValorInicial.Text)))
                 {
-                    if (!(Int32.TryParse(txtValorSubasta.Text, out val)))
+                 
+                    if (double.Parse(nudValorInicial.Text) <= 0)
                     {
-                        cadenaDeErrorNumeroYEsCaracter += "Valor Inicial de la subasta \r";
-                        huboErrorNumerico++;
-
+                        cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
+                        huboErrorTipoDatos++;
                     }
-                    else
-                    {
-                        if (int.Parse(txtValorSubasta.Text) <= 0)
-                        {
-                            cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
-                            huboErrorTipoDatos++;
-                        }
-                    }
+                    
 
                 } 
              
@@ -1070,7 +1043,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
                 PublicacionDOA doa = new PublicacionDOA();
 
-                doa.modificarPublicacion(publiId, txtDescripcion.Text, 1, dtpFin.Value, txtValorSubasta.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado);
+                doa.modificarPublicacion(publiId, txtDescripcion.Text, 1, dtpFin.Value, nudValorInicial.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado);
             }
 
             MessageBox.Show("Se ha modificado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -1149,29 +1122,23 @@ namespace WindowsFormsApplication1.Generar_Publicación
                     huboErrorFechaAnterior++;
                     
                 }
-                if (string.IsNullOrEmpty(txtPrecio.Text))
+                if (string.IsNullOrEmpty(nupPrecio.Text))
                 {
                     cadenaDeErrores += " Precio \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtPrecio.Text)))
+                if (!(string.IsNullOrEmpty(nupPrecio.Text)))
                 {
-                    if (!(Int32.TryParse(txtPrecio.Text, out val)))
+                  
+                    if (double.Parse(nupPrecio.Text) <= 0)
                     {
-                        cadenaDeErrorNumeroYEsCaracter += "Precio \r";
-                        huboErrorNumerico++;
-
-                    }
-                    else
-                    {
-                        if (int.Parse(txtPrecio.Text) <= 0)
-                        {
-                            cadenaDeErrorValoresNegativos += "Precio \r";
-                            huboErrorTipoDatos++;
-                        }
-                    }
+                        cadenaDeErrorValoresNegativos += "Precio \r";
+                        huboErrorTipoDatos++;
+                    }                    
 
                 }
+               
+                
                 if (huboError != 0 && huboErrorTipoDatos != 0 && huboErrorFechaAnterior != 0 && huboErrorNumerico != 0)
                 {
                     string errorGeneral = cadenaDeErrores + cadenaDeErrorNumeroYEsCaracter + cadenaDeErrorValoresNegativos + cadenaDeErrorFechaAnterior;
@@ -1305,7 +1272,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 estado = "Activa";
                 PublicacionDOA doa = new PublicacionDOA();
 
-                doa.crearPublicacion(txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, txtPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
+                doa.crearPublicacion(txtDescripcion.Text, int.Parse(txtStockInmediata.Text), dtpFin.Value, nupPrecio.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
                 MessageBox.Show("Se ha creado y activado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
 
 
@@ -1326,28 +1293,20 @@ namespace WindowsFormsApplication1.Generar_Publicación
                         huboErrorNumerico++;
                     }
                 }
-                if (string.IsNullOrEmpty(txtValorSubasta.Text))
+                if (string.IsNullOrEmpty(nudValorInicial.Text))
                 {
                     cadenaDeErrores += "Valor Inicial de la subasta \r";
                     huboError++;
                 }
-                if (!(string.IsNullOrEmpty(txtValorSubasta.Text)))
+                if (!(string.IsNullOrEmpty(nudValorInicial.Text)))
                 {
-                    if (!(Int32.TryParse(txtValorSubasta.Text, out val)))
+                   
+                    if (double.Parse(nudValorInicial.Text) <= 0)
                     {
-                        cadenaDeErrorNumeroYEsCaracter += "Valor Inicial de la subasta \r";
-                        huboErrorNumerico++;
-
+                        cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
+                        huboErrorTipoDatos++;
                     }
-                    else
-                    {
-                        if (int.Parse(txtValorSubasta.Text) <= 0)
-                        {
-                            cadenaDeErrorValoresNegativos += "Valor Inicial de la subasta \r";
-                            huboErrorTipoDatos++;
-                        }
-                    }
-
+                    
                 }
 
                 if (cboRubro.SelectedIndex == -1)
@@ -1496,7 +1455,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 estado = "Activa";
                 PublicacionDOA doa = new PublicacionDOA();
 
-                doa.crearPublicacion(txtDescripcion.Text, 1, dtpFin.Value, txtValorSubasta.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
+                doa.crearPublicacion(txtDescripcion.Text, 1, dtpFin.Value, nudValorInicial.Text, lblVisSel.Text, cboRubro.SelectedValue.ToString(), cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
                 MessageBox.Show("Se ha creado y activado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
 

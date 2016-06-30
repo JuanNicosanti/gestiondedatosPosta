@@ -42,7 +42,6 @@
             this.cboTipo = new System.Windows.Forms.ComboBox();
             this.lblRubroSe = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
-            this.txtValorSubasta = new System.Windows.Forms.TextBox();
             this.txtStockInmediata = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -55,7 +54,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblPrecio = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtPrecio = new System.Windows.Forms.TextBox();
             this.lblVisibilidad = new System.Windows.Forms.Label();
             this.lblVisSel = new System.Windows.Forms.Label();
             this.cmdSelVis = new System.Windows.Forms.Button();
@@ -64,7 +62,11 @@
             this.lblTitulo = new System.Windows.Forms.Label();
             this.cmdModificar = new System.Windows.Forms.Button();
             this.cmdCrearActivar = new System.Windows.Forms.Button();
+            this.nupPrecio = new System.Windows.Forms.NumericUpDown();
+            this.nudValorInicial = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupPrecio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudValorInicial)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -194,16 +196,9 @@
             this.txtDescripcion.Size = new System.Drawing.Size(100, 20);
             this.txtDescripcion.TabIndex = 14;
             // 
-            // txtValorSubasta
-            // 
-            this.txtValorSubasta.Location = new System.Drawing.Point(158, 116);
-            this.txtValorSubasta.Name = "txtValorSubasta";
-            this.txtValorSubasta.Size = new System.Drawing.Size(100, 20);
-            this.txtValorSubasta.TabIndex = 15;
-            // 
             // txtStockInmediata
             // 
-            this.txtStockInmediata.Location = new System.Drawing.Point(158, 116);
+            this.txtStockInmediata.Location = new System.Drawing.Point(158, 119);
             this.txtStockInmediata.Name = "txtStockInmediata";
             this.txtStockInmediata.Size = new System.Drawing.Size(100, 20);
             this.txtStockInmediata.TabIndex = 16;
@@ -219,7 +214,7 @@
             this.salirToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(397, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(401, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -236,7 +231,7 @@
             this.statusStrip1.BackColor = System.Drawing.Color.NavajoWhite;
             this.statusStrip1.Location = new System.Drawing.Point(0, 381);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(397, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(401, 22);
             this.statusStrip1.TabIndex = 18;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -302,13 +297,6 @@
             this.label8.Size = new System.Drawing.Size(114, 13);
             this.label8.TabIndex = 25;
             this.label8.Text = "(*) Campos obligatorios";
-            // 
-            // txtPrecio
-            // 
-            this.txtPrecio.Location = new System.Drawing.Point(158, 268);
-            this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(100, 20);
-            this.txtPrecio.TabIndex = 26;
             // 
             // lblVisibilidad
             // 
@@ -388,12 +376,40 @@
             this.cmdCrearActivar.UseVisualStyleBackColor = false;
             this.cmdCrearActivar.Click += new System.EventHandler(this.button1_Click);
             // 
+            // nupPrecio
+            // 
+            this.nupPrecio.DecimalPlaces = 2;
+            this.nupPrecio.Location = new System.Drawing.Point(158, 268);
+            this.nupPrecio.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
+            this.nupPrecio.Name = "nupPrecio";
+            this.nupPrecio.Size = new System.Drawing.Size(120, 20);
+            this.nupPrecio.TabIndex = 35;
+            // 
+            // nudValorInicial
+            // 
+            this.nudValorInicial.DecimalPlaces = 2;
+            this.nudValorInicial.Location = new System.Drawing.Point(158, 120);
+            this.nudValorInicial.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
+            this.nudValorInicial.Name = "nudValorInicial";
+            this.nudValorInicial.Size = new System.Drawing.Size(100, 20);
+            this.nudValorInicial.TabIndex = 36;
+            // 
             // AltaPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(397, 403);
+            this.ClientSize = new System.Drawing.Size(401, 403);
+            this.Controls.Add(this.nudValorInicial);
+            this.Controls.Add(this.nupPrecio);
             this.Controls.Add(this.cmdCrearActivar);
             this.Controls.Add(this.cmdModificar);
             this.Controls.Add(this.lblTitulo);
@@ -402,7 +418,6 @@
             this.Controls.Add(this.cmdSelVis);
             this.Controls.Add(this.lblVisSel);
             this.Controls.Add(this.lblVisibilidad);
-            this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblPrecio);
             this.Controls.Add(this.label6);
@@ -412,7 +427,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.txtStockInmediata);
-            this.Controls.Add(this.txtValorSubasta);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.lblRubroSe);
             this.Controls.Add(this.cboTipo);
@@ -433,6 +447,8 @@
             this.Load += new System.EventHandler(this.AltaPublicacion_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupPrecio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudValorInicial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -451,7 +467,6 @@
         private System.Windows.Forms.DateTimePicker dtpFin;
         private System.Windows.Forms.ComboBox cboTipo;
         private System.Windows.Forms.TextBox txtDescripcion;
-        private System.Windows.Forms.TextBox txtValorSubasta;
         private System.Windows.Forms.TextBox txtStockInmediata;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -465,7 +480,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblPrecio;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.Label lblVisibilidad;
         private System.Windows.Forms.Button cmdSelVis;
         public System.Windows.Forms.Label lblVisSel;
@@ -475,5 +489,7 @@
         public System.Windows.Forms.Button cmdModificar;
         public System.Windows.Forms.Button cmdCrearActivar;
         public System.Windows.Forms.Button cmdAceptar;
+        private System.Windows.Forms.NumericUpDown nupPrecio;
+        private System.Windows.Forms.NumericUpDown nudValorInicial;
     }
 }

@@ -59,14 +59,15 @@
             this.rbEnvioSi = new System.Windows.Forms.RadioButton();
             this.rbEnvioNo = new System.Windows.Forms.RadioButton();
             this.lblGuita = new System.Windows.Forms.Label();
-            this.txtGuita = new System.Windows.Forms.TextBox();
             this.lblCantidad = new System.Windows.Forms.Label();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblFPago = new System.Windows.Forms.Label();
             this.cboPagos = new System.Windows.Forms.ComboBox();
+            this.nudGuita = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGuita)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -374,14 +375,6 @@
             this.lblGuita.TabIndex = 33;
             this.lblGuita.Text = "$";
             // 
-            // txtGuita
-            // 
-            this.txtGuita.Location = new System.Drawing.Point(78, 183);
-            this.txtGuita.Margin = new System.Windows.Forms.Padding(2);
-            this.txtGuita.Name = "txtGuita";
-            this.txtGuita.Size = new System.Drawing.Size(76, 20);
-            this.txtGuita.TabIndex = 34;
-            // 
             // lblCantidad
             // 
             this.lblCantidad.AutoSize = true;
@@ -427,17 +420,30 @@
             this.cboPagos.TabIndex = 38;
             this.cboPagos.Text = "Seleccion una forma de pago";
             // 
+            // nudGuita
+            // 
+            this.nudGuita.DecimalPlaces = 2;
+            this.nudGuita.Location = new System.Drawing.Point(78, 184);
+            this.nudGuita.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.nudGuita.Name = "nudGuita";
+            this.nudGuita.Size = new System.Drawing.Size(80, 20);
+            this.nudGuita.TabIndex = 39;
+            // 
             // ComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(1037, 502);
+            this.Controls.Add(this.nudGuita);
             this.Controls.Add(this.cboPagos);
             this.Controls.Add(this.lblFPago);
             this.Controls.Add(this.txtCantidad);
             this.Controls.Add(this.lblCantidad);
-            this.Controls.Add(this.txtGuita);
             this.Controls.Add(this.lblGuita);
             this.Controls.Add(this.rbEnvioNo);
             this.Controls.Add(this.rbEnvioSi);
@@ -474,6 +480,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGuita)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -511,11 +518,11 @@
         private System.Windows.Forms.RadioButton rbEnvioSi;
         private System.Windows.Forms.RadioButton rbEnvioNo;
         private System.Windows.Forms.Label lblGuita;
-        private System.Windows.Forms.TextBox txtGuita;
         private System.Windows.Forms.Label lblCantidad;
         private System.Windows.Forms.TextBox txtCantidad;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblFPago;
         private System.Windows.Forms.ComboBox cboPagos;
+        private System.Windows.Forms.NumericUpDown nudGuita;
     }
 }
