@@ -1,6 +1,5 @@
-1. Ver historial rompio porque no encontro el SP (logueado con admin)
-
 2. Consulta de Facturas, si no se agrega nada y se toca buscar, ROMPE (Error: Input string was not in a correct format)
 
 6.Consulta de facturas , las fechas aparece las actuales, deberian ser las del arch cfg?
 
+7.No muestra las facturas

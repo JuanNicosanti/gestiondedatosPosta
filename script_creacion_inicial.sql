@@ -1820,6 +1820,7 @@ as begin
 	else set @retorno = 'Oferta'
 	return @retorno
 end
+GO
 
 CREATE PROCEDURE ROAD_TO_PROYECTO.Ultimas_Cinco_Transacciones_Calificadas
 	@Usuario nvarchar(255)
@@ -1841,6 +1842,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Historial_Cliente_Acumulados
 		select ROAD_TO_PROYECTO.EstrellasPromedioCliente(@ClieId) as 'Promedio Estrellas', ROAD_TO_PROYECTO.EstrellasTotalesCliente(@ClieId) as 'Estrellas Totales'
 		from ROAD_TO_PROYECTO.Transaccion t
 		where t.ClieId = @ClieId and t.TranId not in (select c.TranId from ROAD_TO_PROYECTO.Calificacion c)
+		group by t.ClieId
 	end
 GO
 

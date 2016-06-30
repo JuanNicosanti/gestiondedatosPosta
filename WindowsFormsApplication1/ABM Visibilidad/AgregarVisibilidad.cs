@@ -80,7 +80,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             if (!(string.IsNullOrEmpty(nudComiVariable.Text)))
             {
 
-              
+
                 if (double.Parse(nudComiVariable.Text) <= 0)
                 {
                     cadenaDeErrorValoresNegativos += "Comision por producto vendido \r";
@@ -97,7 +97,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             if (!(string.IsNullOrEmpty(nudEnvio.Text)))
             {
 
-                if (double.Parse(nudEnvio.Text) <= 0)
+                if (double.Parse(nudEnvio.Text) < 0)
                 {
                     cadenaDeErrorValoresNegativos += "Comision de envio \r";
                     huboErrorNegativos++;

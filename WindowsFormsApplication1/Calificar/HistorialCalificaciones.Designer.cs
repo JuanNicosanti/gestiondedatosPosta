@@ -282,6 +282,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "HistorialCalificaciones";
             this.Text = "HistorialCalificaciones";
+            this.Load += new System.EventHandler(this.HistorialCalificaciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgComprasCalif)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

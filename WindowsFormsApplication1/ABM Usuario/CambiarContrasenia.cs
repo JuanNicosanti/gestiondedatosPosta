@@ -44,7 +44,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private void cmdAceptar_Click(object sender, EventArgs e)
         {
             string cadenaDeErrores = "Debe completar los siguientes campos: \r";
-            string cadenaDeErrorContrasenias = "Las contrasenias no coinciden";
+            string cadenaDeErrorContrasenias = "Las contraseñas no coinciden";
             int huboError = 0;
             if (string.IsNullOrEmpty(txtUsuario.Text))
             {
@@ -65,7 +65,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if(string.IsNullOrEmpty(txtRepetir.Text))
             {
-                cadenaDeErrores += " Repetir la contrasenia \r";
+                cadenaDeErrores += " Repetir la contraseña \r";
                 huboError++;
             }
 
@@ -116,7 +116,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
            
             if (!existeElUsuario)
             {
-                MessageBox.Show("La contrasenia ingresada no corresponde al usuario", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                MessageBox.Show("La contraseña ingresada no corresponde al usuario", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
 

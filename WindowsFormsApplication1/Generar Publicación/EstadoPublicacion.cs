@@ -202,6 +202,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void cmdModificar_Click(object sender, EventArgs e)
         {
             WindowsFormsApplication1.Generar_Publicación.AltaPublicacion ap1 = new WindowsFormsApplication1.Generar_Publicación.AltaPublicacion();
+           
             ap1.esModif = 1;
             ap1.cmdCrearActivar.Visible = false;
             ap1.cmdAceptar.Visible = false;

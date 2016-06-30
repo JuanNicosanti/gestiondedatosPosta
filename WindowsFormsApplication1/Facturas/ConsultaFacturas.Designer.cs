@@ -327,9 +327,9 @@
             this.lblPaginaActual.BackColor = System.Drawing.Color.LightGray;
             this.lblPaginaActual.Location = new System.Drawing.Point(334, 426);
             this.lblPaginaActual.Name = "lblPaginaActual";
-            this.lblPaginaActual.Size = new System.Drawing.Size(35, 13);
+            this.lblPaginaActual.Size = new System.Drawing.Size(10, 13);
             this.lblPaginaActual.TabIndex = 10;
-            this.lblPaginaActual.Text = "label8";
+            this.lblPaginaActual.Text = " ";
             this.lblPaginaActual.Visible = false;
             // 
             // label9
@@ -349,9 +349,8 @@
             this.lblTotalPagina.BackColor = System.Drawing.Color.LightGray;
             this.lblTotalPagina.Location = new System.Drawing.Point(407, 426);
             this.lblTotalPagina.Name = "lblTotalPagina";
-            this.lblTotalPagina.Size = new System.Drawing.Size(41, 13);
+            this.lblTotalPagina.Size = new System.Drawing.Size(0, 13);
             this.lblTotalPagina.TabIndex = 12;
-            this.lblTotalPagina.Text = "label10";
             this.lblTotalPagina.Visible = false;
             // 
             // lblCantidadTotal
@@ -360,9 +359,8 @@
             this.lblCantidadTotal.BackColor = System.Drawing.Color.LightGray;
             this.lblCantidadTotal.Location = new System.Drawing.Point(530, 426);
             this.lblCantidadTotal.Name = "lblCantidadTotal";
-            this.lblCantidadTotal.Size = new System.Drawing.Size(41, 13);
+            this.lblCantidadTotal.Size = new System.Drawing.Size(0, 13);
             this.lblCantidadTotal.TabIndex = 13;
-            this.lblCantidadTotal.Text = "label11";
             this.lblCantidadTotal.Visible = false;
             // 
             // cmdVolver

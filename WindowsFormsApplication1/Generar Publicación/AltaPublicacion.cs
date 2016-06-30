@@ -13,6 +13,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class AltaPublicacion : Form
     {
+
+   
         public static AltaPublicacion ap1;
         private int huboError = 0;
         private int huboErrorTipoDatos = 0;
@@ -192,8 +194,16 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void cmdVolver_Click(object sender, EventArgs e)
         {
-            WindowsFormsApplication1.Form1.f1.Show();
-            this.Hide();
+            if (esModif.Equals(0))
+            {
+                WindowsFormsApplication1.Form1.f1.Show();
+                this.Hide();
+            }
+            else
+            {
+                EstadoPublicacion.estado.Show();
+                this.Hide();
+            }
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -607,10 +617,18 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 
                 doa.crearPublicacion(txtDescripcion.Text, 1,dtpFin.Value, nudValorInicial.Text,lblVisSel.Text, cboRubro.SelectedValue.ToString(),cboTipo.SelectedItem.ToString(), lblUsername.Text, envioHabilitado, estado);
                 MessageBox.Show("Se ha creado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            }     
-            
-            WindowsFormsApplication1.Form1.f1.Show();
-            this.Hide();
+            }
+
+            if (esModif.Equals(0))
+            {
+                WindowsFormsApplication1.Form1.f1.Show();
+                this.Hide();
+            }
+            else
+            {
+                EstadoPublicacion.estado.Show();
+                this.Hide();
+            }
         }
 
         private void cmdLimpiar_Click(object sender, EventArgs e)
@@ -1047,8 +1065,16 @@ namespace WindowsFormsApplication1.Generar_Publicación
             }
 
             MessageBox.Show("Se ha modificado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            WindowsFormsApplication1.Generar_Publicación.EstadoPublicacion.estado.Show();
-            this.Hide();
+            if (esModif.Equals(0))
+            {
+                WindowsFormsApplication1.Form1.f1.Show();
+                this.Hide();
+            }
+            else
+            {
+                EstadoPublicacion.estado.Show();
+                this.Hide();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1459,8 +1485,16 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 MessageBox.Show("Se ha creado y activado correctamente la publicacion", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
 
-            WindowsFormsApplication1.Form1.f1.Show();
-            this.Hide();
+            if (esModif.Equals(0))
+            {
+                WindowsFormsApplication1.Form1.f1.Show();
+                this.Hide();
+            }
+            else
+            {
+                EstadoPublicacion.estado.Show();
+                this.Hide();
+            }
         }
     }
 }

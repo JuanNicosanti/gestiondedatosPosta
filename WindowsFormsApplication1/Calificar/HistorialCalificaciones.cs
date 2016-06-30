@@ -97,5 +97,10 @@ namespace WindowsFormsApplication1.Calificar
         {
 
         }
+
+        private void HistorialCalificaciones_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

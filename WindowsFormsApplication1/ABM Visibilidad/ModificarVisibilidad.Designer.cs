@@ -176,9 +176,14 @@
             // nudEnvio
             // 
             this.nudEnvio.DecimalPlaces = 2;
+            this.nudEnvio.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.nudEnvio.Location = new System.Drawing.Point(21, 207);
             this.nudEnvio.Maximum = new decimal(new int[] {
-            999999,
+            1,
             0,
             0,
             0});
@@ -189,9 +194,14 @@
             // nudComiVariable
             // 
             this.nudComiVariable.DecimalPlaces = 2;
+            this.nudComiVariable.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.nudComiVariable.Location = new System.Drawing.Point(21, 167);
             this.nudComiVariable.Maximum = new decimal(new int[] {
-            99999999,
+            1,
             0,
             0,
             0});
@@ -202,6 +212,11 @@
             // nudComiFija
             // 
             this.nudComiFija.DecimalPlaces = 2;
+            this.nudComiFija.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.nudComiFija.Location = new System.Drawing.Point(21, 121);
             this.nudComiFija.Maximum = new decimal(new int[] {
             9999999,

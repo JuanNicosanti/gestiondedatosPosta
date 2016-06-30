@@ -150,7 +150,7 @@
             // 
             // cmdAceptar
             // 
-            this.cmdAceptar.BackColor = System.Drawing.Color.LawnGreen;
+            this.cmdAceptar.BackColor = System.Drawing.Color.Chocolate;
             this.cmdAceptar.Location = new System.Drawing.Point(47, 323);
             this.cmdAceptar.Name = "cmdAceptar";
             this.cmdAceptar.Size = new System.Drawing.Size(97, 23);
@@ -367,7 +367,7 @@
             // 
             // cmdCrearActivar
             // 
-            this.cmdCrearActivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.cmdCrearActivar.BackColor = System.Drawing.Color.LawnGreen;
             this.cmdCrearActivar.Location = new System.Drawing.Point(47, 352);
             this.cmdCrearActivar.Name = "cmdCrearActivar";
             this.cmdCrearActivar.Size = new System.Drawing.Size(97, 23);
