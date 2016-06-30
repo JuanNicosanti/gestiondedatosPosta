@@ -266,7 +266,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void AgregarVisibilidad_Load(object sender, EventArgs e)
         {
-
+            nudComiFija.Text = "";
+            nudComiVariable.Text = "";
+            nudEnvio.Text = "";
         }
     }
 }

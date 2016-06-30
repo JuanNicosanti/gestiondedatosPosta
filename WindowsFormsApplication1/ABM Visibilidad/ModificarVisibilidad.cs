@@ -34,6 +34,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void ModificarVisibilidad_Load(object sender, EventArgs e)
         {
+            nudComiFija.Text = "";
+            nudComiVariable.Text = "";
+            nudEnvio.Text = "";
             visibilidadVieja = tbDescripcion.Text;
             if (habilitada == 1)
             {
