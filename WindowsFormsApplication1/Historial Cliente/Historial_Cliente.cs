@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
 {
     public partial class Historial_Cliente : Form
     {
+        private Boolean hayDatos;
         SqlCommand cmd;
         SqlDataReader sdr;
         SqlDataAdapter adapter;
@@ -48,48 +49,65 @@ namespace WindowsFormsApplication1.Historial_Cliente
 
         private void cmdPrimera_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblActual.Text) > 1)
+            if (hayDatos) 
             {
-                this.nroPagina = 1;
+                if (Convert.ToInt32(lblActual.Text) > 1)
+                {
+                    this.nroPagina = 1;
 
-                lblActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+
+         
         }
 
         private void cmdAnterior_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblActual.Text) > 1)
+            if (hayDatos)
             {
-                this.nroPagina -= 1;
+                if (Convert.ToInt32(lblActual.Text) > 1)
+                {
+                    this.nroPagina -= 1;
 
 
-                lblActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+          
         }
 
         private void cmdSiguiente_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+            if (hayDatos) 
             {
-                this.nroPagina += 1;
+                if (Convert.ToInt32(lblActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+                {
+                    this.nroPagina += 1;
 
 
-                lblActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+          
         }
 
         private void cmdUltima_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+            if (hayDatos)
             {
-                this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
+                if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+                {
+                    this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
 
-                lblActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+          
         }
 
         private void paginar()
@@ -209,6 +227,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
                 this.paginar();//empezamos con la paginacion             
                 lblCantidadTotal.Text = "Compras/Subastas Encontradas: " + dtComprasYSubastas.Rows.Count.ToString();//Cantidad totoal de registros encontrados
                 cantidadMaximaDeFilas = dtComprasYSubastas.Rows.Count;
+                hayDatos = true;
                 dataGridView2.Select();
             }
             else
@@ -217,6 +236,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
 
                 lblCantidadTotal.Text = "Compras/Subastas Encontradas: 0";
                 cantidadMaximaDeFilas = 0;
+                hayDatos = false;
             }
         }
 

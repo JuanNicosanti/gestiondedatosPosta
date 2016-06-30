@@ -23,7 +23,9 @@ namespace WindowsFormsApplication1.Listado_Estadistico
         private int anio;
         private String rubroElegido;
         private String visibilidadesElegidas;
-        
+
+        private Boolean top1 = false;
+        private Boolean top2=false;
 
         public Listado_Estadistico()
         {
@@ -119,8 +121,12 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             lstVisi.ValueMember = lstVisi.DisplayMember;
             lstVisiSel.Items.Clear();
 
-            MessageBox.Show("Seleccione si desea filtrar por visibilidad", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-
+            if (!top1)
+            {
+                MessageBox.Show("Seleccione si desea filtrar por visibilidad", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
+            top1 = true;
+            top2 = false;
             lblRubro.Visible = false;
             cmdRubro.Visible = false;
             cboRubro.Visible = false;
@@ -160,6 +166,8 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             cmdVisiBorrar.Visible = false;
             cmdVisiSel.Visible = false;
             lblVisi.Visible = false;
+            top1 = false;
+            top2 = false;
 
         }
 
@@ -217,12 +225,18 @@ namespace WindowsFormsApplication1.Listado_Estadistico
             cmdVisiBorrar.Visible = false;
             cmdVisiSel.Visible = false;
             lblVisi.Visible = false;
+            top1 = false;
+            top2 = false;
         }
 
         private void cmdTop2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Seleccione un Rubro", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-
+            if (!top2)
+            {
+                MessageBox.Show("Seleccione un Rubro", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
+            top2 = true;
+            top1 = false;
             lblRubro.Visible = true;
             cmdRubro.Visible = true;
             cboRubro.Visible = true;

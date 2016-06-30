@@ -1,7 +1,6 @@
+1. Ver historial rompio porque no encontro el SP (logueado con admin)
 
-3) AGREGAR A DOC:
-Debido a que el domicilio puede ser una casa o un piso entero, está permitido que no se ingrese ningún dato en los campos "Piso" y "Departamento" en el alta de usuario.
-La funcion "Historial de cliente" puede demorar unos segundos en ejecutarse debido a la cantidad de datos que debe consultar.
+2. Consulta de Facturas, si no se agrega nada y se toca buscar, ROMPE (Error: Input string was not in a correct format)
 
+6.Consulta de facturas , las fechas aparece las actuales, deberian ser las del arch cfg?
 
-10) Cambiar en el DER la ubicación del campo FormaPago (de Factura a Transacción)

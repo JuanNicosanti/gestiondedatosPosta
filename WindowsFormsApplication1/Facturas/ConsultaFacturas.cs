@@ -18,6 +18,8 @@ namespace WindowsFormsApplication1.Facturas
         private DataBase db;
         public static ConsultaFacturas cf;
 
+        private Boolean hayDatos=false;
+        private Boolean seRealizoBusqueda=false;
         private int contadorDeFilas;
         private int cantidadMaximaDeFilas;
 
@@ -52,10 +54,13 @@ namespace WindowsFormsApplication1.Facturas
             tbImporteMaximo.Text = "";
             tbContenido.Text = "";
             tbVendedor.Text = "";
+            hayDatos = false;
+            seRealizoBusqueda = false;
         }
 
         private void cmdBuscar_Click(object sender, EventArgs e)
         {
+            
             string importeMinimo;
             string importeMaximo;
             if (dtpFechaFinal.Value < dtpFechaInicial.Value)
@@ -101,6 +106,7 @@ namespace WindowsFormsApplication1.Facturas
             adapter = new SqlDataAdapter(cmd);
             dtFacturas = new DataTable("ROAD_TO_PROYECTO.Facturas");
             adapter.Fill(dtFacturas);
+            seRealizoBusqueda = true;
            
 
             if (dtFacturas.Rows.Count > 0)
@@ -111,7 +117,7 @@ namespace WindowsFormsApplication1.Facturas
                 lblCantidadTotal.Text = "Facturas Encontradas: " + dtFacturas.Rows.Count.ToString();//Cantidad totoal de registros encontrados
                 cantidadMaximaDeFilas = dtFacturas.Rows.Count;
                 dataGridView1.Select();
-
+                hayDatos = true;
 
             }
             else
@@ -120,6 +126,7 @@ namespace WindowsFormsApplication1.Facturas
 
                 lblCantidadTotal.Text = "Facturas Encontradas: 0";
                 cantidadMaximaDeFilas = 0;
+                hayDatos = false;
             }
 
             panelResultados.Visible = true;
@@ -165,48 +172,65 @@ namespace WindowsFormsApplication1.Facturas
 
         private void cmdPrimera_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+            if (seRealizoBusqueda && hayDatos)
             {
-                this.nroPagina = 1;
+                if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+                {
+                    this.nroPagina = 1;
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+           
         }
 
         private void cmdProxima_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblPaginaActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+            if (seRealizoBusqueda && hayDatos)
             {
-                this.nroPagina += 1;
+                if (Convert.ToInt32(lblPaginaActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+                {
+                    this.nroPagina += 1;
 
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+
+           
         }
 
         private void cmdAnterior_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblPaginaActual.Text) > 1)
+            if (hayDatos && seRealizoBusqueda)
             {
-                this.nroPagina -= 1;
+                if (Convert.ToInt32(lblPaginaActual.Text) > 1)
+                {
+                    this.nroPagina -= 1;
 
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+            
         }
 
         private void cmdUltima_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+            if (hayDatos && seRealizoBusqueda)
             {
-                this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
+                if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+                {
+                    this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+            
         }
 
         private void numPaginas()

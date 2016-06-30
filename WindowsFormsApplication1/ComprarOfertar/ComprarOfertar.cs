@@ -16,7 +16,7 @@ WindowsFormsApplication1.ComprarOfertar
     public partial class ComprarOfertar : Form
     {
 
-        
+        private Boolean seRealizoUnaBusqueda=false;
 
         SqlCommand cmd;
         SqlCommand cmd2;
@@ -28,6 +28,8 @@ WindowsFormsApplication1.ComprarOfertar
         String descripcionFiltros;
         private int tieneEnvio;
         private int cash;
+
+        private Boolean hayDatos=false;
        
 
         private Boolean seSigueCargandoPrimeraPagina=true;
@@ -291,7 +293,7 @@ WindowsFormsApplication1.ComprarOfertar
 
             if (dtPublicaciones.Rows.Count > 0)
             {
-              
+                hayDatos = true;
                 this.numPaginas(); //Funcion para calcular el numero total de paginas que tendra nuestra vista
                 this.paginar();//empezamos con la paginacion             
                 lblCantidadTotal.Text = "Publicaciones Encontradas: " + dtPublicaciones.Rows.Count.ToString();//Cantidad totoal de registros encontrados
@@ -310,6 +312,7 @@ WindowsFormsApplication1.ComprarOfertar
 
                 lblCantidadTotal.Text = "Publicaciones Encontradas: 0";
                 cantidadMaximaDeFilas = 0;
+                hayDatos = false;
             }
         }
 
@@ -338,6 +341,8 @@ WindowsFormsApplication1.ComprarOfertar
             }
 
             this.pedirPublicacionesYOrdenar();
+
+            seRealizoUnaBusqueda = true;
            
           
 
@@ -348,7 +353,7 @@ WindowsFormsApplication1.ComprarOfertar
         private void cmdLimpiar_Click(object sender, EventArgs e)
         {
             timer1.Stop();
-            
+            seRealizoUnaBusqueda = false;
             dataGridView1.Rows.Clear();
             dataGridView1.Refresh();
             txtDescripcion.Text = "";
@@ -378,48 +383,63 @@ WindowsFormsApplication1.ComprarOfertar
 
         private void cmdPrimera_Click_1(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+            if (seRealizoUnaBusqueda && hayDatos)
             {
-                this.nroPagina = 1;
+                if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+                {
+                    this.nroPagina = 1;
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
-            }
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
+            }                      
         }
 
         private void cmdProxima_Click_1(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblPaginaActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+            if (seRealizoUnaBusqueda && hayDatos)
             {
-                this.nroPagina += 1;
+                if (Convert.ToInt32(lblPaginaActual.Text) < Convert.ToInt32(lblTotalPagina.Text))
+                {
+                    this.nroPagina += 1;
 
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+            
         }
 
         private void cmdAnterior_Click_1(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblPaginaActual.Text) > 1)
+            if (seRealizoUnaBusqueda && hayDatos)
             {
-                this.nroPagina -= 1;
+                if (Convert.ToInt32(lblPaginaActual.Text) > 1)
+                {
+                    this.nroPagina -= 1;
 
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+            
         }
 
         private void cmdUltima_Click_1(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+            if (seRealizoUnaBusqueda && hayDatos)
             {
-                this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
+                if (Convert.ToInt32(lblTotalPagina.Text) > 1)
+                {
+                    this.nroPagina = Convert.ToInt32(lblTotalPagina.Text);
 
-                lblPaginaActual.Text = this.nroPagina.ToString();
-                this.paginar();
+                    lblPaginaActual.Text = this.nroPagina.ToString();
+                    this.paginar();
+                }
             }
+            
         }
 
         private void cmdComprarOfertar_Click(object sender, EventArgs e)
@@ -450,11 +470,7 @@ WindowsFormsApplication1.ComprarOfertar
                 return;
             }
 
-            if (cboPagos.SelectedIndex.Equals(-1))
-            {
-                MessageBox.Show("Debe elegir la forma de pago", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                return;
-            }
+          
             
             String ofertaOCompra = dataGridView1[7, fila].Value.ToString();
           
@@ -499,6 +515,11 @@ WindowsFormsApplication1.ComprarOfertar
             }
             if (ofertaOCompra.Equals("Compra Inmediata"))
             {
+                if (cboPagos.SelectedIndex.Equals(-1))
+                {
+                    MessageBox.Show("Debe elegir la forma de pago", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                } 
                 String valorStockString = dataGridView1[2, fila].Value.ToString();
                 int valorStockInt = int.Parse(valorStockString);
                 if (string.IsNullOrEmpty(txtCantidad.Text))
