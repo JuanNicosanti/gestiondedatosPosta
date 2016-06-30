@@ -181,12 +181,14 @@
             // 
             // cmdModificar
             // 
+            this.cmdModificar.BackColor = System.Drawing.Color.LawnGreen;
+            this.cmdModificar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.cmdModificar.Location = new System.Drawing.Point(154, 160);
             this.cmdModificar.Name = "cmdModificar";
             this.cmdModificar.Size = new System.Drawing.Size(124, 23);
             this.cmdModificar.TabIndex = 1;
             this.cmdModificar.Text = "Modificar";
-            this.cmdModificar.UseVisualStyleBackColor = true;
+            this.cmdModificar.UseVisualStyleBackColor = false;
             this.cmdModificar.Click += new System.EventHandler(this.cmdModificar_Click);
             // 
             // dataGridView1

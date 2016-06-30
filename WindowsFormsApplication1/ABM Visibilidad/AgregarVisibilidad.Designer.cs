@@ -33,17 +33,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tbDescripcion = new System.Windows.Forms.TextBox();
-            this.tbComiFija = new System.Windows.Forms.TextBox();
-            this.tbComiVariable = new System.Windows.Forms.TextBox();
             this.cmdAceptarVis = new System.Windows.Forms.Button();
             this.cmdLimpiar = new System.Windows.Forms.Button();
             this.cmdVolverComs = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbEnvio = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.nudComiFija = new System.Windows.Forms.NumericUpDown();
+            this.nudComiVariable = new System.Windows.Forms.NumericUpDown();
+            this.nudEnvio = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiFija)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiVariable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEnvio)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -94,22 +97,6 @@
             this.tbDescripcion.TabIndex = 4;
             this.tbDescripcion.TextChanged += new System.EventHandler(this.tbDescripcion_TextChanged);
             // 
-            // tbComiFija
-            // 
-            this.tbComiFija.Location = new System.Drawing.Point(22, 116);
-            this.tbComiFija.Name = "tbComiFija";
-            this.tbComiFija.Size = new System.Drawing.Size(74, 20);
-            this.tbComiFija.TabIndex = 5;
-            this.tbComiFija.TextChanged += new System.EventHandler(this.tbComiFija_TextChanged);
-            // 
-            // tbComiVariable
-            // 
-            this.tbComiVariable.Location = new System.Drawing.Point(22, 159);
-            this.tbComiVariable.Name = "tbComiVariable";
-            this.tbComiVariable.Size = new System.Drawing.Size(74, 20);
-            this.tbComiVariable.TabIndex = 6;
-            this.tbComiVariable.TextChanged += new System.EventHandler(this.tbComiVariable_TextChanged);
-            // 
             // cmdAceptarVis
             // 
             this.cmdAceptarVis.BackColor = System.Drawing.Color.LawnGreen;
@@ -153,14 +140,6 @@
             this.label5.Text = "Comisión por envío";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // tbEnvio
-            // 
-            this.tbEnvio.Location = new System.Drawing.Point(22, 202);
-            this.tbEnvio.Name = "tbEnvio";
-            this.tbEnvio.Size = new System.Drawing.Size(74, 20);
-            this.tbEnvio.TabIndex = 11;
-            this.tbEnvio.TextChanged += new System.EventHandler(this.tbEnvio_TextChanged);
-            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.NavajoWhite;
@@ -168,7 +147,7 @@
             this.salirToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(363, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(287, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -185,24 +164,63 @@
             this.statusStrip1.BackColor = System.Drawing.Color.NavajoWhite;
             this.statusStrip1.Location = new System.Drawing.Point(0, 297);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(363, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(287, 22);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // nudComiFija
+            // 
+            this.nudComiFija.DecimalPlaces = 2;
+            this.nudComiFija.Location = new System.Drawing.Point(22, 117);
+            this.nudComiFija.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.nudComiFija.Name = "nudComiFija";
+            this.nudComiFija.Size = new System.Drawing.Size(75, 20);
+            this.nudComiFija.TabIndex = 14;
+            // 
+            // nudComiVariable
+            // 
+            this.nudComiVariable.DecimalPlaces = 2;
+            this.nudComiVariable.Location = new System.Drawing.Point(22, 163);
+            this.nudComiVariable.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.nudComiVariable.Name = "nudComiVariable";
+            this.nudComiVariable.Size = new System.Drawing.Size(75, 20);
+            this.nudComiVariable.TabIndex = 15;
+            // 
+            // nudEnvio
+            // 
+            this.nudEnvio.DecimalPlaces = 2;
+            this.nudEnvio.Location = new System.Drawing.Point(22, 202);
+            this.nudEnvio.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudEnvio.Name = "nudEnvio";
+            this.nudEnvio.Size = new System.Drawing.Size(75, 20);
+            this.nudEnvio.TabIndex = 16;
             // 
             // AgregarVisibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(363, 319);
+            this.ClientSize = new System.Drawing.Size(287, 319);
+            this.Controls.Add(this.nudEnvio);
+            this.Controls.Add(this.nudComiVariable);
+            this.Controls.Add(this.nudComiFija);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.tbEnvio);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmdVolverComs);
             this.Controls.Add(this.cmdLimpiar);
             this.Controls.Add(this.cmdAceptarVis);
-            this.Controls.Add(this.tbComiVariable);
-            this.Controls.Add(this.tbComiFija);
             this.Controls.Add(this.tbDescripcion);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -215,6 +233,9 @@
             this.Load += new System.EventHandler(this.AgregarVisibilidad_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiFija)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiVariable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEnvio)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,15 +248,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbDescripcion;
-        private System.Windows.Forms.TextBox tbComiFija;
-        private System.Windows.Forms.TextBox tbComiVariable;
         private System.Windows.Forms.Button cmdAceptarVis;
         private System.Windows.Forms.Button cmdLimpiar;
         private System.Windows.Forms.Button cmdVolverComs;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbEnvio;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.NumericUpDown nudComiFija;
+        private System.Windows.Forms.NumericUpDown nudComiVariable;
+        private System.Windows.Forms.NumericUpDown nudEnvio;
     }
 }

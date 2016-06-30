@@ -54,9 +54,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         private void cmdLimpiar_Click(object sender, EventArgs e)
         {
             tbDescripcion.Text = "";
-            tbComiFija.Text = "";
-            tbComiVariable.Text = "";
-            tbEnvio.Text = "";
+            nudComiFija.Text = "";
+            nudComiVariable.Text = "";
+            nudEnvio.Text = "";
         }
 
         private void cmdAceptarVis_Click(object sender, EventArgs e)
@@ -80,76 +80,55 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                     huboErrorTipoDatos++;
                 }
             }
-            if (string.IsNullOrEmpty(tbComiFija.Text))
+            if (string.IsNullOrEmpty(nudComiFija.Text))
             {
 
                 cadenaDeErrores += "Comision por tipo de publicacion \r";
                 huboError++;
             }
-            if (!(string.IsNullOrEmpty(tbComiFija.Text)))
+            if (!(string.IsNullOrEmpty(nudComiFija.Text)))
             {
 
-                if (!(double.TryParse(tbComiFija.Text, out valDouble)))
+             
+                if (double.Parse(nudComiFija.Text) <= 0)
                 {
-                    cadenaDeErrorNumeroYEsCaracter += "Comision por tipo de publicacion \r";
-                    huboErrorTipoDatos++;
-
+                    cadenaDeErrorValoresNegativos += "Comision por tipo de publicacion \r";
+                    huboErrorNegativos++;
                 }
-                else
-                {
-                    if (double.Parse(tbComiFija.Text) <= 0)
-                    {
-                        cadenaDeErrorValoresNegativos += "Comision por tipo de publicacion \r";
-                        huboErrorNegativos++;
-                    }
-                }
+                
             }
-            if (string.IsNullOrEmpty(tbComiVariable.Text))
+            if (string.IsNullOrEmpty(nudComiVariable.Text))
             {
                 cadenaDeErrores += "Comision por producto vendido \r";
                 huboError++;
             }
-            if (!(string.IsNullOrEmpty(tbComiVariable.Text)))
+            if (!(string.IsNullOrEmpty(nudComiVariable.Text)))
             {
 
-                if (!(double.TryParse(tbComiVariable.Text, out valDouble)))
-                {
-                    cadenaDeErrorNumeroYEsCaracter += "Comision por producto vendido \r";
-                    huboErrorTipoDatos++;
-
-                }
-                else
-                {
-                    if (double.Parse(tbComiVariable.Text) <= 0)
+             
+                    if (double.Parse(nudComiVariable.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision por producto vendido \r";
                         huboErrorNegativos++;
                     }
-                }
+                
             }
-            if (string.IsNullOrEmpty(tbEnvio.Text))
+            if (string.IsNullOrEmpty(nudEnvio.Text))
             {
                 cadenaDeErrores += "Comision de envio \r";
                 huboError++;
 
             }
-            if (!(string.IsNullOrEmpty(tbEnvio.Text)))
+            if (!(string.IsNullOrEmpty(nudEnvio.Text)))
             {
 
-                if (!(double.TryParse(tbEnvio.Text, out valDouble)))
-                {
-                    cadenaDeErrorNumeroYEsCaracter += "Comision de envio \r";
-                    huboErrorTipoDatos++;
-
-                }
-                else
-                {
-                    if (double.Parse(tbEnvio.Text) <= 0)
+              
+                    if (double.Parse(nudEnvio.Text) <= 0)
                     {
                         cadenaDeErrorValoresNegativos += "Comision de envio \r";
                         huboErrorNegativos++;
                     }
-                }
+                
             }
 
 
@@ -251,9 +230,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@VisiId", SqlDbType.Int).Value = visiId;
             cmd.Parameters.AddWithValue("@Descripcion", SqlDbType.NVarChar).Value = tbDescripcion.Text;
-            cmd.Parameters.AddWithValue("@ComiFijaString", SqlDbType.NVarChar).Value = tbComiFija.Text;
-            cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = tbComiVariable.Text;
-            cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = tbEnvio.Text;
+            cmd.Parameters.AddWithValue("@ComiFijaString", SqlDbType.NVarChar).Value = nudComiFija.Text;
+            cmd.Parameters.AddWithValue("@ComiVariableString", SqlDbType.NVarChar).Value = nudComiVariable.Text;
+            cmd.Parameters.AddWithValue("@ComiEnvioString", SqlDbType.NVarChar).Value = nudEnvio.Text;
             cmd.Parameters.AddWithValue("@Habilitado", SqlDbType.Int).Value = habilitada;
             cmd.ExecuteNonQuery();
             MessageBox.Show("Visibilidad modificada correctamente", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);

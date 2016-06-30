@@ -16,9 +16,9 @@ namespace WindowsFormsApplication1.ABM_Rol
        
         SqlCommand cmd;
         SqlCommand cmd2;
-        SqlCommand cmd3;
-        SqlCommand cmd4;
-        SqlDataReader sdr;
+       // SqlCommand cmd3;
+        //SqlCommand cmd4;
+        //SqlDataReader sdr;
         SqlDataAdapter adapter;
         private DataBase db;
         public int esAltaRol = 1;
@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         private String rolAModificar;
         private Boolean tieneFuncionalidades=false;
         private Boolean existeElRol = false;
-        private Boolean desasignarFuncionesViejas = false;
+        //private Boolean desasignarFuncionesViejas = false;
 
         private List<String> funcionesViejas = new List<string>();
 

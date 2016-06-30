@@ -28,13 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbEnvio = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cmdVolverComs = new System.Windows.Forms.Button();
             this.cmdLimpiar = new System.Windows.Forms.Button();
             this.cmdAceptarVis = new System.Windows.Forms.Button();
-            this.tbComiVariable = new System.Windows.Forms.TextBox();
-            this.tbComiFija = new System.Windows.Forms.TextBox();
             this.tbDescripcion = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,15 +41,14 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.cbHabilitada = new System.Windows.Forms.CheckBox();
+            this.nudEnvio = new System.Windows.Forms.NumericUpDown();
+            this.nudComiVariable = new System.Windows.Forms.NumericUpDown();
+            this.nudComiFija = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEnvio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiVariable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiFija)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tbEnvio
-            // 
-            this.tbEnvio.Location = new System.Drawing.Point(21, 206);
-            this.tbEnvio.Name = "tbEnvio";
-            this.tbEnvio.Size = new System.Drawing.Size(74, 20);
-            this.tbEnvio.TabIndex = 23;
             // 
             // label5
             // 
@@ -95,20 +91,6 @@
             this.cmdAceptarVis.Text = "Aceptar";
             this.cmdAceptarVis.UseVisualStyleBackColor = false;
             this.cmdAceptarVis.Click += new System.EventHandler(this.cmdAceptarVis_Click);
-            // 
-            // tbComiVariable
-            // 
-            this.tbComiVariable.Location = new System.Drawing.Point(21, 163);
-            this.tbComiVariable.Name = "tbComiVariable";
-            this.tbComiVariable.Size = new System.Drawing.Size(74, 20);
-            this.tbComiVariable.TabIndex = 18;
-            // 
-            // tbComiFija
-            // 
-            this.tbComiFija.Location = new System.Drawing.Point(21, 120);
-            this.tbComiFija.Name = "tbComiFija";
-            this.tbComiFija.Size = new System.Drawing.Size(74, 20);
-            this.tbComiFija.TabIndex = 17;
             // 
             // tbDescripcion
             // 
@@ -191,21 +173,60 @@
             this.cbHabilitada.Text = "Habilitada";
             this.cbHabilitada.UseVisualStyleBackColor = true;
             // 
+            // nudEnvio
+            // 
+            this.nudEnvio.DecimalPlaces = 2;
+            this.nudEnvio.Location = new System.Drawing.Point(21, 207);
+            this.nudEnvio.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.nudEnvio.Name = "nudEnvio";
+            this.nudEnvio.Size = new System.Drawing.Size(75, 20);
+            this.nudEnvio.TabIndex = 29;
+            // 
+            // nudComiVariable
+            // 
+            this.nudComiVariable.DecimalPlaces = 2;
+            this.nudComiVariable.Location = new System.Drawing.Point(21, 167);
+            this.nudComiVariable.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.nudComiVariable.Name = "nudComiVariable";
+            this.nudComiVariable.Size = new System.Drawing.Size(75, 20);
+            this.nudComiVariable.TabIndex = 28;
+            // 
+            // nudComiFija
+            // 
+            this.nudComiFija.DecimalPlaces = 2;
+            this.nudComiFija.Location = new System.Drawing.Point(21, 121);
+            this.nudComiFija.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.nudComiFija.Name = "nudComiFija";
+            this.nudComiFija.Size = new System.Drawing.Size(75, 20);
+            this.nudComiFija.TabIndex = 27;
+            // 
             // ModificarVisibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(285, 321);
+            this.Controls.Add(this.nudEnvio);
+            this.Controls.Add(this.nudComiVariable);
+            this.Controls.Add(this.nudComiFija);
             this.Controls.Add(this.cbHabilitada);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.tbEnvio);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmdVolverComs);
             this.Controls.Add(this.cmdLimpiar);
             this.Controls.Add(this.cmdAceptarVis);
-            this.Controls.Add(this.tbComiVariable);
-            this.Controls.Add(this.tbComiFija);
             this.Controls.Add(this.tbDescripcion);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -218,6 +239,9 @@
             this.Load += new System.EventHandler(this.ModificarVisibilidad_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEnvio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiVariable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudComiFija)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,13 +257,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox tbEnvio;
-        public System.Windows.Forms.TextBox tbComiVariable;
-        public System.Windows.Forms.TextBox tbComiFija;
         public System.Windows.Forms.TextBox tbDescripcion;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         public System.Windows.Forms.CheckBox cbHabilitada;
+        public System.Windows.Forms.NumericUpDown nudEnvio;
+        public System.Windows.Forms.NumericUpDown nudComiVariable;
+        public System.Windows.Forms.NumericUpDown nudComiFija;
     }
 }

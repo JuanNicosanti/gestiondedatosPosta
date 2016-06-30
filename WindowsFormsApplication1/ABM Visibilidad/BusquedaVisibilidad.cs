@@ -80,9 +80,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             fila = dataGridView1.CurrentRow.Index;
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad modVisibilidad = new WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad();
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbDescripcion.Text = dataGridView1[1, fila].Value.ToString();
-            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbComiFija.Text = dataGridView1[2, fila].Value.ToString();
-            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbComiVariable.Text = dataGridView1[3, fila].Value.ToString();
-            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.tbEnvio.Text = dataGridView1[4, fila].Value.ToString();
+            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.nudComiFija.Text = dataGridView1[2, fila].Value.ToString();
+            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.nudComiVariable.Text = dataGridView1[3, fila].Value.ToString();
+            WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.nudEnvio.Text = dataGridView1[4, fila].Value.ToString();
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.visiId = (int)dataGridView1[0, fila].Value;
             WindowsFormsApplication1.ABM_Visibilidad.ModificarVisibilidad.modVis.habilitada = (int)dataGridView1[5, fila].Value;
             modVisibilidad.Show();
