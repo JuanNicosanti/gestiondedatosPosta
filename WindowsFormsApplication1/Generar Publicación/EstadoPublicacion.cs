@@ -169,6 +169,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Finalizar_Publicacion", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@PubliId", SqlDbType.Int).Value = (int)dgPublis[0, fila].Value;
+            cmd.Parameters.AddWithValue("@FechaActual", SqlDbType.DateTime).Value = Fecha.getFechaActual();
             cmd.ExecuteNonQuery();
             MessageBox.Show("Se finalizó la publicación", "Sr.Usuario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);           
 

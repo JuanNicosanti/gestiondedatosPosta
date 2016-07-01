@@ -83,13 +83,13 @@
             this.panelBusqueda.Controls.Add(this.label1);
             this.panelBusqueda.Location = new System.Drawing.Point(13, 38);
             this.panelBusqueda.Name = "panelBusqueda";
-            this.panelBusqueda.Size = new System.Drawing.Size(731, 146);
+            this.panelBusqueda.Size = new System.Drawing.Size(517, 146);
             this.panelBusqueda.TabIndex = 0;
             // 
             // cmdLimpiar
             // 
             this.cmdLimpiar.BackColor = System.Drawing.Color.LightCoral;
-            this.cmdLimpiar.Location = new System.Drawing.Point(545, 13);
+            this.cmdLimpiar.Location = new System.Drawing.Point(420, 10);
             this.cmdLimpiar.Name = "cmdLimpiar";
             this.cmdLimpiar.Size = new System.Drawing.Size(75, 23);
             this.cmdLimpiar.TabIndex = 13;
@@ -100,7 +100,7 @@
             // cmdBuscar
             // 
             this.cmdBuscar.BackColor = System.Drawing.Color.LawnGreen;
-            this.cmdBuscar.Location = new System.Drawing.Point(545, 68);
+            this.cmdBuscar.Location = new System.Drawing.Point(420, 67);
             this.cmdBuscar.Name = "cmdBuscar";
             this.cmdBuscar.Size = new System.Drawing.Size(75, 23);
             this.cmdBuscar.TabIndex = 12;
@@ -110,16 +110,16 @@
             // 
             // dtpFechaFinal
             // 
-            this.dtpFechaFinal.Location = new System.Drawing.Point(317, 12);
+            this.dtpFechaFinal.Location = new System.Drawing.Point(264, 13);
             this.dtpFechaFinal.Name = "dtpFechaFinal";
-            this.dtpFechaFinal.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFinal.Size = new System.Drawing.Size(130, 20);
             this.dtpFechaFinal.TabIndex = 12;
             // 
             // dtpFechaInicial
             // 
             this.dtpFechaInicial.Location = new System.Drawing.Point(85, 12);
             this.dtpFechaInicial.Name = "dtpFechaInicial";
-            this.dtpFechaInicial.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaInicial.Size = new System.Drawing.Size(130, 20);
             this.dtpFechaInicial.TabIndex = 5;
             // 
             // tbVendedor
@@ -164,7 +164,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(299, 15);
+            this.label2.Location = new System.Drawing.Point(233, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(12, 13);
             this.label2.TabIndex = 2;
@@ -209,7 +209,7 @@
             this.panelResultados.Controls.Add(this.dataGridView1);
             this.panelResultados.Location = new System.Drawing.Point(13, 190);
             this.panelResultados.Name = "panelResultados";
-            this.panelResultados.Size = new System.Drawing.Size(731, 177);
+            this.panelResultados.Size = new System.Drawing.Size(517, 177);
             this.panelResultados.TabIndex = 1;
             this.panelResultados.Visible = false;
             this.panelResultados.Paint += new System.Windows.Forms.PaintEventHandler(this.panelResultados_Paint);
@@ -222,14 +222,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(725, 170);
+            this.dataGridView1.Size = new System.Drawing.Size(514, 170);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // cmdVerFactura
             // 
             this.cmdVerFactura.BackColor = System.Drawing.Color.NavajoWhite;
-            this.cmdVerFactura.Location = new System.Drawing.Point(305, 455);
+            this.cmdVerFactura.Location = new System.Drawing.Point(180, 455);
             this.cmdVerFactura.Name = "cmdVerFactura";
             this.cmdVerFactura.Size = new System.Drawing.Size(143, 23);
             this.cmdVerFactura.TabIndex = 2;
@@ -245,7 +245,7 @@
             this.salirToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(754, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(544, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -262,7 +262,7 @@
             this.statusStrip1.BackColor = System.Drawing.Color.NavajoWhite;
             this.statusStrip1.Location = new System.Drawing.Point(0, 481);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(754, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(544, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -273,15 +273,15 @@
             this.labelMIL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelMIL.Location = new System.Drawing.Point(13, 370);
             this.labelMIL.Name = "labelMIL";
-            this.labelMIL.Size = new System.Drawing.Size(728, 82);
+            this.labelMIL.Size = new System.Drawing.Size(517, 82);
             this.labelMIL.TabIndex = 5;
             this.labelMIL.Visible = false;
             // 
             // cmdPrimera
             // 
-            this.cmdPrimera.Location = new System.Drawing.Point(50, 383);
+            this.cmdPrimera.Location = new System.Drawing.Point(16, 383);
             this.cmdPrimera.Name = "cmdPrimera";
-            this.cmdPrimera.Size = new System.Drawing.Size(120, 23);
+            this.cmdPrimera.Size = new System.Drawing.Size(95, 23);
             this.cmdPrimera.TabIndex = 6;
             this.cmdPrimera.Text = "Primera pagina";
             this.cmdPrimera.UseVisualStyleBackColor = true;
@@ -290,9 +290,9 @@
             // 
             // cmdAnterior
             // 
-            this.cmdAnterior.Location = new System.Drawing.Point(223, 383);
+            this.cmdAnterior.Location = new System.Drawing.Point(139, 383);
             this.cmdAnterior.Name = "cmdAnterior";
-            this.cmdAnterior.Size = new System.Drawing.Size(120, 23);
+            this.cmdAnterior.Size = new System.Drawing.Size(95, 23);
             this.cmdAnterior.TabIndex = 7;
             this.cmdAnterior.Text = "Pagina anterior";
             this.cmdAnterior.UseVisualStyleBackColor = true;
@@ -301,9 +301,9 @@
             // 
             // cmdProxima
             // 
-            this.cmdProxima.Location = new System.Drawing.Point(410, 383);
+            this.cmdProxima.Location = new System.Drawing.Point(302, 383);
             this.cmdProxima.Name = "cmdProxima";
-            this.cmdProxima.Size = new System.Drawing.Size(120, 23);
+            this.cmdProxima.Size = new System.Drawing.Size(97, 23);
             this.cmdProxima.TabIndex = 8;
             this.cmdProxima.Text = "Proxima pagina";
             this.cmdProxima.UseVisualStyleBackColor = true;
@@ -312,9 +312,9 @@
             // 
             // cmdUltima
             // 
-            this.cmdUltima.Location = new System.Drawing.Point(583, 383);
+            this.cmdUltima.Location = new System.Drawing.Point(432, 383);
             this.cmdUltima.Name = "cmdUltima";
-            this.cmdUltima.Size = new System.Drawing.Size(120, 23);
+            this.cmdUltima.Size = new System.Drawing.Size(95, 23);
             this.cmdUltima.TabIndex = 9;
             this.cmdUltima.Text = "Ultima pagina";
             this.cmdUltima.UseVisualStyleBackColor = true;
@@ -325,9 +325,10 @@
             // 
             this.lblPaginaActual.AutoSize = true;
             this.lblPaginaActual.BackColor = System.Drawing.Color.LightGray;
-            this.lblPaginaActual.Location = new System.Drawing.Point(334, 426);
+            this.lblPaginaActual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPaginaActual.Location = new System.Drawing.Point(205, 426);
             this.lblPaginaActual.Name = "lblPaginaActual";
-            this.lblPaginaActual.Size = new System.Drawing.Size(10, 13);
+            this.lblPaginaActual.Size = new System.Drawing.Size(12, 16);
             this.lblPaginaActual.TabIndex = 10;
             this.lblPaginaActual.Text = " ";
             this.lblPaginaActual.Visible = false;
@@ -336,9 +337,10 @@
             // 
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.LightGray;
-            this.label9.Location = new System.Drawing.Point(375, 426);
+            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(246, 426);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(12, 13);
+            this.label9.Size = new System.Drawing.Size(16, 16);
             this.label9.TabIndex = 11;
             this.label9.Text = "/";
             this.label9.Visible = false;
@@ -347,9 +349,10 @@
             // 
             this.lblTotalPagina.AutoSize = true;
             this.lblTotalPagina.BackColor = System.Drawing.Color.LightGray;
-            this.lblTotalPagina.Location = new System.Drawing.Point(407, 426);
+            this.lblTotalPagina.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPagina.Location = new System.Drawing.Point(278, 426);
             this.lblTotalPagina.Name = "lblTotalPagina";
-            this.lblTotalPagina.Size = new System.Drawing.Size(0, 13);
+            this.lblTotalPagina.Size = new System.Drawing.Size(0, 16);
             this.lblTotalPagina.TabIndex = 12;
             this.lblTotalPagina.Visible = false;
             // 
@@ -357,16 +360,17 @@
             // 
             this.lblCantidadTotal.AutoSize = true;
             this.lblCantidadTotal.BackColor = System.Drawing.Color.LightGray;
-            this.lblCantidadTotal.Location = new System.Drawing.Point(530, 426);
+            this.lblCantidadTotal.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantidadTotal.Location = new System.Drawing.Point(334, 426);
             this.lblCantidadTotal.Name = "lblCantidadTotal";
-            this.lblCantidadTotal.Size = new System.Drawing.Size(0, 13);
+            this.lblCantidadTotal.Size = new System.Drawing.Size(0, 16);
             this.lblCantidadTotal.TabIndex = 13;
             this.lblCantidadTotal.Visible = false;
             // 
             // cmdVolver
             // 
             this.cmdVolver.BackColor = System.Drawing.Color.Cyan;
-            this.cmdVolver.Location = new System.Drawing.Point(583, 455);
+            this.cmdVolver.Location = new System.Drawing.Point(410, 455);
             this.cmdVolver.Name = "cmdVolver";
             this.cmdVolver.Size = new System.Drawing.Size(120, 23);
             this.cmdVolver.TabIndex = 14;
@@ -379,7 +383,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(754, 503);
+            this.ClientSize = new System.Drawing.Size(544, 503);
             this.Controls.Add(this.cmdVolver);
             this.Controls.Add(this.lblCantidadTotal);
             this.Controls.Add(this.lblTotalPagina);

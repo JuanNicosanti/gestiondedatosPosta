@@ -22,6 +22,8 @@ namespace WindowsFormsApplication1.Facturas
         private Boolean seRealizoBusqueda=false;
         private int contadorDeFilas;
         private int cantidadMaximaDeFilas;
+        public bool esAdmin = false;
+        public string user;
 
         int filasPagina = 10; // Definimos el numero de filas que deseamos ver por pagina
         int nroPagina = 1;//Esto define el numero de pagina actual en al que nos encontramos
@@ -61,6 +63,7 @@ namespace WindowsFormsApplication1.Facturas
         private void cmdBuscar_Click(object sender, EventArgs e)
         {
             
+           
             string importeMinimo;
             string importeMaximo;
             if (dtpFechaFinal.Value < dtpFechaInicial.Value)
@@ -68,11 +71,22 @@ namespace WindowsFormsApplication1.Facturas
                 MessageBox.Show("La fecha final debe ser menor o igual a la fecha inicial", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return;
             }
-            if (double.Parse(tbImporteMaximo.Text) < 0 || double.Parse(tbImporteMinimo.Text)<0)
+            if (!string.IsNullOrEmpty(tbImporteMinimo.Text))
             {
-                MessageBox.Show("No estan permitidos importes negativos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                return;
-            } 
+                if (double.Parse(tbImporteMinimo.Text) < 0)
+                {
+                    MessageBox.Show("No estan permitidos importes negativos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+            }
+            if(!string.IsNullOrEmpty(tbImporteMaximo.Text))
+            {
+                if (double.Parse(tbImporteMaximo.Text) < 0)
+                {
+                    MessageBox.Show("No estan permitidos importes negativos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+            }
             if (string.IsNullOrEmpty(tbImporteMinimo.Text))
             {
                 importeMinimo = int.MinValue.ToString();
@@ -89,10 +103,13 @@ namespace WindowsFormsApplication1.Facturas
             {
                 importeMaximo = tbImporteMaximo.Text;
             }
-            if ((int.Parse(importeMaximo)) < (int.Parse(importeMinimo)))
+            if (!string.IsNullOrEmpty(tbImporteMinimo.Text) && !string.IsNullOrEmpty(tbImporteMaximo.Text))
             {
-                MessageBox.Show("El importe mínimo debe ser menor o igual al importe máximo", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                return;
+                if ((double.Parse(importeMaximo)) < (double.Parse(importeMinimo)))
+                {
+                    MessageBox.Show("El importe mínimo debe ser menor o igual al importe máximo", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                    return;
+                }
             }
             cmd = new SqlCommand("ROAD_TO_PROYECTO.Consulta_Facturas_Vendedor", db.Connection);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -101,7 +118,14 @@ namespace WindowsFormsApplication1.Facturas
             cmd.Parameters.AddWithValue("@MontoInicioIntervaloString", SqlDbType.NVarChar).Value = importeMinimo;
             cmd.Parameters.AddWithValue("@MontoFinIntervaloString", SqlDbType.NVarChar).Value = importeMaximo;
             cmd.Parameters.AddWithValue("@Detalle", SqlDbType.NVarChar).Value = tbContenido.Text;
-            cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = tbVendedor.Text;
+            if (user != "admin" && !esAdmin)
+            {
+                cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = user;
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Usuario", SqlDbType.NVarChar).Value = tbVendedor.Text;
+            }
 
             adapter = new SqlDataAdapter(cmd);
             dtFacturas = new DataTable("ROAD_TO_PROYECTO.Facturas");
@@ -111,11 +135,12 @@ namespace WindowsFormsApplication1.Facturas
 
             if (dtFacturas.Rows.Count > 0)
             {
-
+               
                 this.numPaginas(); //Funcion para calcular el numero total de paginas que tendra nuestra vista
+                cantidadMaximaDeFilas = dtFacturas.Rows.Count;
                 this.paginar();//empezamos con la paginacion             
                 lblCantidadTotal.Text = "Facturas Encontradas: " + dtFacturas.Rows.Count.ToString();//Cantidad totoal de registros encontrados
-                cantidadMaximaDeFilas = dtFacturas.Rows.Count;
+               
                 dataGridView1.Select();
                 hayDatos = true;
 
@@ -162,7 +187,13 @@ namespace WindowsFormsApplication1.Facturas
 
         private void ConsultaFacturas_Load(object sender, EventArgs e)
         {
-
+            if (user != "admin" && !esAdmin) 
+            {
+                tbVendedor.Visible = false;
+                label6.Visible = false;
+            }
+            dtpFechaFinal.Value = Fecha.getFechaActual();
+            dtpFechaInicial.Value = Fecha.getFechaActual();
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,6 +266,7 @@ namespace WindowsFormsApplication1.Facturas
 
         private void numPaginas()
         {
+           
             if (dtFacturas.Rows.Count % filasPagina == 0)
                 lblTotalPagina.Text = (dtFacturas.Rows.Count / filasPagina).ToString();
             else
@@ -249,6 +281,7 @@ namespace WindowsFormsApplication1.Facturas
 
         private void paginar()
         {
+            
             nroPagina = Convert.ToInt32(lblPaginaActual.Text);//Obtenemos el numero de paginaactual 
             if (dataGridView1.Rows.Count > 0)
             {
@@ -264,26 +297,24 @@ namespace WindowsFormsApplication1.Facturas
             }
 
             dataGridView1.Rows.Clear();
-
+            int filasPaginaBis=filasPagina;
             if (filasPagina > dtFacturas.Rows.Count)
             {
-                filasPagina = dtFacturas.Rows.Count;
+                filasPaginaBis = dtFacturas.Rows.Count;
             }
            
             int indiceInsertar;
             numeroRegistro = this.ini;
-            dataGridView1.ColumnCount = 8;
+            dataGridView1.ColumnCount = 5;
             dataGridView1.Columns[0].Name = "FactNro";
             dataGridView1.Columns[1].Name = "PubliId";
-            dataGridView1.Columns[2].Name = "Fecha";
-            dataGridView1.Columns[3].Name = "Total";
-            dataGridView1.Columns[4].Name = "FormaPago";
-            dataGridView1.Columns[5].Name = "Cantidad";
-            dataGridView1.Columns[6].Name = "Detalle";
-            dataGridView1.Columns[7].Name = "Subtotal";
+            dataGridView1.Columns[2].Name = "Descripcion";
+            dataGridView1.Columns[3].Name = "Fecha";
+            dataGridView1.Columns[4].Name = "Total";                        
 
             contadorDeFilas = 0;
-            for (int i = ini; i < filasPagina * nroPagina; i++)
+            //cantidadMaximaDeFilas=
+            for(int i = ini; i < filasPaginaBis * nroPagina; i++)
             {
 
                 fila = dtFacturas.Rows[i];
@@ -296,11 +327,7 @@ namespace WindowsFormsApplication1.Facturas
                 dataGridView1.Rows[contadorDeFilas].Cells[1].Value = fila[1].ToString();
                 dataGridView1.Rows[contadorDeFilas].Cells[2].Value = fila[2].ToString();
                 dataGridView1.Rows[contadorDeFilas].Cells[3].Value = fila[3].ToString();
-                dataGridView1.Rows[contadorDeFilas].Cells[4].Value = fila[4].ToString();
-                dataGridView1.Rows[contadorDeFilas].Cells[5].Value = fila[5].ToString();
-                dataGridView1.Rows[contadorDeFilas].Cells[6].Value = fila[6].ToString();
-                dataGridView1.Rows[contadorDeFilas].Cells[7].Value = fila[7].ToString();
-
+                dataGridView1.Rows[contadorDeFilas].Cells[4].Value = fila[4].ToString();                         
 
                 contadorDeFilas++;
 
@@ -309,9 +336,6 @@ namespace WindowsFormsApplication1.Facturas
                     i = filasPagina * nroPagina;
 
                 }
-
-
-
             }
         }
 

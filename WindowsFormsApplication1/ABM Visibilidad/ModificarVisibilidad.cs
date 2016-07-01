@@ -68,7 +68,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             string cadenaDeErrorValoresNegativos = "No puede tener valores negativos o cero en los siguientes campos: \r";
             string cadenaDeErrorNumeroYEsCaracter = "No se permiten los tipos de datos ingresados en los siguientes campos: \r";
             int valint = 0;
-            double valDouble = 0;
+            //double valDouble = 0;
             if (string.IsNullOrEmpty(tbDescripcion.Text))
             {
                 cadenaDeErrores += "Descripcion \r";

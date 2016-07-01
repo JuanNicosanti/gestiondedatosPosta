@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace WindowsFormsApplication1.Calificar
 {
     public partial class MenuCalificaciones : Form
-    {
+    {        
         public static MenuCalificaciones menuCalif;
 
         public MenuCalificaciones()
@@ -43,6 +43,11 @@ namespace WindowsFormsApplication1.Calificar
         {
             Form1.f1.Show();
             this.Hide();
+        }
+
+        private void MenuCalificaciones_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

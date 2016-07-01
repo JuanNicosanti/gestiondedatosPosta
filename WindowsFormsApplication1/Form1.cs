@@ -481,7 +481,7 @@ namespace WindowsFormsApplication1
 
             if ((string)clickedItem.Tag == "Calificar al Vendedor")
             {
-                WindowsFormsApplication1.Calificar.MenuCalificaciones mC = new WindowsFormsApplication1.Calificar.MenuCalificaciones();
+                WindowsFormsApplication1.Calificar.MenuCalificaciones mC = new WindowsFormsApplication1.Calificar.MenuCalificaciones();                
                 mC.Show();
                 this.Hide();
                 seleccionoRol = false;
@@ -493,8 +493,10 @@ namespace WindowsFormsApplication1
 
             if ((string)clickedItem.Tag == "Consulta de facturas realizadas al vendedor")
             {
-                WindowsFormsApplication1.Facturas.ConsultaFacturas.cf = new WindowsFormsApplication1.Facturas.ConsultaFacturas();
-                WindowsFormsApplication1.Facturas.ConsultaFacturas.cf.Show();
+                WindowsFormsApplication1.Facturas.ConsultaFacturas cf = new WindowsFormsApplication1.Facturas.ConsultaFacturas();
+                cf.esAdmin = esAdmin;
+                cf.user = user;
+                cf.Show();
                 this.Hide();
                 seleccionoRol = false;
                 seleccionoUsuario = false;

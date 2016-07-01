@@ -319,8 +319,8 @@ insert into ROAD_TO_PROYECTO.Funcion values('Consulta de facturas realizadas al 
 insert into ROAD_TO_PROYECTO.Funcion values('Listado Estadístico','Codigo en C# que habilite esta funcion')
 
 --Funciones por rol
-PRINT 'Creando Funciones Por Rol...'
-insert into ROAD_TO_PROYECTO.Funciones_Por_Rol select RolId,FuncId from ROAD_TO_PROYECTO.Rol,ROAD_TO_PROYECTO.Funcion where Nombre = 'Administrador' and Descripcion in ('ABM Rubro','ABM Rol','ABM Visibilidad','ABM Usuario')
+PRINT 'Creando Funciones Por Rol...' 
+insert into ROAD_TO_PROYECTO.Funciones_Por_Rol select RolId,FuncId from ROAD_TO_PROYECTO.Rol,ROAD_TO_PROYECTO.Funcion where Nombre = 'Administrador' and Descripcion in ('ABM Rubro','ABM Rol','ABM Visibilidad','ABM Usuario','Consulta de facturas realizadas al vendedor','Listado Estadístico','Historial de Cliente')
 insert into ROAD_TO_PROYECTO.Funciones_Por_Rol select RolId,FuncId from ROAD_TO_PROYECTO.Rol,ROAD_TO_PROYECTO.Funcion where nombre = 'Cliente' and Descripcion in ('Generar Publicación','Comprar/Ofertar','Historial de Cliente','Calificar al Vendedor','Consulta de facturas realizadas al vendedor','Listado Estadístico')
 insert into ROAD_TO_PROYECTO.Funciones_Por_Rol select RolId,FuncId from ROAD_TO_PROYECTO.Rol,ROAD_TO_PROYECTO.Funcion where nombre = 'Empresa' and Descripcion in ('Generar Publicación','Consulta de facturas realizadas al vendedor','Listado Estadístico')
 --Roles por usuario
@@ -1125,14 +1125,15 @@ GO
 
 --Cambio de estado de una publicacion
 CREATE PROCEDURE ROAD_TO_PROYECTO.Finalizar_Publicacion
-	@PubliId int
+	@PubliId int,
+	@FechaActual datetime
 	as begin
 		declare @EstadoId int
 		select @EstadoId = EstadoId from ROAD_TO_PROYECTO.Estado where Descripcion = 'Finalizada'
 		if exists (select * from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId and Estado <> @EstadoId)
 		begin
 			update ROAD_TO_PROYECTO.Publicacion
-			set Estado = @EstadoId
+			set Estado = @EstadoId, FechaFin = @FechaActual
 			where PublId = @PubliId
 		end
 	end
@@ -1150,18 +1151,17 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Comprar_Publicacion
 		declare @TranId int
 		if(@Usuario <> (select UserId from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId))
 		begin
-		declare @CompradorId int 
-		set @CompradorId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
-		--Verific si la cantidad a comprar es menor que el stock disponible
-		if((select Stock from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) >= @Cantidad)
-		begin
-			insert into ROAD_TO_PROYECTO.Transaccion(Fecha, PubliId, ClieId, ConEnvio, FormaPago)
-			values(@FechaActual, @PubliId, @CompradorId, @ConEnvio,@FormaPago)
-			select @TranId = SCOPE_IDENTITY()
-			insert into ROAD_TO_PROYECTO.Compra(Cantidad, TranId)
-			values(@Cantidad, @TranId)
-			
-		end
+			declare @CompradorId int 
+			set @CompradorId = (select rpu.IdExterno from ROAD_TO_PROYECTO.Roles_Por_Usuario rpu, ROAD_TO_PROYECTO.Rol r where @Usuario = rpu.UserId and rpu.RolId = r.RolId and r.Nombre = 'Cliente')
+			--Verific si la cantidad a comprar es menor que el stock disponible
+			if((select Stock from ROAD_TO_PROYECTO.Publicacion where PublId = @PubliId) >= @Cantidad)
+			begin
+				insert into ROAD_TO_PROYECTO.Transaccion(Fecha, PubliId, ClieId, ConEnvio, FormaPago)
+				values(@FechaActual, @PubliId, @CompradorId, @ConEnvio,@FormaPago)
+				select @TranId = SCOPE_IDENTITY()
+				insert into ROAD_TO_PROYECTO.Compra(Cantidad, TranId)
+				values(@Cantidad, @TranId)	
+			end
 		end
 	end
 GO
@@ -1389,7 +1389,7 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Consulta_Facturas_Vendedor
 		declare	@ImporteMinimo numeric(18,2), @ImporteMaximo numeric(18,2)
 		set @ImporteMinimo = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@MontoInicioIntervaloString)
 		set @ImporteMaximo = ROAD_TO_PROYECTO.Punto_Por_Coma_Y_Convertir(@MontoFinIntervaloString)		
-		select f.FactNro, f.PubliId, f.Fecha, f.Monto as Total, i.Cantidad, i.Detalle, i.Monto as Subtotal
+		select f.FactNro, f.PubliId, p.Descipcion, f.Fecha, f.Monto as Total--, i.Cantidad, i.Detalle, i.Monto as Subtotal
 		from ROAD_TO_PROYECTO.Factura f
 		inner join ROAD_TO_PROYECTO.Item_Factura i on f.FactNro = i.FactNro
 		inner join ROAD_TO_PROYECTO.Publicacion p on f.PubliId = p.PublId
@@ -1397,6 +1397,8 @@ CREATE PROCEDURE ROAD_TO_PROYECTO.Consulta_Facturas_Vendedor
 		and (f.Fecha between @FechaInicioIntervalo and @FechaFinIntervalo)
 		and (i.Detalle like '%' + @Detalle + '%')
 		and (p.UserId like '%' + @Usuario + '%')
+		group by f.FactNro, f.PubliId, f.Fecha, f.Monto, p.Descipcion
+		order by f.FactNro desc
 	end
 GO
 
@@ -2047,7 +2049,7 @@ CREATE TRIGGER ROAD_TO_PROYECTO.Actualizar_Stock_y_Facturar on ROAD_TO_PROYECTO.
 						--Busco la comisión por envío de la publicación
 						select @ComiEnvio = ComiEnvio 
 						from ROAD_TO_PROYECTO.Visibilidad v, ROAD_TO_PROYECTO.Publicacion p
-						where p.PublId = @PubliId and p.Tipo = v.VisiId
+						where p.PublId = @PubliId and p.Visibilidad = v.VisiId
 
 						--Creo los items de la factura
 						insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto)
@@ -2113,9 +2115,12 @@ CREATE TRIGGER ROAD_TO_PROYECTO.Determinar_Oferta_Ganadora_Y_Facturar_Finalizada
 				insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto) 
 				values (@FacturaActual, 1, 'Precio por tipo publicación', @ComiFija)
 
-				insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto)
-				values(@FacturaActual, 1, 'Comisión por productos vendidos', @ComiVariable * (select o.Monto from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Oferta o where t.TranId = o.TranId and o.Ganadora = 1 and PubliId = @PubliId))
-				
+				if((select o.Monto from ROAD_TO_PROYECTO.Oferta o, ROAD_TO_PROYECTO.Transaccion t where o.TranId = t.TranId and t.PubliId = @PubliId) is not null)
+				begin
+					insert into ROAD_TO_PROYECTO.Item_Factura (FactNro, Cantidad, Detalle, Monto)
+					values(@FacturaActual, 1, 'Comisión por productos vendidos', @ComiVariable * (select o.Monto from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Oferta o where t.TranId = o.TranId and o.Ganadora = 1 and PubliId = @PubliId))
+				end
+
 				--Verifico si corresponde comisiones por envío
 				if(((select p.EnvioHabilitado from ROAD_TO_PROYECTO.Publicacion p where p.PublId = @PubliId) = 1) and ((select ConEnvio from ROAD_TO_PROYECTO.Transaccion t, ROAD_TO_PROYECTO.Oferta o where t.TranId = o.TranId and o.Ganadora = 1 and PubliId = @PubliId) = 1))
 					begin
@@ -2167,3 +2172,9 @@ values('admin', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w2
 
 insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
 values('admin', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'MasterRolTesting'))
+
+insert into ROAD_TO_PROYECTO.Usuario (Usuario, Contraseña, Mail)
+values('sand10s', SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('SHA2_256', 'w23e')), 3, 255), 'admin@mercadoEnvio.org')
+
+insert into ROAD_TO_PROYECTO.Roles_Por_Usuario (UserId, RolId)
+values('sand10s', (select RolId from ROAD_TO_PROYECTO.Rol where Nombre = 'Administrador'))
